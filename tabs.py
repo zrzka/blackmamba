@@ -1,6 +1,5 @@
 import editor
 from objc_util import ObjCClass, on_main_thread, UIApplication
-import time
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
