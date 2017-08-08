@@ -57,9 +57,11 @@ except KeyboardInterrupt:
 
 ### pythonista_startup
 
-For now, it just registers HW keyboard shortcuts.
+Custom shortcuts registration.
 
-| Scope  | Shortcut | Function                                      |
-|--------|----------|-----------------------------------------------|
-| Editor | Cmd /    | toggle_comments.toggle_comments               |
+| Scope  | Shortcut   | Assigned Function                               |
+|--------|------------|-------------------------------------------------|
+| Editor | `Cmd /`    | `toggle_comments.toggle_comments`               |
+
+NOTE: Scope is not implemented yet.
 
