@@ -5,6 +5,8 @@ Packages for Pythonista (Python 3), which should be place into `site-packages-3`
 ## Packages
 
 * [external_screen](#external_screen)
+* [toggle_comments](#toggle_comments)
+* [pythonista_startup](#pythonista_startup)
 
 ### external_screen
 
@@ -49,4 +51,15 @@ except KeyboardInterrupt:
 	pass
 ```
 
+### toggle_comments
+
+`toggle_comments` function comments / uncomments selected editor lines.
+
+### pythonista_startup
+
+For now, it just registers HW keyboard shortcuts.
+
+| Scope  | Shortcut | Function                                      |
+|--------|----------|-----------------------------------------------|
+| Editor | Cmd /    | toggle_comments.toggle_comments               |
 
