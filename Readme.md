@@ -5,7 +5,6 @@ Packages for Pythonista (Python 3), which should be place into `site-packages-3`
 ## Packages
 
 * [external_screen](#external_screen)
-* [toggle_comments](#toggle_comments)
 * [pythonista_startup](#pythonista_startup)
 
 ### external_screen
@@ -51,17 +50,15 @@ except KeyboardInterrupt:
 	pass
 ```
 
-### toggle_comments
-
-`toggle_comments` function comments / uncomments selected editor lines.
-
 ### pythonista_startup
 
 Custom shortcuts registration.
 
-| Scope  | Shortcut   | Assigned Function                               |
-|--------|------------|-------------------------------------------------|
-| Editor | `Cmd /`    | `toggle_comments.toggle_comments`               |
+| Scope  | Shortcut       | Assigned Function                               |
+|--------|----------------|-------------------------------------------------|
+| Editor | `Cmd /`        | `toggle_comments.toggle_comments`               |
+| Editor | `Cmd W`        | `tabs.close_current_tab`                        |
+| Editor | `Cmd Shift W`  | `tabs.close_all_tabs_except_current_one`        |
 
 NOTE: Scope is not implemented yet.
 
