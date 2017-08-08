@@ -59,6 +59,7 @@ Custom shortcuts registration.
 | Editor | `Cmd /`        | `toggle_comments.toggle_comments`               |
 | Editor | `Cmd W`        | `tabs.close_current_tab`                        |
 | Editor | `Cmd Shift W`  | `tabs.close_all_tabs_except_current_one`        |
-
-NOTE: Scope is not implemented yet.
+| Editor | `Cmd N`        | `tabs.new_file`                                 |
+| Editor | `Cmd Shift N`  | `tabs.new_tab`                                  |
+| Editor | `Cmd 0`        | `tabs.toggle_navigator`                         |
 

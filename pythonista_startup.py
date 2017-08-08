@@ -180,6 +180,9 @@ def _swizzle_key_commands():
 def startup():		
 	_swizzle_key_commands()
 	_register_key_command(PythonistaScopeEditor, '/', UIKeyModifierCommand, toggle_comments.toggle_comments, 'Toggle Comments')
+	_register_key_command(PythonistaScopeEditor, 'N', UIKeyModifierCommand, tabs.new_file, 'New File')		
+	_register_key_command(PythonistaScopeEditor, 'N', UIKeyModifierCommand | UIKeyModifierShift, tabs.new_tab, 'New Tab')			
+	_register_key_command(PythonistaScopeEditor, '0', UIKeyModifierCommand | UIKeyModifierShift, tabs.toggle_navigator, 'Toggle Navigator')	
 	_register_key_command(PythonistaScopeEditor, 'W', UIKeyModifierCommand, tabs.close_current_tab, 'Close Tab')	
 	_register_key_command(PythonistaScopeEditor, 'W', UIKeyModifierCommand | UIKeyModifierShift, tabs.close_all_tabs_except_current_one, 'Close Tabs Except Current One')	
 
