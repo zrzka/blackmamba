@@ -185,10 +185,21 @@ def _swizzle_key_commands():
 		
 def register():
 	_swizzle_key_commands()
-	_register_key_command(PYTHONISTA_SCOPE_EDITOR, '/', UIKeyModifierCommand, toggle_comments.toggle_comments, 'Toggle Comments')
-	_register_key_command(PYTHONISTA_SCOPE_EDITOR, 'N', UIKeyModifierCommand, tabs.new_file, 'New File')		
-	_register_key_command(PYTHONISTA_SCOPE_EDITOR, 'N', UIKeyModifierCommand | UIKeyModifierShift, tabs.new_tab, 'New Tab')			
-	_register_key_command(PYTHONISTA_SCOPE_EDITOR, '0', UIKeyModifierCommand | UIKeyModifierShift, tabs.toggle_navigator, 'Toggle Navigator')	
-	_register_key_command(PYTHONISTA_SCOPE_EDITOR, 'W', UIKeyModifierCommand, tabs.close_current_tab, 'Close Tab')	
-	_register_key_command(PYTHONISTA_SCOPE_EDITOR, 'W', UIKeyModifierCommand | UIKeyModifierShift, tabs.close_all_tabs_except_current_one, 'Close Tabs Except Current One')	
+	
+	commands = {
+		PYTHONISTA_SCOPE_GLOBAL: [
+		],
+		PYTHONISTA_SCOPE_EDITOR: [
+			('/', UIKeyModifierCommand, toggle_comments.toggle_comments, 'Toggle Comments'),
+			('N', UIKeyModifierCommand, tabs.new_file, 'New File'),
+			('N', UIKeyModifierCommand | UIKeyModifierShift, tabs.new_tab, 'New Tab'),
+			('0', UIKeyModifierCommand | UIKeyModifierShift, tabs.toggle_navigator, 'Toggle Navigator'),
+			('W', UIKeyModifierCommand, tabs.close_current_tab, 'Close Tab'),
+			('W', UIKeyModifierCommand | UIKeyModifierShift, tabs.close_all_tabs_except_current_one, 'Close Tabs Except Current One')
+		]
+	}
+	
+	for scope, commands in commands.items():
+		for command in commands:
+			_register_key_command(scope, *command)
 
