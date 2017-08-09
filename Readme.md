@@ -2,10 +2,13 @@
 
 Packages for Pythonista (Python 3), which should be place into `site-packages-3`.
 
+NOTE: Some of these packages are experimental, some of them are dangerous, use
+with caution.
+
 ## Packages
 
 * [external_screen](#external_screen)
-* [pythonista_startup](#pythonista_startup)
+* [key_commands](#key_commands)
 
 ### external_screen
 
@@ -50,7 +53,7 @@ except KeyboardInterrupt:
 	pass
 ```
 
-### pythonista_startup
+### key_commands
 
 Custom shortcuts registration.
 
@@ -62,4 +65,5 @@ Custom shortcuts registration.
 | Editor | `Cmd N`        | `tabs.new_file`                                 |
 | Editor | `Cmd Shift N`  | `tabs.new_tab`                                  |
 | Editor | `Cmd 0`        | `tabs.toggle_navigator`                         |
+
 
