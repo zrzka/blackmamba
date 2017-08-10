@@ -1,0 +1,100 @@
+[
+  {
+    "nodes" : [
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{6, 6}, {528, 32}}",
+        "class" : "TextField",
+        "attributes" : {
+          "placeholder" : "Type filename ...",
+          "flex" : "WB",
+          "name" : "textfield",
+          "frame" : "{{170, 254}, {200, 32}}",
+          "spellchecking_type" : "default",
+          "class" : "TextField",
+          "uuid" : "20082093-9C53-4F5D-B972-4B86882A47A2",
+          "alignment" : "left",
+          "autocorrection_type" : "default",
+          "font_size" : 17,
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{6, 46}, {528, 443}}",
+        "class" : "TableView",
+        "attributes" : {
+          "flex" : "WH",
+          "data_source_items" : "Row 1\nRow 2\nRow 3",
+          "name" : "tableview",
+          "frame" : "{{170, 170}, {200, 200}}",
+          "uuid" : "B819D053-7352-4013-A551-393FA9603C78",
+          "background_color" : "RGBA(1.0, 1.0, 1.0, 1.0)",
+          "data_source_number_of_lines" : 1,
+          "class" : "TableView",
+          "data_source_delete_enabled" : true,
+          "row_height" : 44,
+          "data_source_font_size" : 18
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{6, 497}, {528, 25}}",
+        "class" : "Label",
+        "attributes" : {
+          "flex" : "WT",
+          "name" : "label1",
+          "text_color" : "RGBA(0.283019,0.283019,0.283019,1.000000)",
+          "frame" : "{{195, 254}, {150, 32}}",
+          "uuid" : "C8C6C201-35DB-41FE-B284-8C6DEE8ED23C",
+          "class" : "Label",
+          "alignment" : "center",
+          "text" : "⇅ - select file • Enter - open in new tab • Shift + Enter - open in current tab",
+          "font_size" : 13,
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{6, 514}, {528, 25}}",
+        "class" : "Label",
+        "attributes" : {
+          "name" : "label2",
+          "flex" : "WT",
+          "text_color" : "RGBA(0.283019,0.283019,0.283019,1.000000)",
+          "frame" : "{{195, 254}, {150, 32}}",
+          "uuid" : "47F2413A-B12B-4719-B31C-9EAC80F04116",
+          "class" : "Label",
+          "alignment" : "center",
+          "text" : "Esc - close • Ctrl [ - close on smart keyboard",
+          "font_size" : 13,
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      }
+    ],
+    "frame" : "{{0, 0}, {540, 540}}",
+    "class" : "View",
+    "attributes" : {
+      "flex" : "",
+      "enabled" : true,
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "custom_class" : "FilePickerView\t",
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "name" : "Open Quickly ..."
+    },
+    "selected" : false
+  }
+]

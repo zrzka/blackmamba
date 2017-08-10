@@ -8,6 +8,7 @@ from uikit import *
 from runtime import swizzle
 import toggle_comments
 import tabs
+import file_picker
 
 #
 # TODO
@@ -110,7 +111,11 @@ def _register_key_command(scope, input, modifier_flags, function, title=None):
         return False
 
     def key_command_action(_sel, _cmd, sender):
-        function()
+        try:
+            function()
+        except Exception as e:
+            print(e)
+            pass
 
     IMPTYPE = CFUNCTYPE(None, c_void_p, c_void_p, c_void_p)
     imp = IMPTYPE(key_command_action)
@@ -143,7 +148,8 @@ def register_key_commands():
             ('N', UIKeyModifierCommand | UIKeyModifierShift, tabs.new_tab, 'New Tab'),
             ('0', UIKeyModifierCommand, tabs.toggle_navigator, 'Toggle Navigator'),
             ('W', UIKeyModifierCommand, tabs.close_current_tab, 'Close Tab'),
-            ('W', UIKeyModifierCommand | UIKeyModifierShift, tabs.close_all_tabs_except_current_one, 'Close Tabs Except Current One')
+            ('W', UIKeyModifierCommand | UIKeyModifierShift, tabs.close_all_tabs_except_current_one, 'Close Tabs Except Current One'),
+            ('O', UIKeyModifierCommand, file_picker.open_quickly, 'Open Quickly')
         ]
     }
     
