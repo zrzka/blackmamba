@@ -6,6 +6,7 @@ from ui import *
 from uikit import *
 import console
 from key_events import register_key_event_handler, unregister_key_event_handler
+import tabs
         
 EXCLUDE_FOLDERS = set(['.git', 'Pythonista', 'site-packages', 'site-packages-2', 'stash_extensions'])
 ROOT_FOLDER = os.path.expanduser('~/Documents')
@@ -210,11 +211,8 @@ class FilePickerView(View):
             
         self.close()
         
-        # TODO
-        console.clear()
-        print('File name: {}'.format(item.name))
-        print('File path: {}'.format(item.file_path))
-        print('In new tab: {}'.format(new_tab))
+        tabs_vc = tabs.tabs_view_controller()
+        tabs_vc.openFile_inNewTab_withPreferredEditorType_forceReload_(ns(item.file_path), new_tab, 0, True)
     
     def textfield_should_return(self, textfield):
         return False
@@ -230,7 +228,3 @@ def open_quickly():
     v.present('sheet', hide_title_bar=True)
     v.wait_modal()
 
-
-if __name__ == '__main__':
-    open_quickly()
-    
