@@ -13,7 +13,7 @@ EXCLUDE_FOLDERS = set(['.git', 'Pythonista', 'site-packages', 'site-packages-2',
     
 ROOT_FOLDER = os.path.expanduser('~/Documents')
 
-ALLOWED_EXTENSIONS = set(['.py'])
+ALLOWED_EXTENSIONS = set(['.py', '.md'])
         
 class FilePickerListItem(object):
     def __init__(self, folder, name, display_folder):
