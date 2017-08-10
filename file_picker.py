@@ -8,8 +8,12 @@ import console
 from key_events import register_key_event_handler, unregister_key_event_handler
 import tabs
         
-EXCLUDE_FOLDERS = set(['.git', 'Pythonista', 'site-packages', 'site-packages-2', 'stash_extensions'])
+EXCLUDE_FOLDERS = set(['.git', 'Pythonista', 'site-packages', 'site-packages-2', 'stash_extensions',
+    'Examples', '.Trash'])
+    
 ROOT_FOLDER = os.path.expanduser('~/Documents')
+
+ALLOWED_EXTENSIONS = set(['.py'])
         
 class FilePickerListItem(object):
     def __init__(self, folder, name, display_folder):
@@ -52,7 +56,8 @@ class FilePickerDataSource(object):
         for root, subdirs, files in os.walk(ROOT_FOLDER, topdown=True):
             subdirs[:] = [d for d in subdirs if d not in EXCLUDE_FOLDERS]
             display_folder = ' • '.join(root[len(home_folder) + 1:].split(os.sep))
-            items.extend([FilePickerListItem(root, f, display_folder) for f in files if not f.startswith('.')])
+            items.extend([FilePickerListItem(root, f, display_folder) for f in files
+                if not f.startswith('.') and os.path.splitext(f)[1] in ALLOWED_EXTENSIONS])
             
         self._all_items = sorted(items)
         self.filter_by = ''
