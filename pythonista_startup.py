@@ -1,6 +1,6 @@
 #!python3
 
-import key_commands
+from key_commands import register_key_commands
 
-key_commands.register()
+register_key_commands()
 
