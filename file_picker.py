@@ -202,13 +202,7 @@ class FilePickerView(View):
         for sv in tf.subviews():
             if sv.isKindOfClass_(UITextField):
                 sv.becomeFirstResponder()
-         
-    def _select_next_item(self):
-        print('next item')
-        
-    def _select_previous_item(self):
-        print('previous item')
-                              
+                                       
     def _open_selected_file(self, new_tab=True):        
         item = self.ds.selected_item
         if not item:
@@ -216,6 +210,7 @@ class FilePickerView(View):
             
         self.close()
         
+        # TODO
         console.clear()
         print('File name: {}'.format(item.name))
         print('File path: {}'.format(item.file_path))
