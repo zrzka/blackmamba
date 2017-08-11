@@ -47,13 +47,6 @@ def toggle_navigator():
         root.showMasterWithAnimationDuration_(0.3)
 
 
-@on_main_thread
-def open_file(file_path, new_tab=True):
-    tabs = tabs_view_controller()
-    if tabs:
-        tabs.openFile_inNewTab_withPreferredEditorType_forceReload_(ns(file_path), new_tab, 0, True)
-
-
 @on_main_thread		
 def new_tab():	
     tabs = tabs_view_controller()

@@ -13,8 +13,6 @@ EXCLUDE_FOLDERS = set(['.git', 'Pythonista', 'site-packages', 'site-packages-2',
     
 ROOT_FOLDER = os.path.expanduser('~/Documents')
 
-ALLOWED_EXTENSIONS = set(['.py', '.md'])
-        
 class FilePickerListItem(object):
     def __init__(self, folder, name, display_folder):
         self.folder = folder
@@ -56,8 +54,7 @@ class FilePickerDataSource(object):
         for root, subdirs, files in os.walk(ROOT_FOLDER, topdown=True):
             subdirs[:] = [d for d in subdirs if d not in EXCLUDE_FOLDERS]
             display_folder = ' • '.join(root[len(home_folder) + 1:].split(os.sep))
-            items.extend([FilePickerListItem(root, f, display_folder) for f in files
-                if not f.startswith('.') and os.path.splitext(f)[1] in ALLOWED_EXTENSIONS])
+            items.extend([FilePickerListItem(root, f, display_folder) for f in files if not f.startswith('.')])
             
         self._all_items = sorted(items)
         self.filter_by = ''
@@ -215,7 +212,7 @@ class FilePickerView(View):
             return
             
         self.close()        
-        blackmamba.ide.open_file(item.file_path, new_tab)
+        editor.open_file(item.file_path, new_tab)
     
     def textfield_should_return(self, textfield):
         return False
