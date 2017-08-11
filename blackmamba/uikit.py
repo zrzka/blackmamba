@@ -2,6 +2,8 @@
 
 from objc_util import ObjCClass
 
+UIKeyCommand = ObjCClass('UIKeyCommand')
+
 # UIKeyModifierFlags
 
 UIKeyModifierAlphaShift = 1 << 16 # CapsLock
@@ -10,7 +12,6 @@ UIKeyModifierControl = 1 << 18 # Control
 UIKeyModifierAlternate = 1 << 19 # Option
 UIKeyModifierCommand = 1 << 20 # Command
 UIKeyModifierNumericPad = 1 << 21 # Key is located on the numeric keypad
-
 
 # UIEventType
 #
@@ -43,6 +44,4 @@ UITableViewCellStyleDefault = 'default'
 UITableViewCellStyleSubtitle = 'subtitle'
 UITableViewCellStyleValue1 = 'value1'
 UITableViewCellStyleValue2 = 'value2'
-
-UIKeyCommand = ObjCClass('UIKeyCommand')
 

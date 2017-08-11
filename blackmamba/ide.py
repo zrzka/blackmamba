@@ -1,5 +1,5 @@
 import editor
-from objc_util import ObjCClass, on_main_thread, UIApplication
+from objc_util import ObjCClass, on_main_thread, UIApplication, ns
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -45,6 +45,13 @@ def toggle_navigator():
         root.hideMasterWithAnimationDuration_(0.3)
     else:
         root.showMasterWithAnimationDuration_(0.3)
+
+
+@on_main_thread
+def open_file(file_path, new_tab=True):
+    tabs = tabs_view_controller()
+    if tabs:
+        tabs.openFile_inNewTab_withPreferredEditorType_forceReload_(ns(file_path), new_tab, 0, True)
 
 
 @on_main_thread		

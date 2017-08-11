@@ -3,10 +3,10 @@ import editor
 import os
 from objc_util import *
 from ui import *
-from uikit import *
 import console
-from key_events import register_key_event_handler, unregister_key_event_handler
-import tabs
+from blackmamba.uikit import *
+from blackmamba.key_events import *
+import blackmamba.ide
         
 EXCLUDE_FOLDERS = set(['.git', 'Pythonista', 'site-packages', 'site-packages-2', 'stash_extensions',
     'Examples', '.Trash'])
@@ -214,10 +214,8 @@ class FilePickerView(View):
         if not item:
             return
             
-        self.close()
-        
-        tabs_vc = tabs.tabs_view_controller()
-        tabs_vc.openFile_inNewTab_withPreferredEditorType_forceReload_(ns(item.file_path), new_tab, 0, True)
+        self.close()        
+        blackmamba.ide.open_file(item.file_path, new_tab)
     
     def textfield_should_return(self, textfield):
         return False
@@ -232,4 +230,8 @@ def open_quickly():
     v = load_view() # os.path.splitext(inspect.stack()[0][1])[0] + '.pyui')
     v.present('sheet', hide_title_bar=True)
     v.wait_modal()
+    
+
+if __name__ == '__main__':
+    open_quickly()
 

@@ -1,8 +1,8 @@
 #!python3
 
-from runtime import swizzle
 from objc_util import on_main_thread, ObjCInstance, sel, UIApplication
-from uikit import *
+from blackmamba.runtime import swizzle
+from blackmamba.uikit import *
 
 _key_event_handlers = []
 
@@ -24,22 +24,17 @@ def _zrzka_handleKeyUIEvent(_self, _cmd, event):
             if h.key_code == e._keyCode() and h.modifier_flags == e._modifierFlags():
                 try:
                     h.fn()
-                except:
-                    pass
+                except Exception as e:
+                    print('Exception in key event handler {}'.format(h.fn))
+                    print(e)
     
     ObjCInstance(_self).originalhandleKeyUIEvent_(e)
 
 
-def _init_key_events_if_needed():
-    if UIApplication.sharedApplication().respondsToSelector_(sel('originalhandleKeyUIEvent:')):
-        return
-        
-    swizzle('UIApplication', 'handleKeyUIEvent:', _zrzka_handleKeyUIEvent)
-
-
 @on_main_thread
 def register_key_event_handler(key_code, fn, *, modifier_flags=0):
-    _init_key_events_if_needed()
+    if not UIApplication.sharedApplication().respondsToSelector_(sel('originalhandleKeyUIEvent:')):
+        swizzle('UIApplication', 'handleKeyUIEvent:', _zrzka_handleKeyUIEvent)    
     
     handler = KeyEventHandler(key_code, modifier_flags, fn)
     _key_event_handlers.append(handler)

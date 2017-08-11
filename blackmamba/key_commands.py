@@ -4,11 +4,8 @@ import collections
 from ctypes import *
 from objc_util import *
 from objc_util import parse_types
-from uikit import *
-from runtime import swizzle
-import toggle_comments
-import tabs
-import file_picker
+from blackmamba.runtime import swizzle
+from blackmamba.uikit import *
 
 #
 # TODO
@@ -80,7 +77,7 @@ def _normalize_input(input):
 
     return UIKeyInputNames[input]
 
-def _key_command_selector(input, modifier_flags):
+def _key_command_selector_name(input, modifier_flags):
     """Generates ObjC selector for given `input` (key) and `modifier_flags` (command, option, ...)."""	
     s = 'zrzkaHandleKey'
 
@@ -91,31 +88,31 @@ def _key_command_selector(input, modifier_flags):
             s += name
     
     s += input	
-    return sel(s)
-
-
-def _key_window():
-    return UIApplication.sharedApplication().keyWindow()
+    return s
 
 
 @on_main_thread
-def _register_key_command(scope, input, modifier_flags, function, title=None):
+def register_key_command(scope, input, modifier_flags, function, title=None):
+    if not UIApplication.sharedApplication().respondsToSelector_(sel('originalkeyCommands')):
+        swizzle('UIApplication', 'keyCommands', _zrzka_keyCommands)
+        
     if not callable(function):
-        raise ValueError('Provided `function` is not callable')
+        raise ValueError('Provided function is not callable')
 
-    selector = _key_command_selector(input, modifier_flags)
-    obj = _key_window()
+    selector_name = _key_command_selector_name(input, modifier_flags)
+    selector = sel(selector_name)
+    obj = UIApplication.sharedApplication().keyWindow()
 
     if obj.respondsToSelector_(selector):
-        print('Skipping, selector already registered')
+        print('Skipping, method {} already registered'.format(selector_name))
         return False
 
     def key_command_action(_sel, _cmd, sender):
         try:
             function()
         except Exception as e:
+            print('Exception in {} method'.format(selector_name))
             print(e)
-            pass
 
     IMPTYPE = CFUNCTYPE(None, c_void_p, c_void_p, c_void_p)
     imp = IMPTYPE(key_command_action)
@@ -134,27 +131,4 @@ def _register_key_command(scope, input, modifier_flags, function, title=None):
 
     _key_commands[scope].append(kc)
     return False	
-
-
-def register_key_commands():
-    swizzle('UIApplication', 'keyCommands', _zrzka_keyCommands)
-
-    commands = {
-        PYTHONISTA_SCOPE_GLOBAL: [
-        ],
-        PYTHONISTA_SCOPE_EDITOR: [
-            ('/', UIKeyModifierCommand, toggle_comments.toggle_comments, 'Toggle Comments'),
-            ('N', UIKeyModifierCommand, tabs.new_file, 'New File'),
-            ('N', UIKeyModifierCommand | UIKeyModifierShift, tabs.new_tab, 'New Tab'),
-            ('0', UIKeyModifierCommand, tabs.toggle_navigator, 'Toggle Navigator'),
-            ('W', UIKeyModifierCommand, tabs.close_current_tab, 'Close Tab'),
-            ('W', UIKeyModifierCommand | UIKeyModifierShift, tabs.close_all_tabs_except_current_one, 'Close Tabs Except Current One'),
-            ('O', UIKeyModifierCommand, file_picker.open_quickly, 'Open Quickly')
-        ]
-    }
-    
-    for scope, commands in commands.items():
-        for command in commands:
-            _register_key_command(scope, *command)
-
 
