@@ -23,6 +23,7 @@ shortcuts for example, associated with following functions:
 | Editor | `Cmd N`        | `tabs.new_file`                                 |
 | Editor | `Cmd Shift N`  | `tabs.new_tab`                                  |
 | Editor | `Cmd 0`        | `tabs.toggle_navigator`                         |
+| Editor | `Cmd Shift 0`  | `dash.search_dash`                              |
 
 ### external_screen
 

@@ -3,6 +3,7 @@
 import blackmamba.toggle_comments
 import blackmamba.ide
 import blackmamba.file_picker
+import blackmamba.dash
 from blackmamba.key_commands import *
 from blackmamba.uikit import *
 
@@ -17,7 +18,8 @@ def register_key_commands():
             ('0', UIKeyModifierCommand, blackmamba.ide.toggle_navigator, 'Toggle Navigator'),
             ('W', UIKeyModifierCommand, blackmamba.ide.close_current_tab, 'Close Tab'),
             ('W', UIKeyModifierCommand | UIKeyModifierShift, blackmamba.ide.close_all_tabs_except_current_one, 'Close Tabs Except Current One'),
-            ('O', UIKeyModifierCommand, blackmamba.file_picker.open_quickly, 'Open Quickly')
+            ('O', UIKeyModifierCommand, blackmamba.file_picker.open_quickly, 'Open Quickly'),
+            ('0', UIKeyModifierCommand | UIKeyModifierShift, blackmamba.dash.search_dash, 'Search in Dash')
         ]
     }
     
