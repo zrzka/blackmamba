@@ -4,21 +4,47 @@ Packages for Pythonista which should be place into `site-packages-3`. Why
 `site-packages-3`? I do use Python 3 only and didn't test any of these
 packages with Python 2.
 
+## Installation
+
+### Initial installation
+
+Use StaSH:
+
+```
+[site-packages-3]$ pwd
+~/Documents/site-packages-3
+[site-packages-3]$ git clone https://github.com/zrzka/pythonista-site-packages-3.git
+[site-packages-3]$
+```
+
+### Updates
+
+```
+[site-packages-3]$ pwd
+~/Documents/site-packages-3
+[site-packages-3]$ git pull
+[site-packages-3]$ 
+```
+
+### Start Black Mamba within Pythonista
+
+Add the following lines to your `~/Documents/site-packages-3/pythonista_startup.py` file:
+
+```
+#!python3
+
+import blackmamba.startup as bm
+bm.start()
+```
+
+Create the `pythonista_startup.py` file if it doesn't exist.
+
 ## Packages
 
 * [blackmamba](#blackmamba)
 * [external_screen](#external_screen)
 
 ### blackmamba
-
-#### Installation
-
-Clone the whole repository into the `site-packages-3` folder. Then you can:
-
-* rename `blackmamba_pythonista_startup.py` to `pythonista_startup.py`
-* copy content of `blackmamba_pythonista_startup.py` to your `pythonista_startup.py`
-
-#### Description
 
 This package goal is to provide Pythonista on steroids. Check sample
 `pythonista_startup.py` to see what's going on here. It contains HW keyboard
