@@ -17,6 +17,8 @@ Use StaSH:
 [site-packages-3]$
 ```
 
+**NOTE**: Do not miss the ` .` (space dot) at the end of `git clone` command.
+
 ### Updates
 
 ```
