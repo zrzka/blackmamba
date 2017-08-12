@@ -13,7 +13,7 @@ Use StaSH:
 ```
 [site-packages-3]$ pwd
 ~/Documents/site-packages-3
-[site-packages-3]$ git clone https://github.com/zrzka/pythonista-site-packages-3.git
+[site-packages-3]$ git clone https://github.com/zrzka/pythonista-site-packages-3.git .
 [site-packages-3]$
 ```
 
