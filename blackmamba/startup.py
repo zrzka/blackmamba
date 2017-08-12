@@ -7,7 +7,8 @@ import blackmamba.dash
 from blackmamba.key_commands import *
 from blackmamba.uikit import *
 
-def register_key_commands():    
+def _register_key_commands():
+    print('Registering keyboard shortcuts ... ', end='')  
     commands = {
         PYTHONISTA_SCOPE_GLOBAL: [
         ],
@@ -27,5 +28,11 @@ def register_key_commands():
         for command in commands:
             register_key_command(scope, *command)
             
-register_key_commands()
+    print('done')
             
+            
+def start():
+    print('Black Mamba startup')                
+    _register_key_commands()
+    print('Black Mamba initialized')
+
