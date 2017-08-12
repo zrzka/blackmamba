@@ -11,6 +11,15 @@ packages with Python 2.
 
 ### blackmamba
 
+#### Installation
+
+Clone the whole repository into the `site-packages-3` folder. Then you can:
+
+* rename `blackmamba_pythonista_startup.py` to `pythonista_startup.py`
+* copy content of `blackmamba_pythonista_startup.py` to your `pythonista_startup.py`
+
+#### Description
+
 This package goal is to provide Pythonista on steroids. Check sample
 `pythonista_startup.py` to see what's going on here. It contains HW keyboard
 shortcuts for example, associated with following functions:
