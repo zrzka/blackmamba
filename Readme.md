@@ -2,15 +2,15 @@
 
 I do use [Pythonista](http://omz-software.com/pythonista/) on a daily basis.
 
-| Pythonista is a complete development environment for writing Python™
-| scripts on your iPad or iPhone.
+> Pythonista is a complete development environment for writing Python™
+> scripts on your iPad or iPhone.
 
 It's a great tool. But it lacks some features like keyboard shortcuts for
 specific actions. I'm slow without them. So I decided to write set of
 scripts to _fix_ all these issues. To speed up my iteration cycle. To make
 it as fast as possible. And which snake is the speediest one on the planet?
-[Black Mamba](https://en.wikipedia.org/wiki/Black_mamba). You know
-why it's called Black Mamba now.
+[Black Mamba](https://en.wikipedia.org/wiki/Black_mamba). And you know
+why it's called Black Mamba now :)
 
 ## Installation
 
@@ -62,4 +62,29 @@ Create the `pythonista_startup.py` file if it doesn't exist.
 | Editor | `Cmd Shift N`  | `tabs.new_tab`                                  |
 | Editor | `Cmd 0`        | `tabs.toggle_navigator`                         |
 | Editor | `Cmd Shift 0`  | `dash.search_dash`                              |
+
+### Custom key commands
+
+Following example shows how you can register custom key commands and bind them
+to your own functions. `Cmd Shift H` just prints `Hallo`.
+
+```
+#!python3
+
+import blackmamba as bm
+bm.register_default_key_commands()
+
+
+from blackmamba.key_commands import register_key_command
+from blackmamba.uikit import *  # UIKeyModifier*
+
+def my_fn():
+    print('Hallo')
+    
+register_key_command(
+    'H',
+    UIKeyModifierCommand | UIKeyModifierShift,
+    my_fn,
+    'Print Hallo')
+```
 
