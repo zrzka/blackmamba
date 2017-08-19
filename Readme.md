@@ -43,7 +43,7 @@ file. Create this file if it doesn't exist.
 
 ### Register default key commands
 
-How to register default Black Mamba key commands during Pythonista startup.
+How to register default Black Mamba key commands.
 
 ```python
 #!python3
@@ -54,15 +54,16 @@ bm.register_default_key_commands()
 
 List of default key commands:
 
-| Scope  | Shortcut       | Assigned Function                               |
-|--------|----------------|-------------------------------------------------|
-| Editor | `Cmd /`        | `toggle_comments.toggle_comments`               |
-| Editor | `Cmd W`        | `tabs.close_current_tab`                        |
-| Editor | `Cmd Shift W`  | `tabs.close_all_tabs_except_current_one`        |
-| Editor | `Cmd N`        | `tabs.new_file`                                 |
-| Editor | `Cmd Shift N`  | `tabs.new_tab`                                  |
-| Editor | `Cmd 0`        | `tabs.toggle_navigator`                         |
-| Editor | `Cmd Shift 0`  | `dash.search_dash`                              |
+| Shortcut       | Function                                        |
+|----------------|-------------------------------------------------|
+| `Cmd /`        | Comment / uncomment selected line(s)            |
+| `Cmd W`        | Close current editor tab                        |
+| `Cmd Shift W`  | Close all editor tabs except current one        |
+| `Cmd N`        | New tab + new file                              |
+| `Cmd Shift N`  | Just new tab                                    |
+| `Cmd 0`        | Show / hide navigator (library)                 |
+| `Cmd Shift 0`  | Query selected text in Dash                     |
+| `Cmd O`        | Open Quickly file...                            |
 
 ### Register custom key commands
 
@@ -72,12 +73,13 @@ How to print `Hallo` with `Cmd Shift H`.
 #!python3
 
 # Register default key commands. You're not forced to call it, feel
-# free to remove these two lines if you don't like them.
+# free to remove these two lines if you don't like these key commands.
 import blackmamba as bm
 bm.register_default_key_commands()
 
-# `register_key_command` can be called even if you didn't call
-# `register_default_key_commands`.
+# `register_key_command` can be called even if you don't call
+# `register_default_key_commands`. IOW you can use Black Mamba
+# for your own key commands only.
 from blackmamba.key_commands import register_key_command
 from blackmamba.uikit import *  # UIKeyModifier*
 
