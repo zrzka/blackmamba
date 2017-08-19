@@ -38,9 +38,10 @@ Use StaSH:
 
 ## Usage
 
-### Default key commands
+All following examples should be placed in the `~/Documents/site-packages-3/pythonista_startup.py`
+file. Create this file if it doesn't exist.
 
-Add the following lines to your `~/Documents/site-packages-3/pythonista_startup.py` file:
+### Register default key commands
 
 ```
 #!python3
@@ -48,10 +49,6 @@ Add the following lines to your `~/Documents/site-packages-3/pythonista_startup.
 import blackmamba as bm
 bm.register_default_key_commands()
 ```
-
-Create the `pythonista_startup.py` file if it doesn't exist.
-`register_default_key_commands` will register following key commands.
-
 
 | Scope  | Shortcut       | Assigned Function                               |
 |--------|----------------|-------------------------------------------------|
@@ -63,10 +60,9 @@ Create the `pythonista_startup.py` file if it doesn't exist.
 | Editor | `Cmd 0`        | `tabs.toggle_navigator`                         |
 | Editor | `Cmd Shift 0`  | `dash.search_dash`                              |
 
-### Custom key commands
+### Register custom key commands
 
-Following example shows how you can register custom key commands and bind them
-to your own functions. `Cmd Shift H` just prints `Hallo`.
+How to print `Hallo` with `Cmd Shift H`.
 
 ```
 #!python3
