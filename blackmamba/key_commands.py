@@ -36,28 +36,14 @@ UIKeyInputNames = {
     '_': 'Underscore'
 }
 
-PYTHONISTA_SCOPE_GLOBAL = 'global'
-PYTHONISTA_SCOPE_EDITOR = 'editor'
-
-_key_commands = {
-    PYTHONISTA_SCOPE_GLOBAL: [],
-    PYTHONISTA_SCOPE_EDITOR: []
-}
-
-
-def _pythonista_scope(key_commands):
-    for kc in key_commands:
-        if kc.input() == 'L' and kc.modifierFlags() == UIKeyModifierCommand: # Cmd-L Show/Hide Outline
-            return PYTHONISTA_SCOPE_EDITOR
-    return PYTHONISTA_SCOPE_GLOBAL
+_key_commands = []
 
 
 def _zrzka_keyCommands(_self, _cmd):
     """Swizzled version of keyCommands(). It calls original method to get Pythonista shortcuts and then appends custom ones."""
     obj = ObjCInstance(_self)
     commands = list(obj.originalkeyCommands())
-    commands.extend(_key_commands[PYTHONISTA_SCOPE_GLOBAL])
-    commands.extend(_key_commands[PYTHONISTA_SCOPE_EDITOR])	
+    commands.extend(_key_commands)
     return ns(commands).ptr
 
 
@@ -77,6 +63,7 @@ def _normalize_input(input):
 
     return UIKeyInputNames[input]
 
+
 def _key_command_selector_name(input, modifier_flags):
     """Generates ObjC selector for given `input` (key) and `modifier_flags` (command, option, ...)."""	
     s = 'zrzkaHandleKey'
@@ -92,7 +79,7 @@ def _key_command_selector_name(input, modifier_flags):
 
 
 @on_main_thread
-def register_key_command(scope, input, modifier_flags, function, title=None):
+def register_key_command(input, modifier_flags, function, title=None):
     if not UIApplication.sharedApplication().respondsToSelector_(sel('originalkeyCommands')):
         swizzle('UIApplication', 'keyCommands', _zrzka_keyCommands)
         
@@ -129,6 +116,6 @@ def register_key_command(scope, input, modifier_flags, function, title=None):
     else:
         kc = UIKeyCommand.keyCommandWithInput_modifierFlags_action_discoverabilityTitle_(ns(input), modifier_flags, selector, ns(title))
 
-    _key_commands[scope].append(kc)
+    _key_commands.append(kc)
     return False	
 
