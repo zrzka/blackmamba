@@ -141,7 +141,8 @@ class PickerView(View):
     def __init__(self):
         self._tableview = None
         self._textfield = None
-        self._helplabel = None
+        self._help_label = None
+        self._title_label = None
         self._datasource = None
         self._handlers = []
         self.shift_enter_enabled = True
@@ -200,6 +201,10 @@ class PickerView(View):
         return self._help_label
         
     @property
+    def title_label(self):
+        return self._title_label
+        
+    @property
     def textfield(self):
         return self._textfield
         
@@ -207,6 +212,7 @@ class PickerView(View):
         self._tableview = self['tableview']
         self._textfield = self['textfield']
         self._help_label = self['helplabel']
+        self._title_label = self['titlelabel']
 
         self._tableview.allows_multiple_selection = False
         self._textfield.delegate = self

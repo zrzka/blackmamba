@@ -25,9 +25,9 @@ def _zrzka_handleKeyUIEvent(_self, _cmd, event):
             if h.key_code == e._keyCode() and h.modifier_flags == e._modifierFlags():
                 try:
                     h.fn()
-                except Exception as e:
+                except Exception as ex:
                     print('Exception in key event handler {}'.format(h.fn))
-                    print(e)
+                    print(ex)
     
     ObjCInstance(_self).originalhandleKeyUIEvent_(e)
 

@@ -30,6 +30,7 @@ def script_quickly():
     v = load_picker_view()
     v.datasource = FilePickerDataSource(**kwargs)
     v.shift_enter_enabled = False
+    v.title_label.text = 'Run Quickly...'
     v.help_label.text = (
         '⇅ - select • Enter - run Python script'
         '\n'

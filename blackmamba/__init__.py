@@ -5,6 +5,7 @@ import blackmamba.ide
 import blackmamba.file_picker
 import blackmamba.dash
 import blackmamba.script_picker
+import blackmamba.wrench_picker
 from blackmamba.key_commands import *
 from blackmamba.uikit import *
 
@@ -38,7 +39,10 @@ def register_default_key_commands():
          'Search in Dash'),
         ('R', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.script_picker.script_quickly,
-         'Run Script Quickly...')
+         'Run Script Quickly...'),
+        ('R', UIKeyModifierCommand | UIKeyModifierAlternate,
+         blackmamba.wrench_picker.wrench_quickly,
+         'Wrench Quickly...'),         
     ]
     
     for command in commands:

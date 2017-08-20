@@ -100,9 +100,9 @@ def register_key_command(input, modifier_flags, function, title=None):
     def key_command_action(_sel, _cmd, sender):
         try:
             function()
-        except Exception as e:
+        except Exception as ex:
             print('Exception in {} method'.format(selector_name))
-            print(e)
+            print(ex)
 
     IMPTYPE = CFUNCTYPE(None, c_void_p, c_void_p, c_void_p)
     imp = IMPTYPE(key_command_action)

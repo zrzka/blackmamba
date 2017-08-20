@@ -58,6 +58,7 @@ def open_quickly():
     v = load_picker_view()
     v.datasource = FilePickerDataSource(**kwargs)
     v.shift_enter_enabled = True
+    v.title_label.text = 'Open Quickly...'
     v.help_label.text = (
         '⇅ - select • Enter - open file in new tab • Shift + Enter - open file in current tab'
         '\n'
