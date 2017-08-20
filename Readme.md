@@ -72,7 +72,8 @@ List of default key commands:
 | `Cmd 0`        | Show / hide navigator (Library)                 |
 | `Cmd Shift 0`  | Query selected text in Dash                     |
 | `Cmd O`        | Open Quickly...                                 |
-| `Cmd Shift R`  | Run Script Quickly...                           |
+| `Cmd Shift R`  | Run Quickly...                                  |
+| `Cmd Option R` | Wrench Quickly...                               |
 
 ### Register custom key commands
 
