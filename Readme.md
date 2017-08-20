@@ -75,6 +75,9 @@ List of default key commands:
 | `Cmd Shift R`  | Run Quickly...                                  |
 | `Cmd Option R` | Wrench Quickly...                               |
 
+**WARNING** Run Quickly... and Wrench Quickly... works only and only
+if these scripts are Python 3 compatible!
+
 ### Register custom key commands
 
 How to print `Hallo` with `Cmd Shift H`.
