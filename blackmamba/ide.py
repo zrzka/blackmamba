@@ -2,6 +2,8 @@ import editor
 from objc_util import ObjCClass, on_main_thread, UIApplication, ns
 import runpy
 import os
+import urllib.parse
+import webbrowser
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -72,7 +74,11 @@ def new_file():
     
     
 def run_script(script_name):
-    docs = os.path.expanduser('~/Documents')
-    file_path = os.path.join(docs, script_name)
-    runpy.run_path(file_path, run_name='__main__')
+    encoded_name = urllib.parse.quote_plus(script_name, safe='', encoding=None, errors=None)
+    url = 'pythonista://{}?action=run'.format(encoded_name)
+    webbrowser.open(url)
+    
+#    docs = os.path.expanduser('~/Documents')
+#    file_path = os.path.join(docs, script_name)
+#    runpy.run_path(file_path, run_name='__main__')
 
