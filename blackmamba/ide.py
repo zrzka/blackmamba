@@ -1,6 +1,7 @@
 import editor
 from objc_util import ObjCClass, on_main_thread, UIApplication, ns
 import runpy
+import os
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -70,6 +71,8 @@ def new_file():
     tab.addNewFile_(tab.addNewFileButton())
     
     
-def run_script(file_path):
+def run_script(script_name):
+    docs = os.path.expanduser('~/Documents')
+    file_path = os.path.join(docs, script_name)
     runpy.run_path(file_path, run_name='__main__')
 
