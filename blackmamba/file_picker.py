@@ -1,230 +1,70 @@
+#!python3
 
 import editor
 import os
-from objc_util import *
-from ui import *
-import console
-from blackmamba.uikit import *
-from blackmamba.key_events import *
-import blackmamba.ide
+from objc_util import on_main_thread
+from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
         
-EXCLUDE_FOLDERS = set(['.git', 'Pythonista', 'site-packages', 'site-packages-2', 'stash_extensions',
-    'Examples', '.Trash'])
-    
-ROOT_FOLDER = os.path.expanduser('~/Documents')
-
-class FilePickerListItem(object):
+                
+class FilePickerItem(PickerItem):
     def __init__(self, folder, name, display_folder):
-        self.folder = folder
-        self.name = name
-        self.norm_name = name.lower()
-        self.display_folder = display_folder
+        super().__init__(name, display_folder)
+        self._folder = folder
         
     @property
     def file_path(self):
-        return os.path.join(self.folder, self.name)
+        return os.path.join(self._folder, self.title)
 
-    def matches(self, search_terms):
-        if not search_terms:
-            return True
-            
-        for st in search_terms:
-            if st not in self.norm_name:
-                return False
-        
-        return True
 
-    def __lt__(self, other):
-        return self.name < other.name
-
-    def __str__(self):
-        return self.name
-                
-
-class FilePickerDataSource(object):
-    def __init__(self):
-        self.tableview = None
-        self.action = None
-        self._filter_by = None
-        self._selected_row = -1
-        self._items = None
+class FilePickerDataSource(PickerDataSource):
+    def __init__(self, root_folder=None, allow_folder=None, allow_file=None):
+        super().__init__()
+        self._root_folder = root_folder or os.path.expanduser('~/Documents')
                 
         home_folder = os.path.expanduser('~')
         items = []
-        for root, subdirs, files in os.walk(ROOT_FOLDER, topdown=True):
-            subdirs[:] = [d for d in subdirs if d not in EXCLUDE_FOLDERS]
+        for root, subdirs, files in os.walk(self._root_folder, topdown=True):
+            if allow_folder:
+                subdirs[:] = [d for d in subdirs if allow_folder(root, d)]
             display_folder = ' • '.join(root[len(home_folder) + 1:].split(os.sep))
-            items.extend([FilePickerListItem(root, f, display_folder) for f in files if not f.startswith('.')])
-            
-        self._all_items = sorted(items)
-        self.filter_by = ''
+            if allow_file:
+                files = [f for f in files if allow_file(root, f)]
+            items.extend([FilePickerItem(root, f, display_folder) for f in files])
                 
-    @property
-    def filter_by(self):
-        return self._filter_by
-        
-    @filter_by.setter
-    def filter_by(self, value):
-        new_filter_by = [s for s in value.strip().lower().split(' ') if s]
-        
-        self._filter_by = new_filter_by
-        
-        if self._filter_by:
-            self._items = [i for i in self._all_items if i.matches(self._filter_by)]
-        else:
-            self._items = self._all_items
-        self._selected_row = -1
-        self.reload()
-                                
-    @property
-    def items(self):
-        return self._items
-        
-    @property
-    def selected_row(self):
-        return self._selected_row
-        
-    @selected_row.setter
-    def selected_row(self, value):
-        if self.tableview:
-            self.tableview.selected_row = (0, value)
-        self._selected_row = value
-        
-    @property
-    def selected_item(self):
-        if self.selected_row >= 0:
-            return self.items[self.selected_row]
-        return None
-        
-    def select_next_item(self):
-        count = len(self.items)
-        
-        if not count:
-            return
-            
-        row = (self.selected_row + 1) % count
-        self.selected_row = row
-            
-    def select_previous_item(self):
-        count = len(self.items)
-        
-        if not count:
-            return
-        
-        row = self.selected_row - 1
-        if row < 0:
-            row = count - 1
-            
-        self.selected_row = row
+        self.items = items
                         
-    def reload(self):
-        if self.tableview:
-            self.tableview.reload()
-            
-    def tableview_number_of_sections(self, tv):
-        self.tableview = tv
-        return 1
-
-    def tableview_number_of_rows(self, tv, section):
-        return len(self.items)
-
-    def tableview_can_delete(self, tv, section, row):
-        return False
-
-    def tableview_can_move(self, tv, section, row):
-        return False
-        
-    def tableview_did_select(self, tv, section, row):
-        self._selected_row = row
-        if self.action and row >= 0:
-            self.action(self)
-            
-    def tableview_cell_for_row(self, tv, section, row):
-        item = self.items[row]
-        cell = TableViewCell(UITableViewCellStyleSubtitle)
-        cell.text_label.number_of_lines = 1
-        cell.text_label.text = item.name
-        cell.detail_text_label.text = item.display_folder
-        cell.detail_text_label.text_color = (0, 0, 0, 0.5)
-        return cell
-
-
-class FilePickerView(View):
-    def __init__(self):
-        self.tv = None
-        self.tf = None
-
-        self.ds = FilePickerDataSource()
-                
-        def did_select_cell(datasource):
-            self._open_selected_file()
-            
-        self.ds.action = did_select_cell
-        
-        def handle_key_up():
-            self.ds.select_previous_item()
-            
-        def handle_key_down():
-            self.ds.select_next_item()
-            
-        def handle_shift_enter():
-            self._open_selected_file(False)
-            
-        def handle_enter():
-            self._open_selected_file()
-            
-        def handle_escape():
-            self.close()
-            
-        self.key_up_handler = register_key_event_handler(UIEventKeyCodeUp, handle_key_up)
-        self.key_down_handler = register_key_event_handler(UIEventKeyCodeDown, handle_key_down)
-        self.enter_handler = register_key_event_handler(UIEventKeyCodeEnter, handle_enter)
-        self.shift_enter_handler = register_key_event_handler(UIEventKeyCodeEnter, handle_shift_enter, modifier_flags=UIKeyModifierShift)
-        self.escape_handler = register_key_event_handler(UIEventKeyCodeEscape, handle_escape)     
-        self.escape_handler2 = register_key_event_handler(UIEventKeyCodeLeftSquareBracket, handle_escape, modifier_flags=UIKeyModifierControl)   
-            
-    def will_close(self):
-        unregister_key_event_handler(self.key_up_handler)
-        unregister_key_event_handler(self.key_down_handler)
-        unregister_key_event_handler(self.enter_handler)
-        unregister_key_event_handler(self.shift_enter_handler)        
-        unregister_key_event_handler(self.escape_handler)
-        unregister_key_event_handler(self.escape_handler2)
-
-    def did_load(self):
-        self.tv = self['tableview']
-        self.tf = self['textfield']
-
-        self.tv.data_source = self.ds
-        self.tv.delegate = self.ds
-        self.tv.allows_multiple_selection = False
-        self.tf.delegate = self
-            
-        UITextField = ObjCClass('UITextField')
-        tf = ObjCInstance(self.tf._objc_ptr)
-        for sv in tf.subviews():
-            if sv.isKindOfClass_(UITextField):
-                sv.becomeFirstResponder()
-                                       
-    def _open_selected_file(self, new_tab=True):        
-        item = self.ds.selected_item
-        if not item:
-            return
-            
-        self.close()        
-        editor.open_file(item.file_path, new_tab)
-    
-    def textfield_should_return(self, textfield):
-        return False
-        
-    def textfield_should_change(self, textfield, range, replacement):
-        self.ds.filter_by = textfield.text[:range[0]] + replacement + textfield.text[range[1]:]
-        return True
-
 
 @on_main_thread
 def open_quickly():
-    v = load_view() # os.path.splitext(inspect.stack()[0][1])[0] + '.pyui')
+    def allow_folder(root, folder):
+        return folder not in [
+                '.git', 'Pythonista', 'site-packages', 'site-packages-2',
+                'stash_extensions', 'Examples', '.Trash'            
+            ]
+
+    def allow_file(root, name):
+        return not name.startswith('.')
+        
+    def open_file(item, shift_enter):
+        new_tab = not shift_enter
+        editor.open_file(item.file_path, new_tab=new_tab)        
+                                                    
+    kwargs = {
+        'allow_folder': allow_folder,
+        'allow_file': allow_file,        
+        'root_folder': os.path.expanduser('~/Documents')
+    }
+        
+    v = load_picker_view()
+    v.datasource = FilePickerDataSource(**kwargs)
+    v.shift_enter_enabled = True
+    v.help_label.text = (
+        '⇅ - select • Enter - open file in new tab • Shift + Enter - open file in current tab'
+        '\n'
+        'Esc - close • Ctrl [ - close with Apple smart keyboard'
+    )
+    v.textfield.placeholder = 'Start typing to filter files...'
+    v.did_select_item_action = open_file
     v.present('sheet', hide_title_bar=True)
     v.wait_modal()
     

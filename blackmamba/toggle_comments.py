@@ -2,14 +2,15 @@
 
 import editor
 
-def toggle_comments():	
+
+def toggle_comments():
     selection_range = editor.get_selection()
 
     if not selection_range:
         # No file opened in the editor
         return
 
-    text = editor.get_text()		
+    text = editor.get_text()
 
     selected_lines_range = editor.get_line_selection()
     selected_lines_text = text[selected_lines_range[0]:selected_lines_range[1]]

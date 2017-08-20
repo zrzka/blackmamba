@@ -19,11 +19,11 @@ def tabs_view_controller():
     return None
 
 
-@on_main_thread																		
+@on_main_thread
 def close_all_tabs_except_current_one():
     tabs = tabs_view_controller()
     if tabs:
-        tabs.closeAllTabsExceptCurrent()						
+        tabs.closeAllTabsExceptCurrent()
 
 
 @on_main_thread
@@ -35,7 +35,7 @@ def close_current_tab():
         tabs.closeSelectedTab_(tabs.closeSelectedTabButtonItem().ptr)
 
 
-@on_main_thread				
+@on_main_thread
 def toggle_navigator():
     root = root_view_controller()
     if not root:
@@ -47,8 +47,8 @@ def toggle_navigator():
         root.showMasterWithAnimationDuration_(0.3)
 
 
-@on_main_thread		
-def new_tab():	
+@on_main_thread
+def new_tab():
     tabs = tabs_view_controller()
 
     if not tabs:
@@ -57,7 +57,7 @@ def new_tab():
     tabs.addTab_(tabs.addTabButtonItem())
 
 
-@on_main_thread	
+@on_main_thread
 def new_file():
     tabs = tabs_view_controller()
 

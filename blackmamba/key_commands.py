@@ -3,7 +3,6 @@
 import collections
 from ctypes import *
 from objc_util import *
-from objc_util import parse_types
 from blackmamba.runtime import swizzle
 from blackmamba.uikit import *
 
@@ -40,7 +39,8 @@ _key_commands = []
 
 
 def _zrzka_keyCommands(_self, _cmd):
-    """Swizzled version of keyCommands(). It calls original method to get Pythonista shortcuts and then appends custom ones."""
+    """Swizzled version of keyCommands(). It calls original method to
+    get Pythonista shortcuts and then appends custom ones."""
     obj = ObjCInstance(_self)
     commands = list(obj.originalkeyCommands())
     commands.extend(_key_commands)
@@ -48,7 +48,9 @@ def _zrzka_keyCommands(_self, _cmd):
 
 
 def _normalize_input(input):
-    """Converts key command input to upper cased string and replaces special characters (like `/`) with name. If the input can't be normalized, `ValueError` is thrown."""	
+    """Converts key command input to upper cased string and replaces
+    special characters (like /) with name. If the input can't be
+    normalized, ValueError is thrown."""
     
     if not len(input) == 1:
         raise ValueError('Key command input must be one character')
@@ -59,22 +61,23 @@ def _normalize_input(input):
         return input
 
     if input not in UIKeyInputNames:
-        raise ValueError('Unsupported key command input: {}'.format(input))		
+        raise ValueError('Unsupported key command input: {}'.format(input))
 
     return UIKeyInputNames[input]
 
 
 def _key_command_selector_name(input, modifier_flags):
-    """Generates ObjC selector for given `input` (key) and `modifier_flags` (command, option, ...)."""	
+    """Generates ObjC selector for given input (key) and
+    modifier_flags (command, option, ...)."""
     s = 'zrzkaHandleKey'
 
     input = _normalize_input(input)
 
     for mod, name in UIKeyModifierNames.items():
-        if modifier_flags & mod == mod:			
+        if modifier_flags & mod == mod:
             s += name
     
-    s += input	
+    s += input
     return s
 
 
@@ -106,16 +109,17 @@ def register_key_command(input, modifier_flags, function, title=None):
     retain_global(imp)
 
     cls = c.object_getClass(obj.ptr)
-    did_add = c.class_addMethod(cls, selector, imp, c_char_p('v@:@'.encode('utf-8')))
+    type_encoding = c_char_p('v@:@'.encode('utf-8'))
+    did_add = c.class_addMethod(cls, selector, imp, type_encoding)
     if not did_add:
         print('Failed to add key command action selector')
         return False
 
-    if not title:
-        kc = UIKeyCommand.keyCommandWithInput_modifierFlags_action_(ns(input), modifier_flags, selector)
-    else:
+    if title:
         kc = UIKeyCommand.keyCommandWithInput_modifierFlags_action_discoverabilityTitle_(ns(input), modifier_flags, selector, ns(title))
+    else:
+        kc = UIKeyCommand.keyCommandWithInput_modifierFlags_action_(ns(input), modifier_flags, selector)
 
     _key_commands.append(kc)
-    return False	
+    return False
 
