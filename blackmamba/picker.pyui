@@ -5,7 +5,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{6, 6}, {528, 32}}",
+        "frame" : "{{6, 46}, {528, 32}}",
         "class" : "TextField",
         "attributes" : {
           "placeholder" : "",
@@ -26,20 +26,20 @@
         "nodes" : [
 
         ],
-        "frame" : "{{6, 46}, {528, 443}}",
+        "frame" : "{{6, 86}, {528, 403}}",
         "class" : "TableView",
         "attributes" : {
           "flex" : "WH",
           "data_source_items" : "Row 1\nRow 2\nRow 3",
-          "data_source_delete_enabled" : true,
+          "row_height" : 44,
           "frame" : "{{170, 170}, {200, 200}}",
+          "class" : "TableView",
           "uuid" : "B819D053-7352-4013-A551-393FA9603C78",
           "background_color" : "RGBA(1.0, 1.0, 1.0, 1.0)",
           "data_source_number_of_lines" : 1,
+          "data_source_delete_enabled" : true,
           "data_source_font_size" : 18,
-          "class" : "TableView",
-          "name" : "tableview",
-          "row_height" : 44
+          "name" : "tableview"
         },
         "selected" : false
       },
@@ -63,6 +63,25 @@
           "font_name" : "<System>"
         },
         "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{6, 6}, {528, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 18,
+          "flex" : "WB",
+          "frame" : "{{195, 254}, {150, 32}}",
+          "uuid" : "90EB513E-A1A3-4DDD-A939-595265592EEF",
+          "class" : "Label",
+          "alignment" : "center",
+          "text" : "Label",
+          "name" : "titlelabel",
+          "font_name" : "<System-Bold>"
+        },
+        "selected" : false
       }
     ],
     "frame" : "{{0, 0}, {540, 540}}",
@@ -74,7 +93,7 @@
       "custom_class" : "PickerView\t",
       "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
       "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-      "name" : "Open Quickly ..."
+      "name" : ""
     },
     "selected" : false
   }
