@@ -69,9 +69,10 @@ List of default key commands:
 | `Cmd Shift W`  | Close all editor tabs except current one        |
 | `Cmd N`        | New tab + new file                              |
 | `Cmd Shift N`  | Just new tab                                    |
-| `Cmd 0`        | Show / hide navigator (library)                 |
+| `Cmd 0`        | Show / hide navigator (Library)                 |
 | `Cmd Shift 0`  | Query selected text in Dash                     |
-| `Cmd O`        | Open Quickly file...                            |
+| `Cmd O`        | Open Quickly...                                 |
+| `Cmd Shift R`  | Run Script Quickly...                           |
 
 ### Register custom key commands
 

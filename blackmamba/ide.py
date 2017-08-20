@@ -1,5 +1,6 @@
 import editor
 from objc_util import ObjCClass, on_main_thread, UIApplication, ns
+import runpy
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -67,4 +68,8 @@ def new_file():
     tabs.addTab_(tabs.addTabButtonItem())
     tab = tabs.tabViewControllers()[-1]
     tab.addNewFile_(tab.addNewFileButton())
+    
+    
+def run_script(file_path):
+    runpy.run_path(file_path, run_name='__main__')
 

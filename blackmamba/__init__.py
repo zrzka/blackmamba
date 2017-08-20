@@ -4,6 +4,7 @@ import blackmamba.toggle_comments
 import blackmamba.ide
 import blackmamba.file_picker
 import blackmamba.dash
+import blackmamba.script_picker
 from blackmamba.key_commands import *
 from blackmamba.uikit import *
 
@@ -31,10 +32,13 @@ def register_default_key_commands():
          'Close Tabs Except Current One'),
         ('O', UIKeyModifierCommand,
          blackmamba.file_picker.open_quickly,
-         'Open Quickly'),
+         'Open Quickly...'),
         ('0', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.dash.search_dash,
-         'Search in Dash')
+         'Search in Dash'),
+        ('R', UIKeyModifierCommand | UIKeyModifierShift,
+         blackmamba.script_picker.script_quickly,
+         'Run Script Quickly...')
     ]
     
     for command in commands:
