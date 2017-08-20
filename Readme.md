@@ -1,16 +1,24 @@
 # Black Mamba
 
-I do use [Pythonista](http://omz-software.com/pythonista/) on a daily basis.
+[Pythonista](http://omz-software.com/pythonista/) on steroids.
 
 > Pythonista is a complete development environment for writing Python™
 > scripts on your iPad or iPhone.
 
-It's a great tool. But it lacks some features like keyboard shortcuts for
-specific actions. I'm slow without them. So I decided to write set of
+Pythonista is a great tool. But it lacks some features like keyboard shortcuts
+for specific actions. I'm slow without them. So I decided to write set of
 scripts to _fix_ all these issues. To speed up my iteration cycle. To make
 it as fast as possible. And which snake is the speediest one on the planet?
 [Black Mamba](https://en.wikipedia.org/wiki/Black_mamba). And you know
 why it's called Black Mamba now :)
+
+## Status
+
+It's still an experiment and you can expect breaking changes. I'm trying
+to avoid them, but I can't promise stable interface for now.
+
+You're welcome to report [new issue](https://github.com/zrzka/blackmamba/issues/new)
+if you find a bug or would like to have something added.
 
 ## Installation
 
