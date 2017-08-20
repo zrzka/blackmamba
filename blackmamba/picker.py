@@ -189,7 +189,7 @@ class PickerView(View):
     def datasource(self, value):
         self._datasource = value
         
-        def did_select_item():
+        def did_select_item(ds):
             self._did_select_item()
         
         self._datasource.action = did_select_item
@@ -214,6 +214,7 @@ class PickerView(View):
         self._help_label = self['helplabel']
         self._title_label = self['titlelabel']
 
+        self._tableview.allows_selection = True
         self._tableview.allows_multiple_selection = False
         self._textfield.delegate = self
             
