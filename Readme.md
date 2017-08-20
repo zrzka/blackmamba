@@ -76,7 +76,8 @@ List of default key commands:
 | `Cmd Option R` | Wrench Quickly...                               |
 
 **WARNING** Run Quickly... and Wrench Quickly... works only and only
-if these scripts are Python 3 compatible!
+if there's no running script. If there's running script, you'll see
+your script in the editor (new tab), but the script isn't executed.
 
 ### Register custom key commands
 
