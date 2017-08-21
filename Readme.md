@@ -73,9 +73,9 @@ List of default key commands:
 | `Cmd Shift 0`  | Query selected text in Dash                     |
 | `Cmd O`        | Open Quickly...                                 |
 | `Cmd Shift R`  | Run Quickly...                                  |
-| `Cmd Option R` | Wrench Quickly...                               |
+| `Cmd Shift A`  | Action Quickly...                               |
 
-**WARNING** Run Quickly... and Wrench Quickly... works only and only
+**WARNING** Run Quickly... and Action Quickly... works only and only
 if there's no running script. If there's running script, you'll see
 your script in the editor (new tab), but the script isn't executed.
 
