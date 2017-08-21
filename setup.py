@@ -2,7 +2,8 @@ from setuptools import setup
 
 setup(
     name='blackmamba',
-    version='0.0.1',
+    version='0.0.3',
+    download_url = 'https://github.com/zrzka/blackmamba/archive/v0.0.3.tar.gz'
     
     description='Pythonista on steroids',
     
@@ -10,12 +11,12 @@ setup(
     
     author='Robert Vojta',
     
-    license='The Unlicense',
-    
     packages=[
         'blackmamba',
         'blackmamba.experimental'
     ],
-    package_dir={'':'.'}
+    package_dir={'':'.'},
+
+    keywords=['pythonista']
 )
 
