@@ -22,22 +22,6 @@ if you find a bug or would like to have something added.
 
 ## Installation
 
-### StaSh & Pip
-
-```sh
-[~/Documents]$ pwd
-~/Documents
-[~/Documents]$ pip install zrzka/blackmamba -d site-packages-3
-Working on GitHub repository ...
-Opening: https://github.com/zrzka/blackmamba/archive/master.zip
-Save as: /private/var/mobile/Containers/Data/Application/3E88DBD8-5D53-4AE2-8612-2C68695CD9AC/tmp//master.zip (18250 bytes)
-     18250  [100.00%]
-Extracting archive file ...
-Running setup file ...
-Package installed: blackmamba-master
-[~/Documents]$ 
-```
-
 ### StaSh & Git
 
 ```sh
@@ -57,6 +41,24 @@ And updates ...
 [site-packages-3]$ git pull
 [site-packages-3]$ 
 ```
+
+### StaSh & Pip
+
+```sh
+[~/Documents]$ pwd
+~/Documents
+[~/Documents]$ pip install zrzka/blackmamba -d site-packages-3
+Working on GitHub repository ...
+Opening: https://github.com/zrzka/blackmamba/archive/master.zip
+Save as: /private/var/mobile/Containers/Data/Application/3E88DBD8-5D53-4AE2-8612-2C68695CD9AC/tmp//master.zip (18250 bytes)
+     18250  [100.00%]
+Extracting archive file ...
+Running setup file ...
+Package installed: blackmamba-master
+[~/Documents]$ 
+```
+
+**NOTE** StaSh & `pip update zrzka/blackmamba` doesn't work for GitHub packages.
 
 ## Usage
 
