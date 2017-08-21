@@ -9,7 +9,7 @@ Black Mamba
 
 Pythonista is a great tool. But it lacks some features like keyboard shortcuts
 for specific actions. I'm slow without them. So I decided to write set of
-scripts to _fix_ all these issues. To speed up my iteration cycle. To make
+scripts to *fix* all these issues. To speed up my iteration cycle. To make
 it as fast as possible. And which snake is the speediest one on the planet?
 `Black Mamba <https://en.wikipedia.org/wiki/Black_mamba>`_. And you know
 why it's called Black Mamba now :)
