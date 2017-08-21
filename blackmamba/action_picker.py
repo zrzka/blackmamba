@@ -1,18 +1,42 @@
 #!python3
 
 from objc_util import on_main_thread, ObjCClass
-from ui import TableViewCell
+from ui import TableViewCell, Image
+import ui
 from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
-from blackmamba.uikit import UITableViewCellStyleDefault
+from blackmamba.uikit import UITableViewCellStyleSubtitle
 import blackmamba.ide
+import os
         
                 
 class ActionPickerItem(PickerItem):
     def __init__(self, action_info):
-        super().__init__(str(action_info['title'] or action_info['scriptName']))
+        script_name = str(action_info['scriptName'])
+
+        if action_info['title']:
+            title = str(action_info['title'])
+        else:
+            _, tail = os.path.split(script_name)
+            title, _ = os.path.splitext(tail)
+        
+        subtitle = ' • '.join(script_name.split(os.sep))
+                
+        super().__init__(title, subtitle)
+        
         self.icon_name = str(action_info['iconName'])
-        self.icon_color = str(action_info['iconColor'])
-        self.script_name = str(action_info['scriptName'])
+        
+        if action_info['iconColor']:
+            self.icon_color = '#{}'.format(action_info['iconColor'])
+        else:
+            self.icon_color = '#FFFFFF'
+        self.script_name = script_name
+        
+    @property
+    def image(self):
+        # TODO - Find a way how get the right icon, because there's
+        #        lot of prefixes like iob:, different sizes, ...
+        image = Image.named('iob:play_32')
+        return image
 
 
 class ActionPickerDataSource(PickerDataSource):
@@ -26,17 +50,19 @@ class ActionPickerDataSource(PickerDataSource):
         
     def tableview_cell_for_row(self, tv, section, row):
         item = self.filtered_items[row]
-        cell = TableViewCell(UITableViewCellStyleDefault)
+        cell = TableViewCell(UITableViewCellStyleSubtitle)
         cell.text_label.number_of_lines = 1
         cell.text_label.text = item.title
-
-        # TODO - Fix this to display image
-#        image = Image.named('iob:{}_32'.format(item.icon_name))
-#        if not image:
-#            image = Image.named('python')
-
+        cell.detail_text_label.text = item.subtitle
+        cell.detail_text_label.text_color = (0, 0, 0, 0.5)
+        
+#        cell.image_view.content_mode = ui.CONTENT_SCALE_ASPECT_FILL
+#        cell.image_view.background_color = item.icon_color
+#        cell.image_view.image = item.image
+#        cell.image_view.alpha = 0.5
+        
         return cell
-                        
+                                
 
 @on_main_thread
 def action_quickly():
