@@ -5,7 +5,7 @@ import blackmamba.ide
 import blackmamba.file_picker
 import blackmamba.dash
 import blackmamba.script_picker
-import blackmamba.wrench_picker
+import blackmamba.action_picker
 from blackmamba.key_commands import *
 from blackmamba.uikit import *
 
@@ -40,9 +40,9 @@ def register_default_key_commands():
         ('R', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.script_picker.script_quickly,
          'Run Script Quickly...'),
-        ('R', UIKeyModifierCommand | UIKeyModifierAlternate,
-         blackmamba.wrench_picker.wrench_quickly,
-         'Wrench Quickly...'),         
+        ('A', UIKeyModifierCommand | UIKeyModifierShift,
+         blackmamba.action_picker.action_quickly,
+         'Action Quickly...'),         
     ]
     
     for command in commands:

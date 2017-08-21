@@ -7,7 +7,7 @@ from blackmamba.uikit import UITableViewCellStyleDefault
 import blackmamba.ide
         
                 
-class WrenchPickerItem(PickerItem):
+class ActionPickerItem(PickerItem):
     def __init__(self, action_info):
         super().__init__(str(action_info['title'] or action_info['scriptName']))
         self.icon_name = str(action_info['iconName'])
@@ -15,14 +15,14 @@ class WrenchPickerItem(PickerItem):
         self.script_name = str(action_info['scriptName'])
 
 
-class WrenchPickerDataSource(PickerDataSource):
+class ActionPickerDataSource(PickerDataSource):
     def __init__(self):
         super().__init__()
         
         NSUserDefaults = ObjCClass('NSUserDefaults')
         defaults = NSUserDefaults.standardUserDefaults()
         actions = defaults.objectForKey_('EditorActionInfos')
-        self.items = [WrenchPickerItem(ai) for ai in actions]
+        self.items = [ActionPickerItem(ai) for ai in actions]
         
     def tableview_cell_for_row(self, tv, section, row):
         item = self.filtered_items[row]
@@ -39,16 +39,16 @@ class WrenchPickerDataSource(PickerDataSource):
                         
 
 @on_main_thread
-def wrench_quickly():
+def action_quickly():
     def run_wrench_item(item, shift_enter):
         blackmamba.ide.run_script(item.script_name)
                                                             
     v = load_picker_view()
-    v.datasource = WrenchPickerDataSource()
+    v.datasource = ActionPickerDataSource()
     v.shift_enter_enabled = False
-    v.title_label.text = 'Wrench Quickly...'
+    v.title_label.text = 'Action Quickly...'
     v.help_label.text = (
-        '⇅ - select • Enter - run wrench item'
+        '⇅ - select • Enter - run action item'
         '\n'
         'Esc - close • Ctrl [ - close with Apple smart keyboard'
     )
@@ -59,5 +59,5 @@ def wrench_quickly():
     
 
 if __name__ == '__main__':
-    wrench_quickly()
+    action_quickly()
 
