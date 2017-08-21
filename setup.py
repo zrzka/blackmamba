@@ -19,6 +19,6 @@ setup(
         'blackmamba.experimental'
     ],
     
-    package_dir={'': 'blackmamba'}    
+    package_dir={'': '.'}
 )
 
