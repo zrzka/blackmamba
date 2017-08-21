@@ -2,8 +2,8 @@ from setuptools import setup
 
 setup(
     name='blackmamba',
-    version='0.0.5',
-    download_url = 'https://github.com/zrzka/blackmamba/archive/v0.0.5.tar.gz',
+    version='0.0.6',
+    download_url = 'https://github.com/zrzka/blackmamba/archive/v0.0.6.tar.gz',
     
     description='Pythonista on steroids',
     
