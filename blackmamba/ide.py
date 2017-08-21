@@ -4,6 +4,7 @@ import runpy
 import os
 import urllib.parse
 import webbrowser
+import blackmamba.action_picker
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -81,4 +82,19 @@ def run_script(script_name):
 #    docs = os.path.expanduser('~/Documents')
 #    file_path = os.path.join(docs, script_name)
 #    runpy.run_path(file_path, run_name='__main__')
+
+
+@on_main_thread
+def run_action(title):
+    actions = [a for a in blackmamba.action_picker.load_editor_actions() if a.title == title]
+    
+    if len(actions) == 0:
+        print('Unable to find action with title: {}'.format(title))
+        return
+        
+    if len(actions) > 1:
+        print('Multiple actions found with title: {}'.format(title))
+        return
+        
+    run_script(actions[0].script_name)
 

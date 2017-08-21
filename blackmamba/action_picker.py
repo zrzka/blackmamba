@@ -8,28 +8,45 @@ from blackmamba.uikit import UITableViewCellStyleSubtitle
 import blackmamba.ide
 import os
         
-                
-class ActionPickerItem(PickerItem):
+        
+class ActionInfo(object):
     def __init__(self, action_info):
-        script_name = str(action_info['scriptName'])
-
-        if action_info['title']:
-            title = str(action_info['title'])
-        else:
-            _, tail = os.path.split(script_name)
-            title, _ = os.path.splitext(tail)
-        
-        subtitle = ' • '.join(script_name.split(os.sep))
-                
-        super().__init__(title, subtitle)
-        
+        self.script_name = str(action_info['scriptName'])
         self.icon_name = str(action_info['iconName'])
         
+        if action_info['title']:
+            self.title = str(action_info['title'])
+        else:
+            self.title = None
+            
         if action_info['iconColor']:
             self.icon_color = '#{}'.format(action_info['iconColor'])
         else:
             self.icon_color = '#FFFFFF'
-        self.script_name = script_name
+                
+                
+def load_editor_actions():
+    NSUserDefaults = ObjCClass('NSUserDefaults')
+    defaults = NSUserDefaults.standardUserDefaults()
+    return [ActionInfo(a) for a in defaults.objectForKey_('EditorActionInfos')]
+
+                
+class ActionPickerItem(PickerItem):
+    def __init__(self, action_info):
+        if not isinstance(action_info, ActionInfo):
+            action_info = ActionInfo(action_info)
+        
+        if action_info.title:
+            title = action_info.title
+        else:
+            _, tail = os.path.split(action_info.script_name)
+            title, _ = os.path.splitext(tail)
+        
+        subtitle = ' • '.join(action_info.script_name.split(os.sep))
+                
+        super().__init__(title, subtitle)
+
+        self.action_info = action_info
         
     @property
     def image(self):
@@ -42,11 +59,7 @@ class ActionPickerItem(PickerItem):
 class ActionPickerDataSource(PickerDataSource):
     def __init__(self):
         super().__init__()
-        
-        NSUserDefaults = ObjCClass('NSUserDefaults')
-        defaults = NSUserDefaults.standardUserDefaults()
-        actions = defaults.objectForKey_('EditorActionInfos')
-        self.items = [ActionPickerItem(ai) for ai in actions]
+        self.items = [ActionPickerItem(ai) for ai in load_editor_actions()]
         
     def tableview_cell_for_row(self, tv, section, row):
         item = self.filtered_items[row]
@@ -62,12 +75,12 @@ class ActionPickerDataSource(PickerDataSource):
 #        cell.image_view.alpha = 0.5
         
         return cell
-                                
+                                                                                                    
 
 @on_main_thread
 def action_quickly():
     def run_wrench_item(item, shift_enter):
-        blackmamba.ide.run_script(item.script_name)
+        blackmamba.ide.run_script(item.action_info.script_name)
                                                             
     v = load_picker_view()
     v.datasource = ActionPickerDataSource()
