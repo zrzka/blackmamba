@@ -14,7 +14,7 @@ class KeyEventHandler(object):
         self.fn = fn
 
 
-def _zrzka_handleKeyUIEvent(_self, _cmd, event):
+def _blackmamba_handleKeyUIEvent(_self, _cmd, event):
     e = ObjCInstance(event)
     
 #    print('Down: {} Type: {} Subtype: {} Modifier flags: {} Keycode: {}'
@@ -35,7 +35,7 @@ def _zrzka_handleKeyUIEvent(_self, _cmd, event):
 @on_main_thread
 def register_key_event_handler(key_code, fn, *, modifier_flags=0):
     if not UIApplication.sharedApplication().respondsToSelector_(sel('originalhandleKeyUIEvent:')):
-        swizzle('UIApplication', 'handleKeyUIEvent:', _zrzka_handleKeyUIEvent)
+        swizzle('UIApplication', 'handleKeyUIEvent:', _blackmamba_handleKeyUIEvent)
     
     handler = KeyEventHandler(key_code, modifier_flags, fn)
     _key_event_handlers.append(handler)

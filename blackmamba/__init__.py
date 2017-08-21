@@ -11,7 +11,8 @@ from blackmamba.uikit import *
 
 
 def register_default_key_commands():
-    print('Registering keyboard shortcuts ... ', end='')
+    print('Registering default key commands...')
+    
     commands = [
         ('/', UIKeyModifierCommand,
          blackmamba.toggle_comments.toggle_comments,
@@ -48,8 +49,7 @@ def register_default_key_commands():
     for command in commands:
         register_key_command(*command)
             
-    print('done')
-
+    print('Default key commands registered')
 
 if __name__ == '__main__':
     register_default_key_commands()

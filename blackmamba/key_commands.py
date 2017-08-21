@@ -38,7 +38,7 @@ UIKeyInputNames = {
 _key_commands = []
 
 
-def _zrzka_keyCommands(_self, _cmd):
+def _blackmamba_keyCommands(_self, _cmd):
     """Swizzled version of keyCommands(). It calls original method to
     get Pythonista shortcuts and then appends custom ones."""
     obj = ObjCInstance(_self)
@@ -69,7 +69,7 @@ def _normalize_input(input):
 def _key_command_selector_name(input, modifier_flags):
     """Generates ObjC selector for given input (key) and
     modifier_flags (command, option, ...)."""
-    s = 'zrzkaHandleKey'
+    s = 'blackMambaHandleKey'
 
     input = _normalize_input(input)
 
@@ -84,15 +84,18 @@ def _key_command_selector_name(input, modifier_flags):
 @on_main_thread
 def register_key_command(input, modifier_flags, function, title=None):
     if not UIApplication.sharedApplication().respondsToSelector_(sel('originalkeyCommands')):
-        swizzle('UIApplication', 'keyCommands', _zrzka_keyCommands)
-        
-    if not callable(function):
-        raise ValueError('Provided function is not callable')
-
+        swizzle('UIApplication', 'keyCommands', _blackmamba_keyCommands)
+            
     selector_name = _key_command_selector_name(input, modifier_flags)
     selector = sel(selector_name)
     obj = UIApplication.sharedApplication().keyWindow()
-
+    
+    print('Registering key command {} ({})'.format(selector_name, function))
+    
+    if not callable(function):
+        print('Skipping, provided function is not callable')
+        return False
+    
     if obj.respondsToSelector_(selector):
         print('Skipping, method {} already registered'.format(selector_name))
         return False
@@ -112,7 +115,7 @@ def register_key_command(input, modifier_flags, function, title=None):
     type_encoding = c_char_p('v@:@'.encode('utf-8'))
     did_add = c.class_addMethod(cls, selector, imp, type_encoding)
     if not did_add:
-        print('Failed to add key command action selector')
+        print('Failed to add key command method {}'.format(selector_name))
         return False
 
     if title:
@@ -121,5 +124,5 @@ def register_key_command(input, modifier_flags, function, title=None):
         kc = UIKeyCommand.keyCommandWithInput_modifierFlags_action_(ns(input), modifier_flags, selector)
 
     _key_commands.append(kc)
-    return False
+    return True
 
