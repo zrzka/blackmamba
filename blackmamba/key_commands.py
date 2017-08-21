@@ -32,7 +32,8 @@ UIKeyInputNames = {
     '+': 'Plus',
     '-': 'Minus',
     ' ': 'Space',
-    '_': 'Underscore'
+    '_': 'Underscore',
+    '\t': 'Tab'
 }
 
 _key_commands = []
