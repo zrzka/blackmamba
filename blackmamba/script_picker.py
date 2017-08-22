@@ -5,7 +5,8 @@ from objc_util import on_main_thread
 from blackmamba.picker import load_picker_view
 from blackmamba.file_picker import FilePickerDataSource
 import blackmamba.ide
-import blackmamba.settings        
+import blackmamba.settings
+
 
 @on_main_thread
 def script_quickly():

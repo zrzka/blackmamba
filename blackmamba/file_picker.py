@@ -28,7 +28,6 @@ class FilePickerDataSource(PickerDataSource):
                 
             return os.path.normpath(os.path.join(self._root_folder, f))
                             
-        print(ignore_folders)                            
         ignore_folders = {expand_folder(k): v for k, v in ignore_folders.items()}
         global_ignore_folders = ignore_folders.get('', [])
         
