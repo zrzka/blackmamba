@@ -1,6 +1,5 @@
 #!python3
 
-import os
 from objc_util import on_main_thread
 from blackmamba.picker import load_picker_view
 from blackmamba.file_picker import FilePickerDataSource
@@ -14,7 +13,7 @@ def script_quickly():
         return not name.startswith('.') and name.endswith('.py')
         
     def run_script(item, shift_enter):
-        blackmamba.ide.run_script(item.file_path)
+        blackmamba.ide.run_script(item.file_path, full_path=True)
                                                     
     kwargs = {
         'ignore_folders': blackmamba.settings.RUN_QUICKLY_IGNORE_FOLDERS,
