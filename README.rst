@@ -86,8 +86,9 @@ Usage
 =====
 
 Following examples should be placed in the ``~/Documents/site-packages-3/pythonista_startup.py``
-file. Create this file if it doesn't exist. Also I assume that your file starts with Black Mamba
-import:
+file. Create this file if it doesn't exist.
+
+Also I assume that your file starts with Black Mamba import:
 
 .. code-block:: python
 
@@ -139,9 +140,6 @@ Register default key commands
 
 .. code-block:: python
 
-    #!python3
-
-    import blackmamba as bm
     bm.register_default_key_commands()
 
 This registers following keyboard shortcuts you can use with
