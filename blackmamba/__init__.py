@@ -40,10 +40,10 @@ def register_default_key_commands():
          'Search in Dash'),
         ('R', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.script_picker.script_quickly,
-         'Run Script Quickly...'),
+         'Run Quickly...'),
         ('A', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.action_picker.action_quickly,
-         'Action Quickly...'),         
+         'Action Quickly...')
     ]
     
     for command in commands:

@@ -5,16 +5,10 @@ from objc_util import on_main_thread
 from blackmamba.picker import load_picker_view
 from blackmamba.file_picker import FilePickerDataSource
 import blackmamba.ide
-        
+import blackmamba.settings        
 
 @on_main_thread
 def script_quickly():
-    def allow_folder(root, folder):
-        return folder not in [
-                '.git', 'Pythonista', 'site-packages', 'site-packages-2',
-                'stash_extensions', 'Examples', '.Trash'
-            ]
-
     def allow_file(root, name):
         return not name.startswith('.') and name.endswith('.py')
         
@@ -22,9 +16,8 @@ def script_quickly():
         blackmamba.ide.run_script(item.file_path)
                                                     
     kwargs = {
-        'allow_folder': allow_folder,
-        'allow_file': allow_file,
-        'root_folder': os.path.expanduser('~/Documents')
+        'ignore_folders': blackmamba.settings.RUN_QUICKLY_IGNORE_FOLDERS,
+        'allow_file': allow_file
     }
         
     v = load_picker_view()

@@ -4,6 +4,7 @@ import editor
 import os
 from objc_util import on_main_thread
 from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
+import blackmamba.settings
         
                 
 class FilePickerItem(PickerItem):
@@ -17,15 +18,27 @@ class FilePickerItem(PickerItem):
 
 
 class FilePickerDataSource(PickerDataSource):
-    def __init__(self, root_folder=None, allow_folder=None, allow_file=None):
+    def __init__(self, allow_file=None, ignore_folders=None):
         super().__init__()
-        self._root_folder = root_folder or os.path.expanduser('~/Documents')
+        self._root_folder = os.path.expanduser('~/Documents')
+        
+        def expand_folder(f):
+            if not f:
+                return f
                 
+            return os.path.normpath(os.path.join(self._root_folder, f))
+                            
+        print(ignore_folders)                            
+        ignore_folders = {expand_folder(k): v for k, v in ignore_folders.items()}
+        global_ignore_folders = ignore_folders.get('', [])
+        
         home_folder = os.path.expanduser('~')
         items = []
-        for root, subdirs, files in os.walk(self._root_folder, topdown=True):
-            if allow_folder:
-                subdirs[:] = [d for d in subdirs if allow_folder(root, d)]
+        for root, subdirs, files in os.walk(self._root_folder, topdown=True, followlinks=True):
+            if ignore_folders:
+                ignore_list = global_ignore_folders[:]
+                ignore_list.extend(ignore_folders.get(root, []))
+                subdirs[:] = [d for d in subdirs if d not in ignore_list]
             display_folder = ' • '.join(root[len(home_folder) + 1:].split(os.sep))
             if allow_file:
                 files = [f for f in files if allow_file(root, f)]
@@ -36,23 +49,16 @@ class FilePickerDataSource(PickerDataSource):
 
 @on_main_thread
 def open_quickly():
-    def allow_folder(root, folder):
-        return folder not in [
-                '.git', 'Pythonista', 'site-packages', 'site-packages-2',
-                'stash_extensions', 'Examples', '.Trash'            
-            ]
-
     def allow_file(root, name):
         return not name.startswith('.')
         
     def open_file(item, shift_enter):
         new_tab = not shift_enter
-        editor.open_file(item.file_path, new_tab=new_tab)        
+        editor.open_file(item.file_path, new_tab=new_tab)
                                                     
     kwargs = {
-        'allow_folder': allow_folder,
-        'allow_file': allow_file,        
-        'root_folder': os.path.expanduser('~/Documents')
+        'ignore_folders': blackmamba.settings.RUN_QUICKLY_IGNORE_FOLDERS,
+        'allow_file': allow_file
     }
         
     v = load_picker_view()

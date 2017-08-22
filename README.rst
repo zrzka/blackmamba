@@ -18,6 +18,7 @@ why it's called Black Mamba now :)
 
 .. section-numbering::
 
+
 Status
 ======
 
@@ -33,6 +34,7 @@ Installation
 
 Install `StaSh - Shell for Pythonista <https://github.com/ywangd/stash>`_. All following
 commands are for StaSh.
+
 
 PyPI
 ----
@@ -50,6 +52,7 @@ PyPI
 .. code-block:: bash
 
     [~/Documents]$ pip update blackmamba
+
 
 Git
 ---
@@ -77,11 +80,61 @@ But it has several drawbacks:
     [~/Documents]$ cd site-packages-3
     [site-packages-3]$ git pull
 
+
 Usage
 =====
 
 Following examples should be placed in the ``~/Documents/site-packages-3/pythonista_startup.py``
 file. Create this file if it doesn't exist.
+
+
+Ignore folders (Open/Run Quickly...)
+------------------------------------
+
+*Open/Run Quickly...* dialog ignores following folders by default:
+
+* ``.git`` - in any folder
+* ``.Trash``, ``Examples``, ``site-packages``, ``site-packages-2``, ``site-packages-3`` in ``~/Documents`` folder
+
+You can modify it via:
+
+* ``blackmamba.settings.OPEN_QUICKLY_IGNORE_FOLDERS`` - for *Open Quickly...* dialog
+* ``blackmamba.settings.RUN_QUICKLY_IGNORE_FOLDERS`` - for *Run Quickly...* dialog
+
+Example:
+
+.. code-block:: python
+
+    #!python3
+
+    import blackmamba as bm
+
+    bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS = {
+        # Ignores .git folder in any folder under ~/Documents
+        '': ['.git'],
+        
+        # Ignores specific folders under . (= ~/Documents)
+        # ~/Documents/Pythonista is ignored
+        # ~/Documents/something/Pythonista is not ignored
+        '.': ['Pythonista', '.Trash', 'Examples',
+              'site-packages-2', 'site-packages', 'stash_extensions'],
+              'site-packages-3': ['blackmamba'],
+              
+        # Ignores bm-pip-backup in ~/Documents/Development folder
+        # Does not ignore bm-pip-backup folder in any other folder
+        'Development': ['bm-pip-backup']
+    }
+
+    bm.settings.RUN_QUICKLY_IGNORE_FOLDERS = {
+        '': ['.git'],
+        '.': ['Pythonista', '.Trash', 'Examples',
+              'site-packages-2', 'site-packages', 'stash_extensions'],
+        'site-packages-3': ['blackmamba'],
+        'Development': ['bm-pip-backup']
+    }
+
+    bm.register_default_key_commands()
+
 
 Register default key commands
 -----------------------------
@@ -116,6 +169,7 @@ Shortcut         Function
 if there's no running script. If there's running script, you'll see
 your script in the editor (new tab), but the script wasn't executed.
 
+
 Register custom key commands
 ----------------------------
 
@@ -133,4 +187,58 @@ How to print `Hallo` with `Cmd Shift H`.
     
     register_key_command('H', UIKeyModifierCommand | UIKeyModifierShift,
                          my_fn, 'Print Hallo')
+
+
+Sample pythonista_startup.py
+----------------------------
+
+.. code-block:: python
+
+    #!python3
+    
+    import blackmamba as bm
+    
+    #
+    # '': any parent folder
+    # '.': ~/Documents parent folder
+    # 'Development': ~/Documents/Development parent folder
+    #
+    bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS = {
+        '': ['.git'],
+        '.': ['Pythonista', '.Trash', 'Examples',
+              'site-packages-2', 'site-packages', 'stash_extensions'],
+        'site-packages-3': ['blackmamba'],
+        'Development': ['bm-pip-backup']
+    }
+    
+    bm.settings.RUN_QUICKLY_IGNORE_FOLDERS = {
+        '': ['.git'],
+        '.': ['Pythonista', '.Trash', 'Examples',
+              'site-packages-2', 'site-packages', 'stash_extensions'],
+        'site-packages-3': ['blackmamba'],
+        'Development': ['bm-pip-backup']
+    }
+    
+    #
+    # Default Black Mamba external keyboard shortcuts registration
+    #
+    bm.register_default_key_commands()
+    
+    #
+    # Custom shortcuts
+    #
+    
+    def launch_stash():
+        # Wrench item Custom Title (case sensitive)
+        bm.ide.run_action('StaSh')
+        
+        # Or via script, relative path to ~/Documents
+        # bm.ide.run_script('launch_stash.py')
+        
+    
+    bm.key_commands.register_key_command(
+        'S',
+        bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,
+        launch_stash,
+        'Launch StaSh')
 
