@@ -5,6 +5,7 @@ from ctypes import *
 from objc_util import *
 from blackmamba.runtime import swizzle
 from blackmamba.uikit import *
+import inspect
 
 #
 # TODO
@@ -16,7 +17,7 @@ from blackmamba.uikit import *
 #
 
 # Keep it ordered to avoid different selector names for the same input & flags
-UIKeyModifierNames = collections.OrderedDict([
+_UIKeyModifierNames = collections.OrderedDict([
     (UIKeyModifierAlphaShift, 'CapsLock'),
     (UIKeyModifierShift, 'Shift'),
     (UIKeyModifierControl, 'Control'),
@@ -25,7 +26,7 @@ UIKeyModifierNames = collections.OrderedDict([
     (UIKeyModifierNumericPad, 'NumericPad')
 ])
 
-UIKeyInputNames = {
+_UIKeyInputNames = {
     '/': 'Slash',
     '.': 'Dot',
     ',': 'Comma',
@@ -61,10 +62,10 @@ def _normalize_input(input):
     if (input >= 'A' and input <= 'Z') or (input >= '0' and input <= '9'):
         return input
 
-    if input not in UIKeyInputNames:
+    if input not in _UIKeyInputNames:
         raise ValueError('Unsupported key command input: {}'.format(input))
 
-    return UIKeyInputNames[input]
+    return _UIKeyInputNames[input]
 
 
 def _key_command_selector_name(input, modifier_flags):
@@ -74,7 +75,7 @@ def _key_command_selector_name(input, modifier_flags):
 
     input = _normalize_input(input)
 
-    for mod, name in UIKeyModifierNames.items():
+    for mod, name in _UIKeyModifierNames.items():
         if modifier_flags & mod == mod:
             s += name
     
@@ -91,7 +92,19 @@ def register_key_command(input, modifier_flags, function, title=None):
     selector = sel(selector_name)
     obj = UIApplication.sharedApplication().keyWindow()
     
-    print('Registering key command {} ({})'.format(selector_name, function))
+    modifier_names = [name for mod, name in _UIKeyModifierNames.items() if modifier_flags & mod == mod]
+    if modifier_names:
+        shortcut_name = '{} {}'.format(' '.join(modifier_names), input)
+    else:
+        shortcut_name = input
+        
+    function_module = inspect.getmodule(function)
+    if function_module:
+        function_name = '{}.{}'.format(function_module.__name__, function.__name__)
+    else:
+        function_name = function.__name__
+    
+    print('Registering key command "{}" ({})'.format(shortcut_name, function_name))
     
     if not callable(function):
         print('Skipping, provided function is not callable')
