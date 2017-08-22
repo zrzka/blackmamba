@@ -32,7 +32,7 @@ def register_default_key_commands():
         ('W', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.ide.close_all_tabs_except_current_one,
          'Close Tabs Except Current One'),
-        ('O', UIKeyModifierCommand,
+        ('O', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.file_picker.open_quickly,
          'Open Quickly...'),
         ('0', UIKeyModifierCommand | UIKeyModifierShift,
