@@ -26,7 +26,8 @@ It's still an experiment and you can expect breaking changes. I'm trying
 to avoid them, but I can't promise stable interface for now.
 
 You're welcome to report `new issue <https://github.com/zrzka/blackmamba/issues/new>`_
-if you find a bug or would like to have something added.
+if you find a bug or would like to have something added. Or `pull request
+<https://github.com/zrzka/blackmamba/pulls>`_ which is even better.
 
 
 Installation
@@ -85,7 +86,13 @@ Usage
 =====
 
 Following examples should be placed in the ``~/Documents/site-packages-3/pythonista_startup.py``
-file. Create this file if it doesn't exist.
+file. Create this file if it doesn't exist. Also I assume that your file starts with Black Mamba
+import:
+
+.. code-block:: python
+
+    #!python3
+    import blackmamba as bm
 
 
 Ignore folders (Open/Run Quickly...)
@@ -98,30 +105,23 @@ Ignore folders (Open/Run Quickly...)
 
 You can modify it via:
 
-* ``blackmamba.settings.OPEN_QUICKLY_IGNORE_FOLDERS`` - for *Open Quickly...* dialog
-* ``blackmamba.settings.RUN_QUICKLY_IGNORE_FOLDERS`` - for *Run Quickly...* dialog
+* ``bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS`` - for *Open Quickly...* dialog
+* ``bm.settings.RUN_QUICKLY_IGNORE_FOLDERS`` - for *Run Quickly...* dialog
 
 Example:
 
 .. code-block:: python
 
-    #!python3
-
-    import blackmamba as bm
-
     bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS = {
-        # Ignores .git folder in any folder under ~/Documents
+        # '' -> any parent folder
         '': ['.git'],
         
-        # Ignores specific folders under . (= ~/Documents)
-        # ~/Documents/Pythonista is ignored
-        # ~/Documents/something/Pythonista is not ignored
+        # '.' -> ~/Documents parent folder
         '.': ['Pythonista', '.Trash', 'Examples',
               'site-packages-2', 'site-packages', 'stash_extensions'],
               'site-packages-3': ['blackmamba'],
-              
-        # Ignores bm-pip-backup in ~/Documents/Development folder
-        # Does not ignore bm-pip-backup folder in any other folder
+
+        # 'Development' -> ~/Documents/Development parent folder              
         'Development': ['bm-pip-backup']
     }
 
@@ -132,8 +132,6 @@ Example:
         'site-packages-3': ['blackmamba'],
         'Development': ['bm-pip-backup']
     }
-
-    bm.register_default_key_commands()
 
 
 Register default key commands
@@ -177,20 +175,18 @@ How to print `Hallo` with `Cmd Shift H`.
 
 .. code-block:: python
 
-    #!python3
-
-    from blackmamba.key_commands import register_key_command
-    from blackmamba.uikit import *  # UIKeyModifier*
-
-    def my_fn():
+    def print_hallo():
         print('Hallo')
-    
-    register_key_command('H', UIKeyModifierCommand | UIKeyModifierShift,
-                         my_fn, 'Print Hallo')
+            
+    bm.key_commands.register_key_command(
+        'H',
+        bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,
+        print_hallo,
+        'Print Hallo')
 
 
-Sample pythonista_startup.py
-----------------------------
+Complete pythonista_startup.py example
+--------------------------------------
 
 .. code-block:: python
 
@@ -198,11 +194,14 @@ Sample pythonista_startup.py
     
     import blackmamba as bm
     
-    #
-    # '': any parent folder
-    # '.': ~/Documents parent folder
+    ################################################################
+    # Open/Run Quickly... ignore folders                           #
+    ################################################################
+    
+    # ''           : any parent folder
+    # '.'          : ~/Documents parent folder
     # 'Development': ~/Documents/Development parent folder
-    #
+    
     bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS = {
         '': ['.git'],
         '.': ['Pythonista', '.Trash', 'Examples',
@@ -219,26 +218,35 @@ Sample pythonista_startup.py
         'Development': ['bm-pip-backup']
     }
     
-    #
-    # Default Black Mamba external keyboard shortcuts registration
-    #
+    ################################################################
+    # Default Black Mamba external keyboard shortcuts registration #
+    ################################################################
+    
     bm.register_default_key_commands()
     
-    #
-    # Custom shortcuts
-    #
+    ################################################################
+    # Custom keyboard shortcuts                                    #
+    ################################################################
     
-    def launch_stash():
-        # Wrench item Custom Title (case sensitive)
-        bm.ide.run_action('StaSh')
-        
-        # Or via script, relative path to ~/Documents
-        # bm.ide.run_script('launch_stash.py')
-        
+    # Launch StaSh (= custom action title) via Cmd-Shift-S
+    if bm.ide.action_exists('StaSh'):
+        def launch_stash():
+            bm.ide.run_action('StaSh')
+                
+        bm.key_commands.register_key_command(
+            'S',
+            bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,
+            launch_stash,
+            'Launch StaSh')
     
-    bm.key_commands.register_key_command(
-        'S',
-        bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,
-        launch_stash,
-        'Launch StaSh')
+    # Or you can use run_script instead of action to launch StaSh
+    #if bm.ide.script_exists('launch_stash.py'):
+    #    def launch_stash():
+    #        bm.ide.run_script('launch_stash.py')
+    #            
+    #    bm.key_commands.register_key_command(
+    #        'S',
+    #        bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,
+    #        launch_stash,
+    #        'Launch StaSh')
 

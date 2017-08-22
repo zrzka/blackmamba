@@ -72,9 +72,18 @@ def new_file():
     tabs.addTab_(tabs.addTabButtonItem())
     tab = tabs.tabViewControllers()[-1]
     tab.addNewFile_(tab.addNewFileButton())
-    
-    
+
+
+def script_exists(script_name):
+    script_path = os.path.join(os.path.expanduser('~/Documents'), script_name)
+    return os.path.exists(script_path)
+
+        
 def run_script(script_name):
+    if not script_exists(script_name):
+        print('run_script: script does not exist {}'.format(script_name))
+        return
+            
     encoded_name = urllib.parse.quote_plus(script_name, safe='', encoding=None, errors=None)
     url = 'pythonista://{}?action=run'.format(encoded_name)
     webbrowser.open(url)
@@ -84,17 +93,21 @@ def run_script(script_name):
 #    runpy.run_path(file_path, run_name='__main__')
 
 
+def _load_action(title):
+    actions = [a for a in blackmamba.action_picker.load_editor_actions() if a.title == title]
+    return actions[0] if len(actions) == 1 else None
+
+
+def action_exists(title):
+    return _load_action(title) is not None
+
+
 @on_main_thread
 def run_action(title):
-    actions = [a for a in blackmamba.action_picker.load_editor_actions() if a.title == title]
-    
-    if len(actions) == 0:
-        print('Unable to find action with title: {}'.format(title))
+    action = _load_action(title)
+    if not action:
+        print('run_action: action does not exist {}'.format(title))
         return
         
-    if len(actions) > 1:
-        print('Multiple actions found with title: {}'.format(title))
-        return
-        
-    run_script(actions[0].script_name)
+    run_script(action.script_name)
 
