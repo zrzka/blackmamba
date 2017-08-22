@@ -14,6 +14,14 @@ it as fast as possible. And which snake is the speediest one on the planet?
 `Black Mamba <https://en.wikipedia.org/wiki/Black_mamba>`_. And you know
 why it's called Black Mamba now :)
 
+
+.. class:: no-web
+
+    .. image:: https://raw.githubusercontent.com/zrzka/blackmamba/master/_images/shortcuts.jpg
+        :alt: Black Mamba keyboard shortcuts
+        :width: 90%
+        :align: center
+
 .. contents::
 
 .. section-numbering::
