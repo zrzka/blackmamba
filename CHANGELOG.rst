@@ -5,7 +5,8 @@ Change Log
 ``master`` (unreleased)
 -------------------------
 
-*
+* New tab shortcut changed to ``Cmd-T`` (reported by Ole)
+
 
 ``0.0.10`` (2017-08-22)
 -----------------------

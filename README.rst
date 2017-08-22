@@ -161,7 +161,7 @@ Shortcut         Function
 ``Cmd W``        Close current editor tab
 ``Cmd Shift W``  Close all editor tabs except current one
 ``Cmd N``        New tab + new file
-``Cmd Shift N``  Just new tab
+``Cmd T``        Just new tab
 ``Cmd 0``        Show / hide navigator (Library)
 ``Cmd Shift 0``  Query selected text in Dash
 ``Cmd O``        Open Quickly...

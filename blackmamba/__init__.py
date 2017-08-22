@@ -20,7 +20,7 @@ def register_default_key_commands():
         ('N', UIKeyModifierCommand,
          blackmamba.ide.new_file,
          'New File'),
-        ('N', UIKeyModifierCommand | UIKeyModifierShift,
+        ('T', UIKeyModifierCommand,
          blackmamba.ide.new_tab,
          'New Tab'),
         ('0', UIKeyModifierCommand,
