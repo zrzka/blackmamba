@@ -52,24 +52,6 @@ Install `StaSh - Shell for Pythonista <https://github.com/ywangd/stash>`_. All f
 commands are for StaSh.
 
 
-PyPI
-----
-
-    This is preferred way of installation.
-
-**Initial installation:**
-
-.. code-block:: bash
-
-    [~/Documents]$ pip install blackmamba -d ~/Documents/site-packages-3
-
-**Updates:**
-
-.. code-block:: bash
-
-    [~/Documents]$ pip update blackmamba
-
-
 Git
 ---
 
@@ -95,6 +77,36 @@ But it has several drawbacks:
 
     [~/Documents]$ cd site-packages-3
     [site-packages-3]$ git pull
+
+
+PyPI
+----
+
+It's also possible to use PyPI, but it's not recommended now. Two reasons:
+
+* ``pip`` command from StaSh does use XML RPC and responses contain data
+  that are not up to date. In other words, you're not able to install
+  newer version, because ``pip`` doesn't see it even if it's available.
+  See `#254 <https://github.com/ywangd/stash/issues/264>`_.
+  
+* And also ``pip update`` doesn't work as well. So you have to issue
+  ``pip remove blackmamba`` and ``pip install ...`` instead of
+  ``pip update ...``.
+  
+If you'd like to experiment, feel free. I'll keep releasing PyPI versions
+for sure.
+
+**Initial installation:**
+
+.. code-block:: bash
+
+    [~/Documents]$ pip install blackmamba -d ~/Documents/site-packages-3
+
+**Updates:**
+
+.. code-block:: bash
+
+    [~/Documents]$ pip update blackmamba
 
 
 Usage
