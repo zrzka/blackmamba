@@ -7,6 +7,7 @@ Change Log
 
 * New tab shortcut changed to ``Cmd-T`` (reported by Ole)
 * Open quickly shortcut synced with Xcode to ``Cmd-Shift-O`` (reported by Ole)
+* ``Ctrl-Shift-B`` to clear annotations & analyze file (bundled pyflakes)
 
 
 ``0.0.10`` (2017-08-22)

@@ -154,20 +154,21 @@ This registers following keyboard shortcuts you can use with
 external keyboard. It's optional, you're not forced to register
 them.
 
-===============  ========================================
-Shortcut         Function
-===============  ========================================
-``Cmd /``        Comment / uncomment selected line(s)
-``Cmd W``        Close current editor tab
-``Cmd Shift W``  Close all editor tabs except current one
-``Cmd N``        New tab + new file
-``Cmd T``        Just new tab
-``Cmd 0``        Show / hide navigator (Library)
-``Cmd Shift 0``  Query selected text in Dash
-``Cmd Shift O``  Open Quickly...
-``Cmd Shift R``  Run Quickly...
-``Cmd Shift A``  Action Quickly...
-===============  ========================================
+===============   ========================================
+Shortcut          Function
+===============   ========================================
+``Cmd /``         Comment / uncomment selected line(s)
+``Cmd W``         Close current editor tab
+``Cmd Shift W``   Close all editor tabs except current one
+``Cmd N``         New tab + new file
+``Cmd T``         Just new tab
+``Cmd 0``         Show / hide navigator (Library)
+``Cmd Shift 0``   Query selected text in Dash
+``Cmd Shift O``   Open Quickly...
+``Cmd Shift R``   Run Quickly...
+``Cmd Shift A``   Action Quickly...
+``Ctrl Shift B``  Analyze (bundled pyflakes)
+===============   ========================================
 
 **WARNING**: *Run Quickly...* and *Action Quickly...* works only and only
 if there's no running script. If there's running script, you'll see

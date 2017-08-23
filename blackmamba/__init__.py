@@ -6,6 +6,7 @@ import blackmamba.file_picker
 import blackmamba.dash
 import blackmamba.script_picker
 import blackmamba.action_picker
+import blackmamba.analyzer
 from blackmamba.key_commands import *
 from blackmamba.uikit import *
 
@@ -43,7 +44,10 @@ def register_default_key_commands():
          'Run Quickly...'),
         ('A', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.action_picker.action_quickly,
-         'Action Quickly...')
+         'Action Quickly...'),
+        ('B', UIKeyModifierControl | UIKeyModifierShift,
+         blackmamba.analyzer.analyze,
+         'Analyze')
     ]
     
     for command in commands:
