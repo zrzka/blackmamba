@@ -29,7 +29,7 @@ why it's called Black Mamba now :)
         :width: 90%
         :align: center
 
-.. contents::
+.. contents:: Table of Contents
 
 .. section-numbering::
 
