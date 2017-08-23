@@ -18,6 +18,13 @@ why it's called Black Mamba now :)
 .. class:: no-web
 
     .. image:: https://raw.githubusercontent.com/zrzka/blackmamba/master/_images/openquickly.jpg
+        :alt: Black Mamba Open Quickly...
+        :width: 90%
+        :align: center
+
+.. class:: no-web
+
+    .. image:: https://raw.githubusercontent.com/zrzka/blackmamba/master/_images/shortcuts.jpg
         :alt: Black Mamba keyboard shortcuts
         :width: 90%
         :align: center
