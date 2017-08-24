@@ -7,6 +7,8 @@ Change Log
 
 * flake8 checks on Travis CI (thanks to cclauss)
 * Fixed all style issues from flake8 report, down to zero now
+* Analyzer removes trailing white spaces & trailing blank lines
+  before analysis is started (can be turned off via ``bm.settings...``)
 
 
 ``0.0.12`` (2017-08-24)

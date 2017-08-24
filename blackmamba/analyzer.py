@@ -10,6 +10,9 @@ import console
 import blackmamba.settings as settings
 from itertools import groupby
 
+_REMOVE_TRAILING_WHITESPACES_REGEX = re.compile('[ \t]+$', re.MULTILINE)
+_REMOVE_TRAILING_LINES_REGEX = re.compile('\s+\Z', re.MULTILINE)
+
 #
 # Common for pep8 & pyflakes
 #
@@ -156,6 +159,31 @@ def clear_annotations():
     editor.clear_annotations()
 
 
+def _remove_trailing_whitespaces(text):
+    return _REMOVE_TRAILING_WHITESPACES_REGEX.sub('', text)
+
+
+def _remove_trailing_lines(text):
+    return _REMOVE_TRAILING_LINES_REGEX.sub('', text)
+
+
+def _editor_text():
+    text = editor.get_text()
+
+    range_end = len(text)
+
+    if settings.ANALYZER_REMOVE_TRAILING_WHITESPACES:
+        text = _remove_trailing_whitespaces(text)
+
+    if settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
+        text = _remove_trailing_lines(text) + '\n'
+
+    if settings.ANALYZER_REMOVE_TRAILING_WHITESPACES or settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
+        editor.replace_text(0, range_end, text)
+
+    return text
+
+
 def analyze():
     path = editor.get_path()
 
@@ -167,7 +195,8 @@ def analyze():
 
     editor.clear_annotations()
 
-    text = editor.get_text()
+    text = _editor_text()
+
     annotations = _pep8_annotations(
         text,
         ignore=settings.ANALYZER_PEP8_IGNORE,
@@ -185,3 +214,4 @@ def analyze():
     for l, a in groupby(by_line, lambda x: x.line):
         _annotate(l, a, scroll)
         scroll = False
+
