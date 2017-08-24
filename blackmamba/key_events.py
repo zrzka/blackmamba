@@ -2,7 +2,7 @@
 
 from objc_util import on_main_thread, ObjCInstance, sel, UIApplication
 from blackmamba.runtime import swizzle
-from blackmamba.uikit import *
+import blackmamba.uikit as uikit
 
 _key_event_handlers = []
 
@@ -20,7 +20,7 @@ def _blackmamba_handleKeyUIEvent(_self, _cmd, event):
 #    print('Down: {} Type: {} Subtype: {} Modifier flags: {} Keycode: {}'
 #        .format(e._isKeyDown(), e.type(), e.subtype(), e._modifierFlags(), e._keyCode()))
 
-    if e.type() == UIEventTypePhysicalKeyboard and e.subtype() == 0 and not e._isKeyDown():
+    if e.type() == uikit.UIEventTypePhysicalKeyboard and e.subtype() == uikit.UIEventSubtypeNone and not e._isKeyDown():
         for h in _key_event_handlers:
             if h.key_code == e._keyCode() and h.modifier_flags == e._modifierFlags():
                 try:
