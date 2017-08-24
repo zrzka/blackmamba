@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='blackmamba',
-    version='0.0.11',
+    version='0.0.12',
     
     description='Pythonista on steroids',
     

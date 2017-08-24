@@ -5,6 +5,12 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
+* WIP
+
+
+``0.0.12`` (2017-08-24)
+-----------------------
+
 * Analyze renamed to Analyze & Check Style
 * Analyzer now runs both pyflakes & pep8 code style checks
 * Analyzer behavior can be modified via ``bm.settings.ANALYZER_*``
