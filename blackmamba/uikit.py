@@ -44,4 +44,3 @@ UITableViewCellStyleDefault = 'default'
 UITableViewCellStyleSubtitle = 'subtitle'
 UITableViewCellStyleValue1 = 'value1'
 UITableViewCellStyleValue2 = 'value2'
-

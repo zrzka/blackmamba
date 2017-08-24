@@ -1,6 +1,4 @@
-import editor
-from objc_util import ObjCClass, on_main_thread, UIApplication, ns
-import runpy
+from objc_util import ObjCClass, on_main_thread, UIApplication
 import os
 import urllib.parse
 import webbrowser
@@ -79,20 +77,20 @@ def script_exists(script_name, full_path=False):
         script_name = os.path.join(os.path.expanduser('~/Documents'), script_name)
     return os.path.exists(script_name)
 
-        
+
 def run_script(script_name, full_path=False):
     if not script_exists(script_name, full_path):
         print('run_script: script does not exist {}'.format(script_name))
         return
-        
+
     if full_path:
         docs_root = os.path.expanduser('~/Documents/')
         script_name = script_name[len(docs_root):]
-            
+
     encoded_name = urllib.parse.quote_plus(script_name, safe='', encoding=None, errors=None)
     url = 'pythonista://{}?action=run'.format(encoded_name)
     webbrowser.open(url)
-    
+
 #    docs = os.path.expanduser('~/Documents')
 #    file_path = os.path.join(docs, script_name)
 #    runpy.run_path(file_path, run_name='__main__')
@@ -113,6 +111,5 @@ def run_action(title):
     if not action:
         print('run_action: action does not exist {}'.format(title))
         return
-        
-    run_script(action.script_name)
 
+    run_script(action.script_name)

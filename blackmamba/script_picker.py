@@ -11,15 +11,15 @@ import blackmamba.settings
 def script_quickly():
     def allow_file(root, name):
         return not name.startswith('.') and name.endswith('.py')
-        
+
     def run_script(item, shift_enter):
         blackmamba.ide.run_script(item.file_path, full_path=True)
-                                                    
+
     kwargs = {
         'ignore_folders': blackmamba.settings.RUN_QUICKLY_IGNORE_FOLDERS,
         'allow_file': allow_file
     }
-        
+
     v = load_picker_view()
     v.datasource = FilePickerDataSource(**kwargs)
     v.shift_enter_enabled = False
@@ -33,8 +33,7 @@ def script_quickly():
     v.did_select_item_action = run_script
     v.present('sheet', hide_title_bar=True)
     v.wait_modal()
-    
+
 
 if __name__ == '__main__':
     script_quickly()
-
