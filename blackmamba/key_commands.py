@@ -1,10 +1,10 @@
 #!python3
 
 import collections
-from ctypes import *
-from objc_util import *
+from ctypes import CFUNCTYPE, c_void_p, c_char_p
+from objc_util import retain_global, ObjCInstance, UIApplication, c, ns, on_main_thread, sel
 from blackmamba.runtime import swizzle
-from blackmamba.uikit import *
+import blackmamba.uikit as uikit
 import inspect
 
 #
@@ -18,12 +18,12 @@ import inspect
 
 # Keep it ordered to avoid different selector names for the same input & flags
 _UIKeyModifierNames = collections.OrderedDict([
-    (UIKeyModifierAlphaShift, 'CapsLock'),
-    (UIKeyModifierShift, 'Shift'),
-    (UIKeyModifierControl, 'Control'),
-    (UIKeyModifierAlternate, 'Option'),
-    (UIKeyModifierCommand, 'Command'),
-    (UIKeyModifierNumericPad, 'NumericPad')
+    (uikit.UIKeyModifierAlphaShift, 'CapsLock'),
+    (uikit.UIKeyModifierShift, 'Shift'),
+    (uikit.UIKeyModifierControl, 'Control'),
+    (uikit.UIKeyModifierAlternate, 'Option'),
+    (uikit.UIKeyModifierCommand, 'Command'),
+    (uikit.UIKeyModifierNumericPad, 'NumericPad')
 ])
 
 _UIKeyInputNames = {
@@ -53,7 +53,7 @@ def _normalize_input(input):
     """Converts key command input to upper cased string and replaces
     special characters (like /) with name. If the input can't be
     normalized, ValueError is thrown."""
-    
+
     if not len(input) == 1:
         raise ValueError('Key command input must be one character')
 
@@ -78,7 +78,7 @@ def _key_command_selector_name(input, modifier_flags):
     for mod, name in _UIKeyModifierNames.items():
         if modifier_flags & mod == mod:
             s += name
-    
+
     s += input
     return s
 
@@ -87,29 +87,29 @@ def _key_command_selector_name(input, modifier_flags):
 def register_key_command(input, modifier_flags, function, title=None):
     if not UIApplication.sharedApplication().respondsToSelector_(sel('originalkeyCommands')):
         swizzle('UIApplication', 'keyCommands', _blackmamba_keyCommands)
-            
+
     selector_name = _key_command_selector_name(input, modifier_flags)
     selector = sel(selector_name)
     obj = UIApplication.sharedApplication().keyWindow()
-    
+
     modifier_names = [name for mod, name in _UIKeyModifierNames.items() if modifier_flags & mod == mod]
     if modifier_names:
         shortcut_name = '{} {}'.format(' '.join(modifier_names), input)
     else:
         shortcut_name = input
-        
+
     function_module = inspect.getmodule(function)
     if function_module:
         function_name = '{}.{}'.format(function_module.__name__, function.__name__)
     else:
         function_name = function.__name__
-    
+
     print('Registering key command "{}" ({})'.format(shortcut_name, function_name))
-    
+
     if not callable(function):
         print('Skipping, provided function is not callable')
         return False
-    
+
     if obj.respondsToSelector_(selector):
         print('Skipping, method {} already registered'.format(selector_name))
         return False
@@ -133,10 +133,10 @@ def register_key_command(input, modifier_flags, function, title=None):
         return False
 
     if title:
-        kc = UIKeyCommand.keyCommandWithInput_modifierFlags_action_discoverabilityTitle_(ns(input), modifier_flags, selector, ns(title))
+        kc = uikit.UIKeyCommand.keyCommandWithInput_modifierFlags_action_discoverabilityTitle_(
+            ns(input), modifier_flags, selector, ns(title))
     else:
-        kc = UIKeyCommand.keyCommandWithInput_modifierFlags_action_(ns(input), modifier_flags, selector)
+        kc = uikit.UIKeyCommand.keyCommandWithInput_modifierFlags_action_(ns(input), modifier_flags, selector)
 
     _key_commands.append(kc)
     return True
-
