@@ -16,6 +16,7 @@ Change Log
 * Analyzer behavior can be modified via ``bm.settings.ANALYZER_*``
 * Analyzer always scrolls to the first issue
 * Analyzer shows HUD only if there're no issues
+* ``Cmd Shift K`` introduced to clear annotations
 
 
 ``0.0.11`` (2017-08-23)
