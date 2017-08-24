@@ -5,7 +5,8 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
-* WIP
+* flake8 checks on Travis CI (thanks to cclauss)
+* Fixed all style issues from flake8 report, down to zero now
 
 
 ``0.0.12`` (2017-08-24)
