@@ -78,10 +78,6 @@ def _pep8_annotations(text, ignore=None, max_line_length=None):
     if ignore:
         options.ignore += ignore
 
-    if settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
-        if 'W292' not in options.ignore:
-            options.ignore += ('W292',)
-
     if max_line_length:
         options.max_line_length = max_line_length
 
@@ -181,6 +177,12 @@ def _editor_text():
 
     if settings.ANALYZER_REMOVE_TRAILING_WHITESPACES or settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
         editor.replace_text(0, range_end, text)
+
+    if settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
+        # Pythonista is adding '\n' automatically, so, if we removed them
+        # all we have to simulate Pythonista behavior by adding '\n'
+        # for pyflakes & pep8 analysis
+        return text + '\n'
 
     return text
 
