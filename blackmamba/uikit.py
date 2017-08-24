@@ -35,7 +35,7 @@ UIEventKeyCodeUp = 82
 UIEventKeyCodeEnter = 40
 UIEventKeyCodeSpace = 44
 UIEventKeyCodeBackspace = 42
-UIEventKeyCodeEscape = 27
+UIEventKeyCodeEscape = 41
 UIEventKeyCodeLeftSquareBracket = 47
 
 # UITableViewCellStyle
