@@ -130,8 +130,12 @@ def _start_notification_listener():
     NSNotificationCenter = objc_util.ObjCClass('NSNotificationCenter')
     default_center = NSNotificationCenter.defaultCenter()
 
-    default_center.addObserver_selector_name_object_(_listener, objc_util.sel('screenDidConnectNotification:'), 'UIScreenDidConnectNotification', None)
-    default_center.addObserver_selector_name_object_(_listener, objc_util.sel('screenDidDisconnectNotification:'), 'UIScreenDidDisconnectNotification', None)
+    default_center.addObserver_selector_name_object_(
+        _listener, objc_util.sel('screenDidConnectNotification:'),
+        'UIScreenDidConnectNotification', None)
+    default_center.addObserver_selector_name_object_(
+        _listener, objc_util.sel('screenDidDisconnectNotification:'),
+        'UIScreenDidDisconnectNotification', None)
 
     _logger.debug('External screen notification listener started')
 
@@ -208,4 +212,3 @@ def terminate():
     del _disconnected_handlers[:]
     _logger.handlers = []
     _logger = None
-
