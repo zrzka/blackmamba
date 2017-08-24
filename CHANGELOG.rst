@@ -10,6 +10,7 @@ Change Log
 * Analyzer removes trailing white spaces & trailing blank lines
   before analysis is started (can be turned off via ``bm.settings...``)
 * Fixed toggle comments script (#5)
+* Fixed file matching in Open Quickly... (#10)
 
 
 ``0.0.12`` (2017-08-24)

@@ -16,10 +16,14 @@ class PickerItem(object):
         if not terms:
             return True
 
-        # TODO 'pi fi' shouldn't match 'file_picker', but it does
+        start = 0
         for t in terms:
-            if t not in self._norm_title:
+            start = self._norm_title.find(t, start)
+
+            if start == -1:
                 return False
+
+            start += len(t)
 
         return True
 
