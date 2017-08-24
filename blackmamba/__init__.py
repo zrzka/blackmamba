@@ -7,13 +7,13 @@ import blackmamba.dash
 import blackmamba.script_picker
 import blackmamba.action_picker
 import blackmamba.analyzer
-from blackmamba.key_commands import *
-from blackmamba.uikit import *
+from blackmamba.key_commands import register_key_command
+from blackmamba.uikit import UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
 
 
 def register_default_key_commands():
     print('Registering default key commands...')
-    
+
     commands = [
         ('/', UIKeyModifierCommand,
          blackmamba.toggle_comments.toggle_comments,
@@ -52,12 +52,11 @@ def register_default_key_commands():
          blackmamba.analyzer.clear_annotations,
          'Clear Annotations')
     ]
-    
+
     for command in commands:
         register_key_command(*command)
-            
+
     print('Default key commands registered')
 
 if __name__ == '__main__':
     register_default_key_commands()
-
