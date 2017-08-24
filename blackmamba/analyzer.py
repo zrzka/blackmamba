@@ -72,14 +72,15 @@ def _pep8_annotations(text, ignore=None, max_line_length=None):
     # pep8 requires you to include \n at the end of lines
     lines = text.splitlines(True)
 
-    # ignore
-    # max_line_length
-
     style_guide = pep8.StyleGuide(reporter=_Pep8AnnotationReport, )
     options = style_guide.options
 
     if ignore:
         options.ignore += ignore
+
+    if settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
+        if 'W292' not in options.ignore:
+            options.ignore += ('W292',)
 
     if max_line_length:
         options.max_line_length = max_line_length
@@ -176,7 +177,7 @@ def _editor_text():
         text = _remove_trailing_whitespaces(text)
 
     if settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
-        text = _remove_trailing_lines(text) + '\n'
+        text = _remove_trailing_lines(text)
 
     if settings.ANALYZER_REMOVE_TRAILING_WHITESPACES or settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
         editor.replace_text(0, range_end, text)
@@ -214,4 +215,3 @@ def analyze():
     for l, a in groupby(by_line, lambda x: x.line):
         _annotate(l, a, scroll)
         scroll = False
-
