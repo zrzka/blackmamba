@@ -83,6 +83,24 @@ def _key_command_selector_name(input, modifier_flags):
     return s
 
 
+def _shortcut_name(input, modifier_flags):
+    modifier_names = [name for mod, name in _UIKeyModifierNames.items() if modifier_flags & mod == mod]
+
+    if modifier_names:
+        return '{} {}'.format(' '.join(modifier_names), input)
+
+    return input
+
+
+def _function_name(function):
+    function_module = inspect.getmodule(function)
+
+    if function_module:
+        return '{}.{}'.format(function_module.__name__, function.__name__)
+
+    return function.__name__
+
+
 @on_main_thread
 def register_key_command(input, modifier_flags, function, title=None):
     if not UIApplication.sharedApplication().respondsToSelector_(sel('originalkeyCommands')):
@@ -92,19 +110,8 @@ def register_key_command(input, modifier_flags, function, title=None):
     selector = sel(selector_name)
     obj = UIApplication.sharedApplication().keyWindow()
 
-    modifier_names = [name for mod, name in _UIKeyModifierNames.items() if modifier_flags & mod == mod]
-    if modifier_names:
-        shortcut_name = '{} {}'.format(' '.join(modifier_names), input)
-    else:
-        shortcut_name = input
-
-    function_module = inspect.getmodule(function)
-    if function_module:
-        function_name = '{}.{}'.format(function_module.__name__, function.__name__)
-    else:
-        function_name = function.__name__
-
-    print('Registering key command "{}" ({})'.format(shortcut_name, function_name))
+    print('Registering key command "{}" ({})'.format(
+        _shortcut_name(input, modifier_flags), _function_name(function)))
 
     if not callable(function):
         print('Skipping, provided function is not callable')
