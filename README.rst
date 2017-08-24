@@ -186,7 +186,8 @@ Shortcut          Function
 ``Cmd Shift O``   Open Quickly...
 ``Cmd Shift R``   Run Quickly...
 ``Cmd Shift A``   Action Quickly...
-``Ctrl Shift B``  Analyze (bundled pyflakes)
+``Ctrl Shift B``  Analyze & Check Style
+``Cmd Shift K``   Clear annotations
 ================  ========================================
 
 **WARNING**: *Run Quickly...* and *Action Quickly...* works only and only
@@ -209,6 +210,24 @@ How to print `Hallo` with `Cmd Shift H`.
         bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,
         print_hallo,
         'Print Hallo')
+        
+
+Analyzer
+--------
+
+Analyze & Check Style (``Ctrl Shift B``) runs pyflakes & pep8 code style checks.
+Analyzer behavior can be modified via following settings variables:
+
+.. code-block:: python
+
+    bm.settings.ANALYZER_HUD_DELAY = 1.0
+    
+    bm.settings.ANALYZER_PEP8_IGNORE = ('W391', )  # Must be a tuple
+    
+    bm.settings.ANALYZER_PEP8_MAX_LINE_LENGTH = 120
+    
+Analyzer always scrolls to the first issue and does not show HUD in case
+your file contains issues.
 
 
 Complete pythonista_startup.py example
@@ -251,6 +270,13 @@ Complete pythonista_startup.py example
     bm.register_default_key_commands()
     
     ################################################################
+    # Analyzer                                                     #
+    ################################################################
+    
+    bm.settings.ANALYZER_PEP8_IGNORE = ('W391', 'W293')
+    bm.settings.ANALYZER_PEP8_MAX_LINE_LENGTH = 120
+    
+    ################################################################
     # Custom keyboard shortcuts                                    #
     ################################################################
     
@@ -269,7 +295,7 @@ Complete pythonista_startup.py example
     #if bm.ide.script_exists('launch_stash.py'):
     #    def launch_stash():
     #        bm.ide.run_script('launch_stash.py')
-    #            
+    #
     #    bm.key_commands.register_key_command(
     #        'S',
     #        bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,

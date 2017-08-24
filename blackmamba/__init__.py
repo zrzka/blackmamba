@@ -47,7 +47,10 @@ def register_default_key_commands():
          'Action Quickly...'),
         ('B', UIKeyModifierControl | UIKeyModifierShift,
          blackmamba.analyzer.analyze,
-         'Analyze')
+         'Analyze & Check Style'),
+        ('K', UIKeyModifierCommand | UIKeyModifierShift,
+         blackmamba.analyzer.clear_annotations,
+         'Clear Annotations')
     ]
     
     for command in commands:

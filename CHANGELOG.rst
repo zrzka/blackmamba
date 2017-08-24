@@ -5,7 +5,11 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
-* WIP
+* Analyze renamed to Analyze & Check Style
+* Analyzer now runs both pyflakes & pep8 code style checks
+* Analyzer behavior can be modified via ``bm.settings.ANALYZER_*``
+* Analyzer always scrolls to the first issue
+* Analyzer shows HUD only if there're no issues
 
 
 ``0.0.11`` (2017-08-23)
