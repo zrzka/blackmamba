@@ -58,5 +58,6 @@ def register_default_key_commands():
 
     print('Default key commands registered')
 
+
 if __name__ == '__main__':
     register_default_key_commands()
