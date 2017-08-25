@@ -188,6 +188,7 @@ Shortcut          Function
 ``Cmd Shift A``   Action Quickly...
 ``Ctrl Shift B``  Analyze & Check Style
 ``Cmd Shift K``   Clear annotations
+``Cmd U``         Run Unit Tests... (experimental)
 ================  ========================================
 
 **WARNING**: *Run Quickly...* and *Action Quickly...* works only and only

@@ -8,6 +8,7 @@ import pyflakes.api as pyflakes
 import editor
 import console
 import blackmamba.settings as settings
+from blackmamba.annotation import Annotation, Style
 from itertools import groupby
 
 _REMOVE_TRAILING_WHITESPACES_REGEX = re.compile('[ \t]+$', re.MULTILINE)
@@ -18,33 +19,21 @@ _REMOVE_TRAILING_LINES_REGEX = re.compile('\s+\Z', re.MULTILINE)
 #
 
 
-class _Style(Enum):
-    '''Value represents value for style parameter in editor.annotate_line function.'''
-    error = 'error'
-    warning = 'warning'
-
-
 class _Source(Enum):
     pep8 = 'PEP8'
     pyflakes = 'pyflakes'
 
 
-class _Annotation(object):
+class _AnalyzerAnnotation(Annotation):
     def __init__(self, line, text, source, style):
-        self.line = line
-        self.text = text
+        super().__init__(line, text, style)
         self.source = source
-        self.style = style
-
-    @property
-    def editor_annotation_style(self):
-        return self.style.value
 
     def __lt__(self, other):
         if self.source is _Source.pep8 and other.source is _Source.pyflakes:
             return True
 
-        if self.style is _Style.warning and other.style is _Style.error:
+        if self.style is Style.warning and other.style is Style.error:
             return True
 
         return False
@@ -64,7 +53,7 @@ class _Pep8AnnotationReport(pep8.BaseReport):
         if not super().error(line_number, offset, text, check):
             return
 
-        annotation = _Annotation(self.line_offset + line_number, text, _Source.pep8, _Style.warning)
+        annotation = _AnalyzerAnnotation(self.line_offset + line_number, text, _Source.pep8, Style.warning)
         self.annotations.append(annotation)
 
 
@@ -115,12 +104,12 @@ def _get_annotations(path, stream, style):
         line = int(match.group(1))
 
         if match.lastindex == 3:
-            annotation = _Annotation(
+            annotation = _AnalyzerAnnotation(
                 line, 'Col {}: {}'.format(match.group(2), match.group(3)),
                 _Source.pyflakes, style
             )
         else:
-            annotation = _Annotation(
+            annotation = _AnalyzerAnnotation(
                 line, match.group(2),
                 _Source.pyflakes, style
             )
@@ -137,8 +126,8 @@ def _pyflakes_annotations(path, text):
 
     pyflakes.check(text, path, reporter)
 
-    warnings = _get_annotations(path, warning_stream, _Style.warning)
-    errors = _get_annotations(path, error_stream, _Style.error)
+    warnings = _get_annotations(path, warning_stream, Style.warning)
+    errors = _get_annotations(path, error_stream, Style.error)
 
     return warnings + errors
 

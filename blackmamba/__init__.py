@@ -7,6 +7,7 @@ import blackmamba.dash
 import blackmamba.script_picker
 import blackmamba.action_picker
 import blackmamba.analyzer
+import blackmamba.tester
 from blackmamba.key_commands import register_key_command
 from blackmamba.uikit import UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
 
@@ -50,7 +51,10 @@ def register_default_key_commands():
          'Analyze & Check Style'),
         ('K', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.analyzer.clear_annotations,
-         'Clear Annotations')
+         'Clear Annotations'),
+        ('U', UIKeyModifierCommand,
+         blackmamba.tester.run_script_unit_tests,
+         'Run Unit Tests...')
     ]
 
     for command in commands:
