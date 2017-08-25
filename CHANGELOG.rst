@@ -5,7 +5,7 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
-* WIP
+* Since 0.0.14, the license was to changed to MIT
 
 
 ``0.0.13`` (2017-08-24)
