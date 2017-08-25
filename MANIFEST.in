@@ -1,2 +1,1 @@
 include blackmamba/*.pyui
-include blackmamba/experimental/*.pyui
