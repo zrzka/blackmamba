@@ -6,7 +6,7 @@ setup(
 
     description='Pythonista on steroids',
     long_description=open('README.rst', 'rt').read(),
-    
+
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
