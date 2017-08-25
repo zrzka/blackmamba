@@ -6,6 +6,7 @@ Change Log
 -----------------------
 
 * Since 0.0.14, the license was to changed to MIT
+* Seems no one does use PyPI for installation, .pyui files are now included
 
 
 ``0.0.13`` (2017-08-24)
