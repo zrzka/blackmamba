@@ -173,23 +173,26 @@ This registers following keyboard shortcuts you can use with
 external keyboard. It's optional, you're not forced to register
 them.
 
-================  ========================================
-Shortcut          Function
-================  ========================================
-``Cmd /``         Comment / uncomment selected line(s)
-``Cmd W``         Close current editor tab
-``Cmd Shift W``   Close all editor tabs except current one
-``Cmd N``         New tab + new file
-``Cmd T``         Just new tab
-``Cmd 0``         Show / hide navigator (Library)
-``Cmd Shift 0``   Query selected text in Dash
-``Cmd Shift O``   Open Quickly...
-``Cmd Shift R``   Run Quickly...
-``Cmd Shift A``   Action Quickly...
-``Ctrl Shift B``  Analyze & Check Style
-``Cmd Shift K``   Clear annotations
-``Cmd U``         Run Unit Tests... (experimental)
-================  ========================================
+================    ========================================
+Shortcut            Function
+================    ========================================
+``Cmd /``           Comment / uncomment selected line(s)
+``Cmd W``           Close current editor tab
+``Cmd Shift W``     Close all editor tabs except current one
+``Cmd N``           New tab + new file
+``Cmd T``           Just new tab
+``Cmd 0``           Show / hide navigator (Library)
+``Cmd Shift 0``     Query selected text in Dash
+``Cmd Shift O``     Open Quickly...
+``Cmd Shift R``     Run Quickly...
+``Cmd Shift A``     Action Quickly...
+``Ctrl Shift B``    Analyze & Check Style
+``Cmd Shift K``     Clear annotations
+``Cmd U``           Run Unit Tests... (experimental)
+``Ctrl Tab``        Show Next Tab (or ``Cmd Shift ]``)
+``Ctrl Shift Tab``  Show Previous Tab (or ``Cmd Shift [``)
+``Cmd 1..9``        Show nth tab
+==================  ========================================
 
 **WARNING**: *Run Quickly...* and *Action Quickly...* works only and only
 if there's no running script. If there's running script, you'll see

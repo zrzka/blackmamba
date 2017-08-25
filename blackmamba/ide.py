@@ -22,6 +22,36 @@ def tabs_view_controller():
     return None
 
 
+def _tabs_count():
+    return len(tabs_view_controller().tabBarView().tabViews())
+
+
+def _selected_tab_index():
+    return tabs_view_controller().tabBarView().selectedTabIndex()
+
+
+@on_main_thread
+def select_tab(index):
+    tabs = tabs_view_controller()
+    tab_views = tabs.tabBarView().tabViews()
+
+    if index >= len(tab_views):
+        return
+
+    tabs.tabBarView().tabSelected_(tab_views[index])
+    tabs.switchToTabViewController_(tabs.tabViewControllers()[index])
+
+
+@on_main_thread
+def select_next_tab():
+    select_tab((_selected_tab_index() + 1) % _tabs_count())
+
+
+@on_main_thread
+def select_previous_tab():
+    select_tab((_selected_tab_index() - 1) % _tabs_count())
+
+
 @on_main_thread
 def close_all_tabs_except_current_one():
     tabs = tabs_view_controller()

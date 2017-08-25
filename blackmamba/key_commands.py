@@ -34,7 +34,9 @@ _UIKeyInputNames = {
     '-': 'Minus',
     ' ': 'Space',
     '_': 'Underscore',
-    '\t': 'Tab'
+    '\t': 'Tab',
+    '[': 'LeftSquareBracket',
+    ']': 'RightSquareBracket'
 }
 
 _key_commands = []

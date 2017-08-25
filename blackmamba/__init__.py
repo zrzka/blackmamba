@@ -12,6 +12,12 @@ from blackmamba.key_commands import register_key_command
 from blackmamba.uikit import UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
 
 
+def _make_select_tab(index):
+    def select_tab():
+        blackmamba.ide.select_tab(index)
+    return select_tab
+
+
 def register_default_key_commands():
     print('Registering default key commands...')
 
@@ -54,11 +60,24 @@ def register_default_key_commands():
          'Clear Annotations'),
         ('U', UIKeyModifierCommand,
          blackmamba.tester.run_script_unit_tests,
-         'Run Unit Tests...')
+         'Run Unit Tests...'),
+        ('\t', UIKeyModifierControl,
+         blackmamba.ide.select_next_tab,
+         'Show Next Tab'),
+        ('\t', UIKeyModifierControl | UIKeyModifierShift,
+         blackmamba.ide.select_previous_tab,
+         'Show Previous Tab'),
+        (']', UIKeyModifierCommand | UIKeyModifierShift,
+         blackmamba.ide.select_next_tab),
+        ('[', UIKeyModifierCommand | UIKeyModifierShift,
+         blackmamba.ide.select_previous_tab)
     ]
 
     for command in commands:
         register_key_command(*command)
+
+    for i in range(9):
+        register_key_command(str(i + 1), UIKeyModifierCommand, _make_select_tab(i))
 
     print('Default key commands registered')
 
