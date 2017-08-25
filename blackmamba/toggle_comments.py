@@ -3,6 +3,23 @@
 import editor
 
 
+def _comment_line(line):
+    return '# ' + line
+
+
+def _uncomment_line(line):
+    if not line.strip().startswith('#'):
+        return line
+
+    start = line.find('# ')
+    if start == -1:
+        start = line.find('#') + 1
+    else:
+        start += 2
+
+    return line[start:]
+
+
 def toggle_comments():
     selection_range = editor.get_selection()
 
@@ -27,18 +44,15 @@ def toggle_comments():
             del selected_lines[-1]
             selected_lines_range = (selected_lines_range[0], selected_lines_range[1] - len(last_line) - 1)
 
-    is_commented = selected_lines_text.strip().startswith('#')
+    if selected_lines_text.strip().startswith('#'):
+        toggle_comment = _uncomment_line
+    else:
+        toggle_comment = _comment_line
 
     replacement = ''
 
     for line in selected_lines:
-        if is_commented:
-            if line.strip().startswith('#'):
-                replacement += line[line.find('#') + 1:]
-            else:
-                replacement += line
-        else:
-            replacement += '#' + line
+        replacement += toggle_comment(line)
 
     if last_line_deleted:
         replacement = replacement[:-1]
