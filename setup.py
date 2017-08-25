@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='blackmamba',
-    version='0.0.13',
+    version='0.0.14',
 
     description='Pythonista on steroids',
     long_description=open('README.rst', 'rt').read(),
