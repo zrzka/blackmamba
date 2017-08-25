@@ -5,13 +5,19 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
+* 
+
+``0.0.14`` (2017-08-25)
+-----------------------
+
 * Since 0.0.14, the license was to changed to MIT
-* Seems no one does use PyPI for installation, .pyui files are now included
+* Seems no one does use PyPI for installation, .pyui files are now included :)
 * Comment line with ``# `` instead of just ``#`` (#12)
-* ``Cmd U`` to run unit tests (experimental)
 * ``Ctrl Tab`` (or ``Cmd Shift ]``) selects next tab
 * ``Ctrl Shift Tab`` (or ``Cmd Shift [``) selects previous tab
 * ``Cmd 1..9`` selects specific tab
+* EXPERIMENTAL ``Cmd U`` to run unit tests (works, but sometimes, use at your
+  own risk)
 
 
 ``0.0.13`` (2017-08-24)
