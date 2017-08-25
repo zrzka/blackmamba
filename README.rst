@@ -14,21 +14,6 @@ it as fast as possible. And which snake is the speediest one on the planet?
 `Black Mamba <https://en.wikipedia.org/wiki/Black_mamba>`_. And you know
 why it's called Black Mamba now :)
 
-
-.. class:: no-web
-
-    .. image:: https://raw.githubusercontent.com/zrzka/blackmamba/master/_images/openquickly.jpg
-        :alt: Black Mamba Open Quickly...
-        :width: 90%
-        :align: center
-
-.. class:: no-web
-
-    .. image:: https://raw.githubusercontent.com/zrzka/blackmamba/master/_images/shortcuts.jpg
-        :alt: Black Mamba keyboard shortcuts
-        :width: 90%
-        :align: center
-
 .. contents:: Table of Contents
 
 .. section-numbering::
@@ -45,8 +30,8 @@ if you find a bug or would like to have something added. Or `pull request
 <https://github.com/zrzka/blackmamba/pulls>`_ which is even better.
 
 
-Installation
-============
+Package Installation
+====================
 
 Install `StaSh - Shell for Pythonista <https://github.com/ywangd/stash>`_. All following
 commands are for StaSh.
@@ -109,69 +94,20 @@ for sure.
     [~/Documents]$ pip update blackmamba
 
 
-Usage
-=====
+pythonista_startup.py
+=====================
 
-Following examples should be placed in the ``~/Documents/site-packages-3/pythonista_startup.py``
-file. Create this file if it doesn't exist.
-
-Also I assume that your file starts with Black Mamba import:
+Copy & paste ...
 
 .. code-block:: python
 
     #!python3
     import blackmamba as bm
+    
+    bm.register_default_key_commands()    
 
-
-Ignore folders (Open/Run Quickly...)
-------------------------------------
-
-*Open/Run Quickly...* dialog ignores following folders by default:
-
-* ``.git`` - in any folder
-* ``.Trash``, ``Examples``, ``site-packages``, ``site-packages-2``, ``site-packages-3`` in ``~/Documents`` folder
-
-You can modify it via:
-
-* ``bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS`` - for *Open Quickly...* dialog
-* ``bm.settings.RUN_QUICKLY_IGNORE_FOLDERS`` - for *Run Quickly...* dialog
-
-Example:
-
-.. code-block:: python
-
-    bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS = {
-        # '' -> any parent folder
-        '': ['.git'],
-        
-        # '.' -> ~/Documents parent folder
-        '.': ['Pythonista', '.Trash', 'Examples',
-              'site-packages-2', 'site-packages', 'stash_extensions'],
-              'site-packages-3': ['blackmamba'],
-
-        # 'Development' -> ~/Documents/Development parent folder              
-        'Development': ['bm-pip-backup']
-    }
-
-    bm.settings.RUN_QUICKLY_IGNORE_FOLDERS = {
-        '': ['.git'],
-        '.': ['Pythonista', '.Trash', 'Examples',
-              'site-packages-2', 'site-packages', 'stash_extensions'],
-        'site-packages-3': ['blackmamba'],
-        'Development': ['bm-pip-backup']
-    }
-
-
-Register default key commands
------------------------------
-
-.. code-block:: python
-
-    bm.register_default_key_commands()
-
-This registers following keyboard shortcuts you can use with
-external keyboard. It's optional, you're not forced to register
-them.
+... into ``~/Documents/site-packages-3/pythonista_startup.py`` and you're
+ready to use following shortcuts:
 
 ================    ========================================
 Shortcut            Function
@@ -199,110 +135,7 @@ if there's no running script. If there's running script, you'll see
 your script in the editor (new tab), but the script wasn't executed.
 
 
-Register custom key commands
-----------------------------
-
-How to print `Hallo` with `Cmd Shift H`.
-
-.. code-block:: python
-
-    def print_hallo():
-        print('Hallo')
-            
-    bm.key_commands.register_key_command(
-        'H',
-        bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,
-        print_hallo,
-        'Print Hallo')
-        
-
-Analyzer
---------
-
-Analyze & Check Style (``Ctrl Shift B``) runs pyflakes & pep8 code style checks.
-Analyzer behavior can be modified via following settings variables:
-
-.. code-block:: python
-
-    bm.settings.ANALYZER_HUD_DELAY = 1.0
-    
-    bm.settings.ANALYZER_PEP8_IGNORE = ('W391', )  # Must be a tuple
-    
-    bm.settings.ANALYZER_PEP8_MAX_LINE_LENGTH = 120
-    
-Analyzer always scrolls to the first issue and does not show HUD in case
-your file contains issues.
-
-
-Complete pythonista_startup.py example
---------------------------------------
-
-.. code-block:: python
-
-    #!python3
-    
-    import blackmamba as bm
-    
-    ################################################################
-    # Open/Run Quickly... ignore folders                           #
-    ################################################################
-    
-    # ''           : any parent folder
-    # '.'          : ~/Documents parent folder
-    # 'Development': ~/Documents/Development parent folder
-    
-    bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS = {
-        '': ['.git'],
-        '.': ['Pythonista', '.Trash', 'Examples',
-              'site-packages-2', 'site-packages', 'stash_extensions'],
-        'site-packages-3': ['blackmamba'],
-        'Development': ['bm-pip-backup']
-    }
-    
-    bm.settings.RUN_QUICKLY_IGNORE_FOLDERS = {
-        '': ['.git'],
-        '.': ['Pythonista', '.Trash', 'Examples',
-              'site-packages-2', 'site-packages', 'stash_extensions'],
-        'site-packages-3': ['blackmamba'],
-        'Development': ['bm-pip-backup']
-    }
-    
-    ################################################################
-    # Default Black Mamba external keyboard shortcuts registration #
-    ################################################################
-    
-    bm.register_default_key_commands()
-    
-    ################################################################
-    # Analyzer                                                     #
-    ################################################################
-    
-    bm.settings.ANALYZER_PEP8_IGNORE = ('W391', 'W293')
-    bm.settings.ANALYZER_PEP8_MAX_LINE_LENGTH = 120
-    
-    ################################################################
-    # Custom keyboard shortcuts                                    #
-    ################################################################
-    
-    # Launch StaSh (= custom action title) via Cmd-Shift-S
-    if bm.ide.action_exists('StaSh'):
-        def launch_stash():
-            bm.ide.run_action('StaSh')
-                
-        bm.key_commands.register_key_command(
-            'S',
-            bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,
-            launch_stash,
-            'Launch StaSh')
-    
-    # Or you can use run_script instead of action to launch StaSh
-    #if bm.ide.script_exists('launch_stash.py'):
-    #    def launch_stash():
-    #        bm.ide.run_script('launch_stash.py')
-    #
-    #    bm.key_commands.register_key_command(
-    #        'S',
-    #        bm.uikit.UIKeyModifierCommand | bm.uikit.UIKeyModifierShift,
-    #        launch_stash,
-    #        'Launch StaSh')
+Do you want know more about configuration options? Check
+`commented configuration file <https://github.com/zrzka/blackmamba/blob/master/pythonista_startup.py>`_
+file.
 
