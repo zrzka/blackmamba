@@ -5,6 +5,7 @@ setup(
     version='0.0.13',
 
     description='Pythonista on steroids',
+    long_description=open('README.rst', 'rt').read(),
     
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -16,8 +17,6 @@ setup(
 
     url='https://github.com/zrzka/blackmamba',
     license='MIT',
-
-    include_package_data=True,
 
     author='Robert Vojta',
 
