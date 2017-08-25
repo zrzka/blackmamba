@@ -1,3 +1,5 @@
+.cache
+__pycache__
 dist
 blackmamba.egg-info
 Readme.md
