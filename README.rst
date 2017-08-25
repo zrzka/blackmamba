@@ -109,9 +109,9 @@ Copy & paste ...
 ... into ``~/Documents/site-packages-3/pythonista_startup.py`` and you're
 ready to use following shortcuts:
 
-================    ========================================
+==================  ========================================
 Shortcut            Function
-================    ========================================
+==================  ========================================
 ``Cmd /``           Comment / uncomment selected line(s)
 ``Cmd W``           Close current editor tab
 ``Cmd Shift W``     Close all editor tabs except current one
@@ -135,7 +135,7 @@ if there's no running script. If there's running script, you'll see
 your script in the editor (new tab), but the script wasn't executed.
 
 
-Do you want know more about configuration options? Check
-`commented configuration file <https://github.com/zrzka/blackmamba/blob/master/pythonista_startup.py>`_
+Do you want know more about configuration options? Check fully commented sample
+`pythonista_startup.py <https://github.com/zrzka/blackmamba/blob/master/pythonista_startup.py>`_
 file.
 
