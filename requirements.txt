@@ -1,3 +1,5 @@
 flake8
 mock
 pytest
+pep8
+pyflakes
