@@ -1,1 +1,2 @@
-blackmamba/*.pyui
+include blackmamba/*.pyui
+include blackmamba/experimental/*.pyui
