@@ -50,8 +50,8 @@ bm.settings.ANALYZER_PEP8_MAX_LINE_LENGTH = 127
 # Unit tests                                                   #
 ################################################################
 
-TESTS_HUD_DELAY = 1.0
-TESTS_HIDE_CONSOLE = True
+bm.settings.TESTS_HUD_DELAY = 1.0
+bm.settings.TESTS_HIDE_CONSOLE = True
 
 ################################################################
 # Custom keyboard shortcuts                                    #
