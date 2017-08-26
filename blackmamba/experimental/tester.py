@@ -81,8 +81,7 @@ def _show_results(attrib, all_passed=True):
             tests -= c
             messages.append('{} {}'.format(c, v))
 
-    if tests > 0:
-        messages.append('{} passed'.format(tests))
+    messages.append('{} passed'.format(tests))
 
     console.hud_alert(
         ', '.join(messages) + ' in {} seconds'.format(time),

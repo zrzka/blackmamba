@@ -5,7 +5,7 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
-* 
+* Fix HUD message when there're no tests in the file
 
 ``0.0.14`` (2017-08-25)
 -----------------------
