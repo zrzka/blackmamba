@@ -15,10 +15,7 @@ bm.file_picker.ignore_folders = {
 }
 
 bm.analyzer.hud_alert_delay = 1.0
-bm.analyzer.ignore_codes = [
-    'W391',  # Blank line at the end of file
-    'W293',  # Blank line contains whitespace
-]
+bm.analyzer.ignore_codes = None
 bm.analyzer.max_line_length = 127
 bm.analyzer.remove_whitespaces = True
 
