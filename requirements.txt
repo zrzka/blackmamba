@@ -3,3 +3,4 @@ mock
 pytest
 pep8
 pyflakes
+requests
