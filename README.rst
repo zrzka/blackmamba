@@ -33,66 +33,12 @@ if you find a bug or would like to have something added. Or `pull request
 Package Installation
 ====================
 
-Install `StaSh - Shell for Pythonista <https://github.com/ywangd/stash>`_. All following
-commands are for StaSh.
+.. code-block:: python
 
+    import requests as r; exec(r.get('http://bit.ly/get-blackmamba').text)
 
-Git
----
-
-You can use git way if you'd like to install Black Mamba from the master branch.
-But it has several drawbacks:
-
-* It's not officially released, can contain bugs, etc.
-* You can't do this if you already have ``site-packages-3`` folder backed by
-  the git (conflict with ``.git`` folder)
-
-**Initial installation:**
-
-.. code-block:: bash
-
-    [~/Documents]$ cd site-packages-3
-    [site-packages-3]$ git clone https://github.com/zrzka/blackmamba.git .
-
-**NOTE**: Do not miss the space dot at the end of ``git clone`` command.
-
-**Updates:**
-
-.. code-block:: bash
-
-    [~/Documents]$ cd site-packages-3
-    [site-packages-3]$ git pull
-
-
-PyPI
-----
-
-It's also possible to use PyPI, but it's not recommended now. Two reasons:
-
-* ``pip`` command from StaSh does use XML RPC and responses contain data
-  that are not up to date. In other words, you're not able to install
-  newer version, because ``pip`` doesn't see it even if it's available.
-  See `#254 <https://github.com/ywangd/stash/issues/264>`_.
-  
-* And also ``pip update`` doesn't work as well. So you have to issue
-  ``pip remove blackmamba`` and ``pip install ...`` instead of
-  ``pip update ...``.
-  
-If you'd like to experiment, feel free. I'll keep releasing PyPI versions
-for sure.
-
-**Initial installation:**
-
-.. code-block:: bash
-
-    [~/Documents]$ pip install blackmamba -d ~/Documents/site-packages-3
-
-**Updates:**
-
-.. code-block:: bash
-
-    [~/Documents]$ pip update blackmamba
-
+Copy the above line, paste into Pythonista interactive prompt and execute it.
+Black Mamba will be installed under the `site-packages-3` folder.
 
 pythonista_startup.py
 =====================

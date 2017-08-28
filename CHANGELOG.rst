@@ -6,6 +6,8 @@ Change Log
 -----------------------
 
 * Fix HUD message when there're no tests in the file
+* Removed unreliable PyPI package installation
+* Custom installer alla StaSh
 
 ``0.0.14`` (2017-08-25)
 -----------------------
