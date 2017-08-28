@@ -2,22 +2,11 @@
 
 import blackmamba as bm
 
-################################################################
-# Default Black Mamba external keyboard shortcuts registration #
-################################################################
-
-bm.register_default_key_commands()
-
-
-################################################################
-# Open/Run Quickly... ignore folders                           #
-################################################################
-
 # ''           : any parent folder
 # '.'          : ~/Documents parent folder
 # 'Development': ~/Documents/Development parent folder
 
-bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS = {
+bm.file_picker.ignore_folders = {
     '': ['.git'],
     '.': ['Pythonista', '.Trash', 'Examples',
           'site-packages-2', 'site-packages', 'stash_extensions'],
@@ -25,33 +14,18 @@ bm.settings.OPEN_QUICKLY_IGNORE_FOLDERS = {
     'Development': ['bm-pip-backup']
 }
 
-bm.settings.RUN_QUICKLY_IGNORE_FOLDERS = {
-    '': ['.git'],
-    '.': ['Pythonista', '.Trash', 'Examples',
-          'site-packages-2', 'site-packages', 'stash_extensions'],
-    'site-packages-3': ['blackmamba'],
-    'Development': ['bm-pip-backup']
-}
+bm.analyzer.hud_alert_delay = 1.0
+bm.analyzer.ignore_codes = [
+    'W391',  # Blank line at the end of file
+    'W293',  # Blank line contains whitespace
+]
+bm.analyzer.max_line_length = 127
+bm.analyzer.remove_whitespaces = True
 
+bm.experimental.tester.hud_alert_delay = 1.0
+bm.experimental.tester.hide_console = True
 
-################################################################
-# Analyzer                                                     #
-################################################################
-
-# Must be None or tuple ('W391', 'W293', ...)
-bm.settings.ANALYZER_PEP8_IGNORE = None
-
-# Max line length (E501)
-# 127 is the GitHub editor max line length
-bm.settings.ANALYZER_PEP8_MAX_LINE_LENGTH = 127
-
-
-################################################################
-# Unit tests                                                   #
-################################################################
-
-bm.settings.TESTS_HUD_DELAY = 1.0
-bm.settings.TESTS_HIDE_CONSOLE = True
+bm.main()
 
 ################################################################
 # Custom keyboard shortcuts                                    #
