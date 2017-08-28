@@ -6,8 +6,10 @@ import os
 import xml.etree.ElementTree as ET
 import console
 from blackmamba.annotation import Annotation, Style
-import blackmamba.settings as settings
 import re
+
+hud_alert_delay = 1.0
+hide_console = True
 
 _LOG_FILE_PATH = os.path.expanduser('~/Documents/.blackmamba_pytest_log.xml')
 
@@ -86,7 +88,7 @@ def _show_results(attrib, all_passed=True):
     console.hud_alert(
         ', '.join(messages) + ' in {} seconds'.format(time),
         'success' if all_passed else 'error',
-        settings.TESTS_HUD_DELAY)
+        hud_alert_delay)
 
 
 def _run_unit_tests(path):
@@ -103,7 +105,7 @@ def _run_unit_tests(path):
         editor.annotate_line(a.line, a.text, a.editor_annotation_style, True, filename=a.filename, scroll=scroll)
         scroll = False
 
-    if settings.TESTS_HIDE_CONSOLE:
+    if hide_console:
         console.hide_output()
 
 

@@ -7,6 +7,7 @@ import blackmamba.dash
 import blackmamba.action_picker
 import blackmamba.analyzer
 import blackmamba.experimental.tester
+import blackmamba.updates
 from blackmamba.key_commands import register_key_command
 from blackmamba.uikit import UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
 
@@ -17,7 +18,7 @@ def _make_select_tab(index):
     return select_tab
 
 
-def register_default_key_commands():
+def _register_default_key_commands():
     print('Registering default key commands...')
 
     commands = [
@@ -81,5 +82,10 @@ def register_default_key_commands():
     print('Default key commands registered')
 
 
+def main():
+    blackmamba.updates.check()
+    _register_default_key_commands()
+
+
 if __name__ == '__main__':
-    register_default_key_commands()
+    main()

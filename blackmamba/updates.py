@@ -1,12 +1,14 @@
 #!python3
 
 from objc_util import ObjCClass, on_main_thread
-import blackmamba.settings as settings
 import time
 import os
 import json
 import requests
 import console
+
+check_for_updates = True
+check_interval = 86400  # Seconds, 86400 = 1 day
 
 _DEFAULTS_LAST_UPDATE_CHECK_KEY = 'BlackMambaLastUpdateCheck'
 _ROOT_DIR = os.path.expanduser('~/Documents/site-packages-3/blackmamba')
@@ -70,14 +72,14 @@ def _get_latest_release():
         pass
 
 
-def check_for_updates():
-    if not settings.CHECK_FOR_UPDATES:
+def check():
+    if not check_for_updates:
         return
 
     timestamp = _timestamp()
-#     last_check = timestamp - settings.CHECK_FOR_UPDATES_INTERVAL
+#     last_check = timestamp - check_interval
     last_check = _get_last_update_check() or timestamp
-    if last_check + settings.CHECK_FOR_UPDATES_INTERVAL > timestamp:
+    if last_check + check_interval > timestamp:
         return
     _set_last_update_check(timestamp)
 

@@ -11,6 +11,7 @@ Change Log
 * Custom installer alla StaSh
 * Removed ``settings`` module (moved to respective modules)
 * Removed ``script_picker.py`` (merged to ``file_picker.py``)
+* Updated ``pythonista_startup.py`` sample
 
 ``0.0.14`` (2017-08-25)
 -----------------------

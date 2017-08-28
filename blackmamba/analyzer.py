@@ -7,9 +7,17 @@ from enum import Enum
 import pyflakes.api as pyflakes
 import editor
 import console
-import blackmamba.settings as settings
 from blackmamba.annotation import Annotation, Style
 from itertools import groupby
+
+hud_alert_delay = 1.0
+ignore_codes = [
+    'W391',  # Blank line at the end of file
+    'W293',  # Blank line contains whitespace
+]
+max_line_length = 79
+remove_whitespaces = True
+
 
 _REMOVE_TRAILING_WHITESPACES_REGEX = re.compile('[ \t]+$', re.MULTILINE)
 _REMOVE_TRAILING_LINES_REGEX = re.compile('\s+\Z', re.MULTILINE)
@@ -65,7 +73,7 @@ def _pep8_annotations(text, ignore=None, max_line_length=None):
     options = style_guide.options
 
     if ignore:
-        options.ignore += ignore
+        options.ignore += tuple(ignore)
 
     if max_line_length:
         options.max_line_length = max_line_length
@@ -158,16 +166,10 @@ def _editor_text():
 
     range_end = len(text)
 
-    if settings.ANALYZER_REMOVE_TRAILING_WHITESPACES:
+    if remove_whitespaces:
         text = _remove_trailing_whitespaces(text)
-
-    if settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
         text = _remove_trailing_lines(text)
-
-    if settings.ANALYZER_REMOVE_TRAILING_WHITESPACES or settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
         editor.replace_text(0, range_end, text)
-
-    if settings.ANALYZER_REMOVE_TRAILING_BLANK_LINES:
         # Pythonista is adding '\n' automatically, so, if we removed them
         # all we have to simulate Pythonista behavior by adding '\n'
         # for pyflakes & pep8 analysis
@@ -191,14 +193,14 @@ def analyze():
 
     annotations = _pep8_annotations(
         text,
-        ignore=settings.ANALYZER_PEP8_IGNORE,
-        max_line_length=settings.ANALYZER_PEP8_MAX_LINE_LENGTH
+        ignore=ignore_codes,
+        max_line_length=max_line_length
     )
 
     annotations += _pyflakes_annotations(path, text)
 
     if not annotations:
-        console.hud_alert('No Issues Found', 'iob:checkmark_32', settings.ANALYZER_HUD_DELAY)
+        console.hud_alert('No Issues Found', 'iob:checkmark_32', hud_alert_delay)
         return None
 
     scroll = True
