@@ -38,7 +38,8 @@ Package Installation
     import requests as r; exec(r.get('http://bit.ly/get-blackmamba').text)
 
 Copy the above line, paste into Pythonista interactive prompt and execute it.
-Black Mamba will be installed under the `site-packages-3` folder.
+Black Mamba will be installed under the ``site-packages-3`` folder.
+
 
 pythonista_startup.py
 =====================
