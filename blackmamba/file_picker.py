@@ -4,7 +4,14 @@ import editor
 import os
 from objc_util import on_main_thread
 from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
-import blackmamba.settings
+import blackmamba.ide as ide
+
+
+ignore_folders = {
+    '': ['.git'],
+    '.': ['.Trash', 'Examples',
+          'site-packages', 'site-packages-2', 'site-packages-3']
+}
 
 
 class FilePickerItem(PickerItem):
@@ -56,7 +63,7 @@ def open_quickly():
         editor.open_file(item.file_path, new_tab=new_tab)
 
     kwargs = {
-        'ignore_folders': blackmamba.settings.RUN_QUICKLY_IGNORE_FOLDERS,
+        'ignore_folders': ignore_folders,
         'allow_file': allow_file
     }
 
@@ -75,5 +82,29 @@ def open_quickly():
     v.wait_modal()
 
 
-if __name__ == '__main__':
-    open_quickly()
+@on_main_thread
+def script_quickly():
+    def allow_file(root, name):
+        return not name.startswith('.') and name.endswith('.py')
+
+    def run_script(item, shift_enter):
+        ide.run_script(item.file_path, full_path=True)
+
+    kwargs = {
+        'ignore_folders': ignore_folders,
+        'allow_file': allow_file
+    }
+
+    v = load_picker_view()
+    v.datasource = FilePickerDataSource(**kwargs)
+    v.shift_enter_enabled = False
+    v.title_label.text = 'Run Quickly...'
+    v.help_label.text = (
+        '⇅ - select • Enter - run Python script'
+        '\n'
+        'Esc - close • Ctrl [ - close with Apple smart keyboard'
+    )
+    v.textfield.placeholder = 'Start typing to filter scripts...'
+    v.did_select_item_action = run_script
+    v.present('sheet', hide_title_bar=True)
+    v.wait_modal()

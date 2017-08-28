@@ -4,7 +4,6 @@ import blackmamba.toggle_comments
 import blackmamba.ide
 import blackmamba.file_picker
 import blackmamba.dash
-import blackmamba.script_picker
 import blackmamba.action_picker
 import blackmamba.analyzer
 import blackmamba.experimental.tester
@@ -47,7 +46,7 @@ def register_default_key_commands():
          blackmamba.dash.search_dash,
          'Search in Dash'),
         ('R', UIKeyModifierCommand | UIKeyModifierShift,
-         blackmamba.script_picker.script_quickly,
+         blackmamba.file_picker.script_quickly,
          'Run Quickly...'),
         ('A', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.action_picker.action_quickly,

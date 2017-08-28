@@ -6,8 +6,11 @@ Change Log
 -----------------------
 
 * Fix HUD message when there're no tests in the file
-* Removed unreliable PyPI package installation
+* Removed unreliable PyPI package installation option
+* Removed package from PyPI
 * Custom installer alla StaSh
+* Removed ``settings`` module (moved to respective modules)
+* Removed ``script_picker.py`` (merged to ``file_picker.py``)
 
 ``0.0.14`` (2017-08-25)
 -----------------------
