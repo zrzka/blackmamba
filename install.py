@@ -193,7 +193,7 @@ def _move_to_site_packages(extracted_zip_dir):
         _terminate('Failed to move Black Mamba to site-packages-3')
 
 
-def _check_local_installation(release):
+def _local_installation_exists(release):
     _info('Checking Black Mamba installation...')
 
     if os.path.exists(os.path.join(_TARGET_DIR, '.git')):
@@ -212,6 +212,8 @@ def _check_local_installation(release):
     if exists:
         _info('Black Mamba installed, will be replaced')
 
+    return exists
+
 
 def _save_release_info(release):
     _info('Saving installed version release info')
@@ -226,7 +228,7 @@ def _save_release_info(release):
 
 def _install():
     release = _get_latest_release()
-    _check_local_installation(release)
+    local_exists = _local_installation_exists(release)
     path = _download_release_zip(release)
     extracted_zip_dir = _extract_release(release, path)
     _move_to_site_packages(extracted_zip_dir)
@@ -234,10 +236,11 @@ def _install():
     _cleanup()
     _info('Black Mamba {} installed'.format(release['tag_name']))
 
-    tag_name = release['tag_name']
-    console.alert('Black Mamba Installer',
-                  'Black Mamba {} installed. Pythonista RESTART needed for updates to take effect.'.format(tag_name),
-                  'Got it!', hide_cancel_button=True)
+    if local_exists:
+        tag_name = release['tag_name']
+        console.alert('Black Mamba Installer',
+                      'Black Mamba {} installed.\n\nPythonista RESTART needed for updates to take effect.'.format(tag_name),
+                      'Got it!', hide_cancel_button=True)
 
 
 if __name__ == '__main__':
