@@ -233,7 +233,11 @@ def _install():
     _save_release_info(release)
     _cleanup()
     _info('Black Mamba {} installed'.format(release['tag_name']))
-    _info('Pythonista RESTART needed for updates to take effect')
+
+    tag_name = release['tag_name']
+    console.alert('Black Mamba Installer',
+                  'Black Mamba {} installed. Pythonista RESTART needed for updates to take effect.'.format(tag_name),
+                  'Got it!', hide_cancel_button=True)
 
 
 if __name__ == '__main__':
