@@ -12,6 +12,7 @@ _OWNER = 'zrzka'
 _REPOSITORY = 'blackmamba'
 
 _TMP_DIR = os.environ.get('TMPDIR', os.environ.get('TMP'))
+_TMP_TARGET_DIR = os.path.expanduser('~/Documents/site-packages-3/.blackmamba-install')
 _TARGET_DIR = os.path.expanduser('~/Documents/site-packages-3/blackmamba')
 _RELEASE_INFO_FILE = os.path.join(_TARGET_DIR, '.release.json')
 
@@ -121,17 +122,30 @@ def _download_release_zip(release):
     return path
 
 
-def _unzip_release(release, path):
-    _info('Extracting ZIP archive...')
-    target_dir = os.path.expanduser('~/Documents/site-packages-3/.blackmamba-install')
+def _prepare_dir(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)
 
-    _cleanup_paths.append(target_dir)
+    os.makedirs(path)
+
+
+def _extract_file(zip_file, zip_file_name, file_name):
+    if file_name.endswith('/'):
+        if not os.path.exists(file_name):
+            os.makedirs(file_name)
+    else:
+        data = zip_file.read(zip_file_name)
+        with open(file_name, 'wb') as output:
+            output.write(data)
+
+
+def _extract_release(release, path):
+    _info('Extracting ZIP archive...')
+
+    _cleanup_paths.append(_TMP_TARGET_DIR)
 
     try:
-        if os.path.exists(target_dir):
-            shutil.rmtree(target_dir)
-
-        os.makedirs(target_dir)
+        _prepare_dir(_TMP_TARGET_DIR)
 
         with open(path, 'rb') as input:
             zf = zipfile.ZipFile(input)
@@ -154,16 +168,8 @@ def _unzip_release(release, path):
                 # Strip blackmamba/ directory
                 stripped_name = stripped_name[len('blackmamba/'):]
 
-                file_name = os.path.join(target_dir, stripped_name)
-
-                if file_name.endswith('/'):
-                    if not os.path.exists(file_name):
-                        os.makedirs(file_name)
-                else:
-                    _info(' - {}'.format(stripped_name))
-                    data = zf.read(name)
-                    with open(file_name, 'wb') as output:
-                        output.write(data)
+                file_name = os.path.join(_TMP_TARGET_DIR, stripped_name)
+                _extract_file(zf, name, file_name)
 
             if not top_level_dir:
                 _terminate('Failed to extract ZIP file')
@@ -172,7 +178,7 @@ def _unzip_release(release, path):
         _error(e)
         _terminate('Failed to extract ZIP file')
 
-    return target_dir
+    return _TMP_TARGET_DIR
 
 
 def _move_to_site_packages(extracted_zip_dir):
@@ -222,7 +228,7 @@ def _install():
     release = _get_latest_release()
     _check_local_installation(release)
     path = _download_release_zip(release)
-    extracted_zip_dir = _unzip_release(release, path)
+    extracted_zip_dir = _extract_release(release, path)
     _move_to_site_packages(extracted_zip_dir)
     _save_release_info(release)
     _cleanup()
