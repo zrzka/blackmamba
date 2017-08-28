@@ -14,7 +14,7 @@ import plistlib
 import os
 import sys
 
-
+__version__ = '0.0.15'
 _LATEST_VERSION_COMPATIBILITY_TEST = (301016, '3.1')
 
 
@@ -100,9 +100,9 @@ def _is_compatible_with_pythonista():
 
     local_release = blackmamba.updates.get_local_release()
     if local_release:
-        print('Black Mamba release {} ({})'.format(local_release['name'], local_release['tag_name']))
+        print('Black Mamba {} (tag {})'.format(__version__, local_release['tag_name']))
     else:
-        print('Black Mamba unknown - not installed via installation script')
+        print('Black Mamba {} (tag unknown, not installed via installation script)'.format(__version__))
 
     if bundle_version > _LATEST_VERSION_COMPATIBILITY_TEST[0]:
         sys.stderr.write('Not tested combination, please, update Black Mamba\n')
