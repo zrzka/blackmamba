@@ -2,7 +2,7 @@
 Change Log
 ==========
 
-``master`` (unreleased)
+``0.0.15`` (2017-08-28)
 -----------------------
 
 * Fix HUD message when there're no tests in the file
