@@ -10,6 +10,12 @@ import blackmamba.experimental.tester
 import blackmamba.updates
 from blackmamba.key_commands import register_key_command
 from blackmamba.uikit import UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
+import plistlib
+import os
+import sys
+
+
+_LATEST_VERSION_COMPATIBILITY_TEST = (301016, '3.1')
 
 
 def _make_select_tab(index):
@@ -82,10 +88,42 @@ def _register_default_key_commands():
     print('Default key commands registered')
 
 
-def main():
-    blackmamba.updates.check()
-    _register_default_key_commands()
+def _is_compatible_with_pythonista():    
+    plist_path = os.path.abspath(os.path.join(sys.executable,
+                                 '..', 'Info.plist'))
+    plist = plistlib.readPlist(plist_path)
+
+    version_string = plist['CFBundleShortVersionString']
+    bundle_version = int(plist['CFBundleVersion'])
+    
+    print('Pythonista {} ({})'.format(version_string, bundle_version))
+    
+    local_release = blackmamba.updates.get_local_release()
+    if local_release:
+        print('Black Mamba release {} ({})'.format(local_release['name'], local_release['tag_name']))
+    else:
+        print('Black Mamba unknown - not installed via installation script')
+    
+    if bundle_version > _LATEST_VERSION_COMPATIBILITY_TEST[0]:
+        sys.stderr.write('Not tested combination, please, update Black Mamba\n')
+        sys.stderr.write('Latest tests were made with Pythonista {} ({})\n'.format(
+            _LATEST_VERSION_COMPATIBILITY_TEST[1],
+            _LATEST_VERSION_COMPATIBILITY_TEST[0]))
+        return False
+        
+    return True
+
+
+def main(allow_incompatible_pythonista_version=False):
+    print('Black Mamba initialization...')
+    compatible = _is_compatible_with_pythonista()
+    
+    if compatible or allow_incompatible_pythonista_version:
+        blackmamba.updates.check()
+        _register_default_key_commands()
+        
+    print('Black Mamba initialized')
 
 
 if __name__ == '__main__':
-    main()
+    main(True)

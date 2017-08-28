@@ -36,7 +36,7 @@ def _timestamp():
     return int(time.time())
 
 
-def _get_local_release():
+def get_local_release():
     try:
         with open(_RELEASE_PATH, 'rt') as input:
             return json.load(input)
@@ -85,7 +85,7 @@ def check():
 
     print('Checking for Black Mamba updates...')
 
-    local_release = _get_local_release()
+    local_release = get_local_release()
     latest_release = _get_latest_release()
 
     if local_release:

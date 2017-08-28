@@ -12,6 +12,7 @@ Change Log
 * Removed ``settings`` module (moved to respective modules)
 * Removed ``script_picker.py`` (merged to ``file_picker.py``)
 * Updated ``pythonista_startup.py`` sample
+* Pythonista version compatibility check
 
 ``0.0.14`` (2017-08-25)
 -----------------------
