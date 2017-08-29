@@ -11,7 +11,8 @@ Change Log
 * All print messages replaced with ``log.info`` (``.error``, ``.warn``)
 * ``bm.log.level`` allows to set logging level (default ``INFO``)
 * Do not bother user with alert about new version (just use console)
-  when the Black Mamba is not installed via installer
+  in case the Black Mamba is not installed via installer (git for example)
+* Tested with latest Pythonista beta (3.1.1 - 311008)
  
 
 ``0.0.15`` (2017-08-28)

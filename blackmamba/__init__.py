@@ -16,7 +16,7 @@ import sys
 from blackmamba.log import warn, info, error
 
 __version__ = '0.0.15'
-_LATEST_VERSION_COMPATIBILITY_TEST = (301016, '3.1')
+_LATEST_VERSION_COMPATIBILITY_TEST = (311008, '3.1.1')
 
 
 def _make_select_tab(index):
