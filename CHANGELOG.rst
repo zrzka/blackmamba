@@ -6,6 +6,7 @@ Change Log
 
 * Allow to start Black Mamba even in untested version of Pythonista, just
   warn the user
+* Init messages are colored (orange=warn, red=error)
  
 
 ``0.0.15`` (2017-08-28)
