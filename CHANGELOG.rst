@@ -10,6 +10,8 @@ Change Log
 * Init messages are colored (orange=warn, red=error)
 * All print messages replaced with ``log.info`` (``.error``, ``.warn``)
 * ``bm.log.level`` allows to set logging level (default ``INFO``)
+* Do not bother user with alert about new version (just use console)
+  when the Black Mamba is not installed via installer
  
 
 ``0.0.15`` (2017-08-28)
