@@ -6,7 +6,7 @@ from objc_util import retain_global, ObjCInstance, UIApplication, c, ns, on_main
 from blackmamba.runtime import swizzle
 import blackmamba.uikit as uikit
 import inspect
-from blackmamba.log import warn, error, info
+from blackmamba.log import error, info
 
 #
 # TODO

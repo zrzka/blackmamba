@@ -7,9 +7,10 @@ from contextlib import contextmanager
 ERROR = 40
 WARNING = 30
 INFO = 20
+DEBUG = 10
 NOTSET = 0
 
-level = NOTSET
+level = INFO
 
 
 @contextmanager

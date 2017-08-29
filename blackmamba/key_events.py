@@ -3,6 +3,7 @@
 from objc_util import on_main_thread, ObjCInstance, sel, UIApplication
 from blackmamba.runtime import swizzle
 import blackmamba.uikit as uikit
+from blackmamba.log import error
 
 _key_event_handlers = []
 
@@ -17,8 +18,8 @@ class KeyEventHandler(object):
 def _blackmamba_handleKeyUIEvent(_self, _cmd, event):
     e = ObjCInstance(event)
 
-#    print('Down: {} Type: {} Subtype: {} Modifier flags: {} Keycode: {}'
-#        .format(e._isKeyDown(), e.type(), e.subtype(), e._modifierFlags(), e._keyCode()))
+#     debug('Down: {} Type: {} Subtype: {} Modifier flags: {} Keycode: {}'
+#           .format(e._isKeyDown(), e.type(), e.subtype(), e._modifierFlags(), e._keyCode()))
 
     if e.type() == uikit.UIEventTypePhysicalKeyboard and e.subtype() == uikit.UIEventSubtypeNone and not e._isKeyDown():
         for h in _key_event_handlers:
@@ -26,8 +27,8 @@ def _blackmamba_handleKeyUIEvent(_self, _cmd, event):
                 try:
                     h.fn()
                 except Exception as ex:
-                    print('Exception in key event handler {}'.format(h.fn))
-                    print(ex)
+                    error('Exception in key event handler {}'.format(h.fn))
+                    error(ex)
 
     ObjCInstance(_self).originalhandleKeyUIEvent_(e)
 

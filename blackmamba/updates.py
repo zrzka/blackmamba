@@ -6,6 +6,7 @@ import os
 import json
 import requests
 import console
+from blackmamba.log import info
 
 check_for_updates = True
 check_interval = 86400  # Seconds, 86400 = 1 day
@@ -83,19 +84,19 @@ def check():
         return
     _set_last_update_check(timestamp)
 
-    print('Checking for Black Mamba updates...')
+    info('Checking for Black Mamba updates...')
 
     local_release = get_local_release()
     latest_release = _get_latest_release()
 
     if local_release:
-        print('Installed version {} (tag {})'.format(local_release['name'], local_release['tag_name']))
+        info('Installed version {} (tag {})'.format(local_release['name'], local_release['tag_name']))
 
         if local_release['tag_name'] == latest_release['tag_name']:
-            print('No updates available')
+            info('No updates available')
             return
     else:
-        print('Missing installed version info, update recommended')
+        info('Missing installed version info, update recommended')
 
     console.alert('Black Mamba',
                   'New version {} available.'.format(latest_release['tag_name']),

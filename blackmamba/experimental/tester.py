@@ -57,7 +57,6 @@ def _parse_log_file():
             text = failure.get('message')
             line = _parse_line(file, failure.text, int(tc.get('line')))
 
-            print('--', file, '--')
             annotation = Annotation(line, text, Style.error)  # , os.path.basename(file))
             result.append(annotation)
 

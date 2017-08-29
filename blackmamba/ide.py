@@ -3,6 +3,7 @@ import os
 import urllib.parse
 import webbrowser
 import blackmamba.action_picker
+from blackmamba.log import error
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -110,7 +111,7 @@ def script_exists(script_name, full_path=False):
 
 def run_script(script_name, full_path=False):
     if not script_exists(script_name, full_path):
-        print('run_script: script does not exist {}'.format(script_name))
+        error('run_script: script does not exist {}'.format(script_name))
         return
 
     if full_path:
@@ -139,7 +140,7 @@ def action_exists(title):
 def run_action(title):
     action = _load_action(title)
     if not action:
-        print('run_action: action does not exist {}'.format(title))
+        error('run_action: action does not exist {}'.format(title))
         return
 
     run_script(action.script_name)

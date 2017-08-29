@@ -2,6 +2,7 @@
 
 from objc_util import on_main_thread, c, parse_types, ObjCClass, sel, retain_global
 from ctypes import CFUNCTYPE, c_void_p
+from blackmamba.log import error
 
 SWIZZLED_SELECTOR_PREFIX = 'original'
 
@@ -19,13 +20,13 @@ def swizzle(cls_name, selector_name, fn):
     new_selector = sel(new_selector_name)
 
     if c.class_getInstanceMethod(cls, new_selector):
-        print('Skipping swizzling, already responds to {} selector'.format(new_selector_name))
+        error('Skipping swizzling, already responds to {} selector'.format(new_selector_name))
         return
 
     selector = sel(selector_name)
     method = c.class_getInstanceMethod(cls, selector)
     if not method:
-        print('Failed to get {} instance method'.format(selector_name))
+        error('Failed to get {} instance method'.format(selector_name))
         return
 
     type_encoding = c.method_getTypeEncoding(method)
@@ -40,7 +41,7 @@ def swizzle(cls_name, selector_name, fn):
     did_add = c.class_addMethod(cls, new_selector, imp, type_encoding)
 
     if not did_add:
-        print('Failed to add {} method'.format(new_selector_name))
+        error('Failed to add {} method'.format(new_selector_name))
         return
 
     new_method = c.class_getInstanceMethod(cls, new_selector)
