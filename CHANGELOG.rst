@@ -3,6 +3,7 @@ Change Log
 ==========
 
 ``master`` (unreleased)
+-----------------------
 
 * Allow to start Black Mamba even in untested version of Pythonista, just
   warn the user
