@@ -6,6 +6,7 @@ from objc_util import retain_global, ObjCInstance, UIApplication, c, ns, on_main
 from blackmamba.runtime import swizzle
 import blackmamba.uikit as uikit
 import inspect
+from blackmamba.log import warn, error, info
 
 #
 # TODO
@@ -112,23 +113,23 @@ def register_key_command(input, modifier_flags, function, title=None):
     selector = sel(selector_name)
     obj = UIApplication.sharedApplication().keyWindow()
 
-    print('Registering key command "{}" ({})'.format(
+    info('Registering key command "{}" ({})'.format(
         _shortcut_name(input, modifier_flags), _function_name(function)))
 
     if not callable(function):
-        print('Skipping, provided function is not callable')
+        error('Skipping, provided function is not callable')
         return False
 
     if obj.respondsToSelector_(selector):
-        print('Skipping, method {} already registered'.format(selector_name))
+        error('Skipping, method {} already registered'.format(selector_name))
         return False
 
     def key_command_action(_sel, _cmd, sender):
         try:
             function()
         except Exception as ex:
-            print('Exception in {} method'.format(selector_name))
-            print(ex)
+            error('Exception in {} method'.format(selector_name))
+            error(ex)
 
     IMPTYPE = CFUNCTYPE(None, c_void_p, c_void_p, c_void_p)
     imp = IMPTYPE(key_command_action)
@@ -138,7 +139,7 @@ def register_key_command(input, modifier_flags, function, title=None):
     type_encoding = c_char_p('v@:@'.encode('utf-8'))
     did_add = c.class_addMethod(cls, selector, imp, type_encoding)
     if not did_add:
-        print('Failed to add key command method {}'.format(selector_name))
+        error('Failed to add key command method {}'.format(selector_name))
         return False
 
     if title:

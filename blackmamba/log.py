@@ -4,6 +4,14 @@ import console
 from contextlib import contextmanager
 
 
+ERROR = 40
+WARNING = 30
+INFO = 20
+NOTSET = 0
+
+level = NOTSET
+
+
 @contextmanager
 def _color(*color):
     if color:
@@ -14,10 +22,16 @@ def _color(*color):
 
 
 def info(*args, **kwargs):
+    if level > INFO:
+        return
+
     print(*args, **kwargs)
 
 
 def warn(*args, **kwargs):
+    if level > WARNING:
+        return
+
     with _color(1, 0.5, 0):
         print(*args, **kwargs)
 
