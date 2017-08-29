@@ -60,8 +60,7 @@ Copy & paste ...
 
     #!python3
     import blackmamba as bm
-    
-    bm.register_default_key_commands()    
+    bm.main()
 
 ... into ``~/Documents/site-packages-3/pythonista_startup.py`` and you're
 ready to use following shortcuts:
