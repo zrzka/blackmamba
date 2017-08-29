@@ -104,26 +104,30 @@ def _is_compatible_with_pythonista():
     else:
         print('Black Mamba {} (tag unknown, not installed via installation script)'.format(__version__))
 
-    if bundle_version > _LATEST_VERSION_COMPATIBILITY_TEST[0]:
-        sys.stderr.write('Not tested combination, please, update Black Mamba\n')
-        sys.stderr.write('Latest tests were made with Pythonista {} ({})\n'.format(
-            _LATEST_VERSION_COMPATIBILITY_TEST[1],
-            _LATEST_VERSION_COMPATIBILITY_TEST[0]))
-        return False
-
-    return True
+    return bundle_version <= _LATEST_VERSION_COMPATIBILITY_TEST[0]
 
 
-def main(allow_incompatible_pythonista_version=False):
+def main(**kwargs):
     print('Black Mamba initialization...')
     compatible = _is_compatible_with_pythonista()
 
-    if compatible or allow_incompatible_pythonista_version:
-        blackmamba.updates.check()
-        _register_default_key_commands()
+    if 'allow_incompatible_pythonista_version' in kwargs:
+        print('allow_incompatible_pythonista_version argument removed, has no effect')
+
+    blackmamba.updates.check()
+    _register_default_key_commands()
 
     print('Black Mamba initialized')
 
+    if not compatible:
+        sys.stderr.write('Installed Black Mamba version is not tested with current version of Pythonista\n')
+        sys.stderr.write('Latest compatibility tests were made with Pythonista {} ({})\n'.format(
+            _LATEST_VERSION_COMPATIBILITY_TEST[1],
+            _LATEST_VERSION_COMPATIBILITY_TEST[0]))
+        sys.stderr.write('Update Black Mamba or use at your own risk\n')
+
+    return compatible
+
 
 if __name__ == '__main__':
-    main(True)
+    main()
