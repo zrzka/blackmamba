@@ -2,6 +2,12 @@
 
 import blackmamba as bm
 
+# Default: True
+bm.updates.check_for_updates = True
+
+# Default: 86400 seconds (1 day)
+bm.updates.check_interval = 3600
+
 # ''           : any parent folder
 # '.'          : ~/Documents parent folder
 # 'Development': ~/Documents/Development parent folder
