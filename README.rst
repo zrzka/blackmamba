@@ -47,7 +47,7 @@ Updates
 Black Mamba checks for updates automatically (once a day). This can be modified
 via ``check_for_updates`` and ``check_interval`` variables in the ``updates``
 module. Anyway, if you see a message about new version available, just repeat
-package installation steps to install new version util real updates will be
+package installation steps to install new version until real update will be
 implemented.
 
 
