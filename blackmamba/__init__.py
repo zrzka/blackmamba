@@ -15,7 +15,7 @@ import os
 import sys
 from blackmamba.log import warn, info, error
 
-__version__ = '0.0.15'
+__version__ = '0.0.16'
 _LATEST_VERSION_COMPATIBILITY_TEST = (311008, '3.1.1')
 
 
