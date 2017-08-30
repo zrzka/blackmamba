@@ -1,7 +1,7 @@
 #!python3
 
 from objc_util import on_main_thread, c, parse_types, ObjCClass, sel, retain_global
-from ctypes import CFUNCTYPE, c_void_p
+from ctypes import CFUNCTYPE, c_void_p, c_char_p
 from blackmamba.log import error
 
 SWIZZLED_SELECTOR_PREFIX = 'original'
@@ -10,6 +10,31 @@ SWIZZLED_SELECTOR_PREFIX = 'original'
 method_exchangeImplementations = c.method_exchangeImplementations
 method_exchangeImplementations.argtypes = [c_void_p, c_void_p]
 method_exchangeImplementations.restype = c_void_p
+
+
+@on_main_thread
+def add_method(cls_name, selector_name, fn, type_encoding):
+    cls = ObjCClass(cls_name).ptr
+
+    selector = sel(selector_name)
+
+    if c.class_getInstanceMethod(cls, selector):
+        error('Failed to add method, class {} already provides method {}'.format(cls_name, selector_name))
+        return
+
+    parsed_types = parse_types(type_encoding)
+    restype = parsed_types[0]
+    argtypes = parsed_types[1]
+
+    IMPTYPE = CFUNCTYPE(restype, *argtypes)
+    imp = IMPTYPE(fn)
+    retain_global(imp)
+
+    did_add = c.class_addMethod(cls, selector, imp, c_char_p(type_encoding.encode('utf-8')))
+    if not did_add:
+        error('Failed to add class method')
+
+    return did_add
 
 
 @on_main_thread
