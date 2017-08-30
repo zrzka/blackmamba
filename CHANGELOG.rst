@@ -5,7 +5,8 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
-* 
+* Installation command is copied to the clipboard when the alert about
+  new version is shown. Just open console and paste it.
 
 
 ``0.0.16`` (2017-08-29)

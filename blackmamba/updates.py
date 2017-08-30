@@ -7,6 +7,7 @@ import json
 import requests
 import console
 from blackmamba.log import info, error
+import clipboard
 
 check_for_updates = True
 check_interval = 86400  # Seconds, 86400 = 1 day
@@ -16,6 +17,7 @@ _ROOT_DIR = os.path.expanduser('~/Documents/site-packages-3/blackmamba')
 _RELEASE_PATH = os.path.join(_ROOT_DIR, '.release.json')
 _OWNER = 'zrzka'
 _REPOSITORY = 'blackmamba'
+_INSTALL_COMMAND = 'import requests as r; exec(r.get(\'http://bit.ly/get-blackmamba\').text)'
 
 
 def _user_defaults():
@@ -101,6 +103,8 @@ def check():
         if local_release['tag_name'] == latest_release['tag_name']:
             info('No updates available, you are up to date')
             return
+
+        clipboard.set(_INSTALL_COMMAND)
 
         console.alert('Black Mamba',
                       'New version {} (tag {}) available.'.format(latest_release['name'], latest_release['tag_name']),
