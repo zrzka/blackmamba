@@ -11,3 +11,4 @@ if not IS_PYTHONISTA:
     sys.modules['ui'] = MagicMock()
     sys.modules['objc_util'] = MagicMock()
     sys.modules['console'] = MagicMock()
+    sys.modules['clipboard'] = MagicMock()
