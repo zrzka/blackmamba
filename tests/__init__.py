@@ -1,8 +1,6 @@
-import blackmamba.system as system
+import sys
 
-
-if not system.PYTHONISTA:
-    import sys
+if not sys.platform == 'ios':
     from mock import MagicMock
 
     sys.modules['editor'] = MagicMock()
