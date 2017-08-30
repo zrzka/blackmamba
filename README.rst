@@ -2,6 +2,10 @@
 Black Mamba
 ===========
 
+.. image:: https://travis-ci.org/zrzka/blackmamba.svg?branch=master
+    :align: right
+    :alt: Travis CI Build Status
+
 `Pythonista <http://omz-software.com/pythonista/>`_ on steroids.
 
     Pythonista is a complete development environment for writing Python™
