@@ -49,7 +49,7 @@ class Available():
 
         Run function only within Pythonista >= 3.1.1::
 
-            @Available('3.1.1')
+            @Available('3.1.1')  # or @Available(from_version='3.1.1')
             def run_me():
                 pass
 
