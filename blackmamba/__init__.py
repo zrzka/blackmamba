@@ -10,10 +10,8 @@ import blackmamba.experimental.tester
 import blackmamba.updates
 from blackmamba.key_commands import register_key_command
 from blackmamba.uikit import UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
-import plistlib
-import os
-import sys
 from blackmamba.log import warn, info, error
+import blackmamba.system as system
 
 __version__ = '0.0.16'
 _LATEST_VERSION_COMPATIBILITY_TEST = (311008, '3.1.1')
@@ -90,14 +88,7 @@ def _register_default_key_commands():
 
 
 def _is_compatible_with_pythonista():
-    plist_path = os.path.abspath(os.path.join(sys.executable,
-                                 '..', 'Info.plist'))
-    plist = plistlib.readPlist(plist_path)
-
-    version_string = plist['CFBundleShortVersionString']
-    bundle_version = int(plist['CFBundleVersion'])
-
-    info('Pythonista {} ({})'.format(version_string, bundle_version))
+    info('Pythonista {} ({})'.format(system.PYTHONISTA_VERSION, system.PYTHONISTA_BUNDLE_VERSION))
 
     local_release = blackmamba.updates.get_local_release()
     if local_release:
@@ -105,11 +96,16 @@ def _is_compatible_with_pythonista():
     else:
         info('Black Mamba {} (tag unknown, not installed via installation script)'.format(__version__))
 
-    return bundle_version <= _LATEST_VERSION_COMPATIBILITY_TEST[0]
+    return system.PYTHONISTA_BUNDLE_VERSION <= _LATEST_VERSION_COMPATIBILITY_TEST[0]
 
 
 def main(**kwargs):
     info('Black Mamba initialization...')
+
+    if not system.PYTHONISTA:
+        error('Skipping, not running under Pythonista')
+        return
+
     compatible = _is_compatible_with_pythonista()
 
     if 'allow_incompatible_pythonista_version' in kwargs:

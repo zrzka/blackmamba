@@ -1,9 +1,8 @@
 import os
-import re
+import blackmamba.system as system
 
-IS_PYTHONISTA = re.search('Pythonista\d+', os.environ.get('PYTHONPATH', ''), re.ASCII) is not None
 
-if not IS_PYTHONISTA:
+if not system.PYTHONISTA:
     import sys
     from mock import MagicMock
 
