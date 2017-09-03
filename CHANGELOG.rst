@@ -7,8 +7,8 @@ Change Log
 
 * Installation command is copied to the clipboard when the alert about
   new version is shown. Just open console and paste it.
-* ``system.Available`` decorator to limit functions execution under
-  the specific Pythonista versions.
+* ``system.Pythonista`` and ``system.iOS`` decorator to limit functions
+  execution under the specific Pythonista & iOS versions.
 
 
 ``0.0.16`` (2017-08-29)
