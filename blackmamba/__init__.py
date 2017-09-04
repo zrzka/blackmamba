@@ -79,7 +79,10 @@ def _register_default_key_commands():
          blackmamba.ide.select_previous_tab),
         ('L', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.outline.outline_quickly,
-         'Outline Quickly...')
+         'Outline Quickly...'),
+        ('L', UIKeyModifierControl,
+         blackmamba.ide.jump_to_line_dialog,
+         'Jump to line...')
     ]
 
     for command in commands:

@@ -5,6 +5,7 @@ import webbrowser
 import blackmamba.action_picker
 from blackmamba.log import error
 import editor
+import console
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -162,3 +163,16 @@ def scroll_to_line(line_number):
 
     if line_number >= 1 and line_number <= len(line_start_indexes):
         editor.set_selection(line_start_indexes[line_number - 1])
+
+
+@on_main_thread
+def jump_to_line_dialog():
+    try:
+        input = console.input_alert('Jump to line...', 'Empty (or invalid) value  to dismiss.')
+        scroll_to_line(int(input))
+    except ValueError:
+        # Invalid input value (not int)
+        pass
+    except KeyboardInterrupt:
+        # Cancel button
+        pass
