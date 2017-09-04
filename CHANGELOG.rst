@@ -4,6 +4,11 @@ Change Log
 
 ``master`` (unreleased)
 -----------------------
+* Fixed unused import in action picker
+
+
+``0.0.18`` (unreleased)
+-----------------------
 
 * Installation command is copied to the clipboard when the alert about
   new version is shown. Just open console and paste it.

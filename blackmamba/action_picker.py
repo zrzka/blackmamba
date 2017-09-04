@@ -1,7 +1,7 @@
 #!python3
 
 from objc_util import on_main_thread, ObjCClass
-from ui import TableViewCell, Image
+from ui import TableViewCell
 from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
 from blackmamba.uikit import UITableViewCellStyleSubtitle
 import blackmamba.ide
