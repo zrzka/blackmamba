@@ -2,9 +2,11 @@
 Change Log
 ==========
 
-``master`` (unreleased)
+``0.0.20`` (unreleased)
 -----------------------
+
 * Fixed unused import in action picker
+* Compatibility check with 3.1.1 (311009)
 
 
 ``0.0.18`` (unreleased)
