@@ -58,7 +58,7 @@ class ActionPickerItem(PickerItem):
 class ActionPickerDataSource(PickerDataSource):
     def __init__(self):
         super().__init__()
-        self.items = [ActionPickerItem(ai) for ai in load_editor_actions()]
+        self.items = sorted([ActionPickerItem(ai) for ai in load_editor_actions()])
 
     def tableview_cell_for_row(self, tv, section, row):
         item = self.filtered_items[row]

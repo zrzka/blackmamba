@@ -50,7 +50,7 @@ class FilePickerDataSource(PickerDataSource):
                 files = [f for f in files if allow_file(root, f)]
             items.extend([FilePickerItem(root, f, display_folder) for f in files])
 
-        self.items = items
+        self.items = sorted(items)
 
 
 @on_main_thread

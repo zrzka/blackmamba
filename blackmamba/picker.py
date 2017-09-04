@@ -7,9 +7,10 @@ from blackmamba.key_events import register_key_event_handler, unregister_key_eve
 
 
 class PickerItem(object):
-    def __init__(self, title, subtitle=None):
+    def __init__(self, title, subtitle=None, image=None):
         self.title = title
         self.subtitle = subtitle
+        self.image = image
         self._norm_title = title.lower()
 
     def matches_title(self, terms):
@@ -69,7 +70,7 @@ class PickerDataSource(object):
 
     @items.setter
     def items(self, value):
-        self._items = sorted(value)
+        self._items = value
         self._filter_items()
 
     @property
@@ -138,6 +139,8 @@ class PickerDataSource(object):
         cell.text_label.text = item.title
         cell.detail_text_label.text = item.subtitle
         cell.detail_text_label.text_color = (0, 0, 0, 0.5)
+        if item.image:
+            cell.image_view.image = item.image
         return cell
 
 
