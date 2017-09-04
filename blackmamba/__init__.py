@@ -14,7 +14,7 @@ from blackmamba.uikit import UIKeyModifierCommand, UIKeyModifierShift, UIKeyModi
 from blackmamba.log import warn, info, error
 import blackmamba.system as system
 
-__version__ = '0.0.18'
+__version__ = '0.0.19'
 _LATEST_VERSION_COMPATIBILITY_TEST = (311008, '3.1.1')
 
 
