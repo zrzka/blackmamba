@@ -15,6 +15,7 @@ Change Log
 * ``system.Pythonista`` and ``system.iOS`` decorator to limit functions
   execution under the specific Pythonista & iOS versions.
 * 0.0.17 skipped, because this version was used for testing & fixing pip
+* Outline Quickly... (``Cmd L``) introduced
 
 
 ``0.0.16`` (2017-08-29)
