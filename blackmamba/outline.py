@@ -7,6 +7,7 @@ from enum import Enum
 from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
 from objc_util import on_main_thread
 from ui import Image
+import blackmamba.ide as ide
 
 
 class OutlineNodeItem(PickerItem):
@@ -73,14 +74,7 @@ def outline_quickly():
         return
 
     def scroll_to_node(node, shift_enter):
-        # https://github.com/omz/Pythonista-Issues/issues/365
-        line_ranges = [0]
-        start = 0
-        for line in text.splitlines():
-            start += len(line) + 1
-            line_ranges.append(start)
-
-        editor.set_selection(line_ranges[node.line - 1])
+        ide.scroll_to_line(node.line)
 
     v = load_picker_view()
     v.datasource = OutlineDataSource(text, os.path.basename(filename))

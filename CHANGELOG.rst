@@ -7,6 +7,7 @@ Change Log
 
 * Fixed unused import in action picker
 * Compatibility check with 3.1.1 (311009)
+* Introduced ``ide.scroll_to_line(line_number)``
 
 
 ``0.0.18`` (unreleased)

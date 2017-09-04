@@ -4,6 +4,7 @@ import urllib.parse
 import webbrowser
 import blackmamba.action_picker
 from blackmamba.log import error
+import editor
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -144,3 +145,19 @@ def run_action(title):
         return
 
     run_script(action.script_name)
+
+
+def scroll_to_line(line_number):
+    text = editor.get_text()
+    if not text:
+        return
+
+    # https://github.com/omz/Pythonista-Issues/issues/365
+    line_start_indexes = [0]
+    start = 0
+    for line in text.splitlines():
+        start += len(line) + 1
+        line_start_indexes.append(start)
+
+    if line_number >= 1 and line_number <= len(line_start_indexes):
+        editor.set_selection(line_start_indexes[line_number - 1])
