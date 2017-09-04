@@ -8,6 +8,7 @@ import blackmamba.action_picker
 import blackmamba.analyzer
 import blackmamba.experimental.tester
 import blackmamba.updates
+import blackmamba.outline
 from blackmamba.key_commands import register_key_command
 from blackmamba.uikit import UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
 from blackmamba.log import warn, info, error
@@ -75,7 +76,10 @@ def _register_default_key_commands():
         (']', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.ide.select_next_tab),
         ('[', UIKeyModifierCommand | UIKeyModifierShift,
-         blackmamba.ide.select_previous_tab)
+         blackmamba.ide.select_previous_tab),
+        ('L', UIKeyModifierCommand | UIKeyModifierShift,
+         blackmamba.outline.outline_quickly,
+         'Outline Quickly...')
     ]
 
     for command in commands:
