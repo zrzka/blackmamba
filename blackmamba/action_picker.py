@@ -47,13 +47,6 @@ class ActionPickerItem(PickerItem):
 
         self.action_info = action_info
 
-    @property
-    def image(self):
-        # TODO - Find a way how get the right icon, because there's
-        #        lot of prefixes like iob:, different sizes, ...
-        image = Image.named('iob:play_32')
-        return image
-
 
 class ActionPickerDataSource(PickerDataSource):
     def __init__(self):
@@ -67,12 +60,6 @@ class ActionPickerDataSource(PickerDataSource):
         cell.text_label.text = item.title
         cell.detail_text_label.text = item.subtitle
         cell.detail_text_label.text_color = (0, 0, 0, 0.5)
-
-#        cell.image_view.content_mode = ui.CONTENT_SCALE_ASPECT_FILL
-#        cell.image_view.background_color = item.icon_color
-#        cell.image_view.image = item.image
-#        cell.image_view.alpha = 0.5
-
         return cell
 
 
