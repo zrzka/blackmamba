@@ -9,6 +9,7 @@ Change Log
   new version is shown. Just open console and paste it.
 * ``system.Pythonista`` and ``system.iOS`` decorator to limit functions
   execution under the specific Pythonista & iOS versions.
+* 0.0.17 skipped, because this version was used for testing & fixing pip
 
 
 ``0.0.16`` (2017-08-29)
