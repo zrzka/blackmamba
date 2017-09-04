@@ -147,6 +147,7 @@ def run_action(title):
     run_script(action.script_name)
 
 
+@on_main_thread
 def scroll_to_line(line_number):
     text = editor.get_text()
     if not text:
