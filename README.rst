@@ -89,6 +89,8 @@ Shortcut            Function
 ``Ctrl Tab``        Show Next Tab (or ``Cmd Shift ]``)
 ``Ctrl Shift Tab``  Show Previous Tab (or ``Cmd Shift [``)
 ``Cmd 1..9``        Show nth tab
+``Ctrl L``          Jump to line
+``Cmd E``           Drag Provider
 ==================  ========================================
 
 **WARNING**: *Run Quickly...* and *Action Quickly...* works only and only
