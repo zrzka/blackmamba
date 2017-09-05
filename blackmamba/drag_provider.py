@@ -8,6 +8,7 @@ import blackmamba.runtime as runtime
 import blackmamba.system as system
 from blackmamba.key_events import register_key_event_handler, unregister_key_event_handler
 import blackmamba.uikit as uikit
+from blackmamba.log import error
 import console
 
 _TMP_DIR = os.environ.get('TMPDIR', os.environ.get('TMP'))
