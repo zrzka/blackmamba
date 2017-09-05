@@ -2,16 +2,23 @@
 Change Log
 ==========
 
-``0.0.20`` (unreleased)
+``master`` (unreleased)
+-----------------------
+
+*
+
+
+``0.0.19`` (2017-09-05)
 -----------------------
 
 * Fixed unused import in action picker
 * Compatibility check with 3.1.1 (311009)
 * Introduced ``ide.scroll_to_line(line_number)``
 * ``Ctrl L`` Jump to line... added
+* ``Cmd E`` to show Drag Provider (iOS 11 only)
 
 
-``0.0.18`` (unreleased)
+``0.0.18`` (2017-09-04)
 -----------------------
 
 * Installation command is copied to the clipboard when the alert about

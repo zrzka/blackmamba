@@ -24,6 +24,20 @@ def _make_select_tab(index):
     return select_tab
 
 
+@system.iOS('11.0')
+def _register_ios11_default_key_commands():
+    from blackmamba.drag_provider import drag_provider_dialog
+
+    commands = [
+        ('E', UIKeyModifierCommand,
+         drag_provider_dialog,
+         'Drag Provider')
+    ]
+
+    for command in commands:
+        register_key_command(*command)
+
+
 def _register_default_key_commands():
     info('Registering default key commands...')
 
@@ -90,6 +104,8 @@ def _register_default_key_commands():
 
     for i in range(9):
         register_key_command(str(i + 1), UIKeyModifierCommand, _make_select_tab(i))
+
+    _register_ios11_default_key_commands()
 
     info('Default key commands registered')
 
