@@ -1,32 +1,19 @@
 #!python3
 
-import blackmamba.toggle_comments
-import blackmamba.ide
-import blackmamba.file_picker
-import blackmamba.dash
-import blackmamba.action_picker
-import blackmamba.analyzer
-import blackmamba.experimental.tester
-import blackmamba.updates
-import blackmamba.outline
-from blackmamba.key_commands import register_key_command
-from blackmamba.uikit import UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
-from blackmamba.log import warn, info, error
+from blackmamba.log import info, error
 import blackmamba.system as system
 
 __version__ = '0.0.20'
+__author__ = 'Robert Vojta'
+
 _LATEST_VERSION_COMPATIBILITY_TEST = (311009, '3.1.1')
 
 
-def _make_select_tab(index):
-    def select_tab():
-        blackmamba.ide.select_tab(index)
-    return select_tab
-
-
+@system.Pythonista()
 @system.iOS('11.0')
 def _register_ios11_default_key_commands():
     from blackmamba.drag_provider import drag_provider_dialog
+    from blackmamba.key_command import register_key_command, UIKeyModifierCommand
 
     commands = [
         ('E', UIKeyModifierCommand,
@@ -38,12 +25,25 @@ def _register_ios11_default_key_commands():
         register_key_command(*command)
 
 
+@system.Pythonista()
 def _register_default_key_commands():
+    import blackmamba.comment
+    import blackmamba.ide
+    import blackmamba.file_picker
+    import blackmamba.dash
+    import blackmamba.action_picker
+    import blackmamba.analyzer
+    import blackmamba.experimental.tester
+    import blackmamba.outline
+    from blackmamba.key_command import (
+        register_key_command, UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
+    )
+
     info('Registering default key commands...')
 
     commands = [
         ('/', UIKeyModifierCommand,
-         blackmamba.toggle_comments.toggle_comments,
+         blackmamba.comment.toggle_comments,
          'Toggle Comments'),
         ('N', UIKeyModifierCommand,
          blackmamba.ide.new_file,
@@ -102,6 +102,11 @@ def _register_default_key_commands():
     for command in commands:
         register_key_command(*command)
 
+    def _make_select_tab(index):
+        def select_tab():
+            blackmamba.ide.select_tab(index)
+        return select_tab
+
     for i in range(9):
         register_key_command(str(i + 1), UIKeyModifierCommand, _make_select_tab(i))
 
@@ -110,43 +115,37 @@ def _register_default_key_commands():
     info('Default key commands registered')
 
 
-def _is_compatible_with_pythonista():
+@system.Pythonista()
+def _check_compatibility_and_updates():
+    import blackmamba.update
     info('Pythonista {} ({})'.format(system.PYTHONISTA_VERSION, system.PYTHONISTA_BUNDLE_VERSION))
 
-    local_release = blackmamba.updates.get_local_release()
+    local_release = blackmamba.update.get_local_release()
     if local_release:
         info('Black Mamba {} (tag {})'.format(__version__, local_release['tag_name']))
     else:
         info('Black Mamba {} (tag unknown, not installed via installation script)'.format(__version__))
 
-    return system.PYTHONISTA_BUNDLE_VERSION <= _LATEST_VERSION_COMPATIBILITY_TEST[0]
-
-
-def main(**kwargs):
-    info('Black Mamba initialization...')
-
-    if not system.PYTHONISTA:
-        error('Skipping, not running under Pythonista')
-        return
-
-    compatible = _is_compatible_with_pythonista()
-
-    if 'allow_incompatible_pythonista_version' in kwargs:
-        warn('allow_incompatible_pythonista_version argument removed, has no effect')
-
-    blackmamba.updates.check()
-    _register_default_key_commands()
-
-    info('Black Mamba initialized')
-
-    if not compatible:
+    if system.PYTHONISTA_BUNDLE_VERSION > _LATEST_VERSION_COMPATIBILITY_TEST[0]:
         error('Installed Black Mamba version is not tested with current version of Pythonista')
         error('Latest compatibility tests were made with Pythonista {} ({})'.format(
             _LATEST_VERSION_COMPATIBILITY_TEST[1],
             _LATEST_VERSION_COMPATIBILITY_TEST[0]))
         error('Update Black Mamba or use at your own risk')
 
-    return compatible
+    blackmamba.update.check()
+
+
+@system.Pythonista()
+@system.catch_exceptions
+def main(config=None):
+    from blackmamba.config import update_config_with_dict
+    info('Black Mamba initialization...')
+    if config:
+        update_config_with_dict(config)
+    _check_compatibility_and_updates()
+    _register_default_key_commands()
+    info('Black Mamba initialized')
 
 
 if __name__ == '__main__':

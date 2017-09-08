@@ -1,8 +1,13 @@
 from setuptools import setup
+import re
+
+_init_py = open('blackmamba/__init__.py').read()
+__version__ = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', _init_py).group(1)
+__author__ = re.search(r'__author__\s*=\s*[\'"]([^\'"]*)[\'"]', _init_py).group(1)
 
 setup(
     name='blackmamba',
-    version='0.0.20',
+    version=__version__,
 
     description='Pythonista on steroids',
     long_description=open('README.rst', 'rt').read(),
@@ -18,7 +23,7 @@ setup(
     url='https://github.com/zrzka/blackmamba',
     license='MIT',
 
-    author='Robert Vojta',
+    author=__author__,
 
     packages=[
         'blackmamba',

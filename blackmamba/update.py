@@ -7,10 +7,9 @@ import json
 import requests
 import console
 from blackmamba.log import info, error
+from blackmamba.config import get_config_value
 import clipboard
 
-check_for_updates = True
-check_interval = 86400  # Seconds, 86400 = 1 day
 
 _DEFAULTS_LAST_UPDATE_CHECK_KEY = 'BlackMambaLastUpdateCheck'
 _ROOT_DIR = os.path.expanduser('~/Documents/site-packages-3/blackmamba')
@@ -76,13 +75,13 @@ def _get_latest_release():
 
 
 def check():
-    if not check_for_updates:
+    if not get_config_value('update.enabled', True):
         return
 
     timestamp = _timestamp()
 #     last_check = timestamp - check_interval
     last_check = _get_last_update_check() or timestamp
-    if last_check + check_interval > timestamp:
+    if last_check + get_config_value('update.interval', 86400) > timestamp:
         return
     _set_last_update_check(timestamp)
 

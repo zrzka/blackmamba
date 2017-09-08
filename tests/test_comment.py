@@ -1,6 +1,6 @@
 #!python3
 
-from blackmamba.toggle_comments import _comment_line, _uncomment_line
+from blackmamba.comment import _comment_line, _uncomment_line
 
 
 def test_comment_line():

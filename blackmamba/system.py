@@ -1,5 +1,20 @@
+#!python3
+'''System info and decorators.
+
+Note:
+    This module must not introduce dependency on any other Black Mamba
+    modules and must be importable on any other platform as well.
+'''
+
 import sys
-from objc_util import ObjCClass
+import traceback
+import functools
+
+try:
+    import console
+except ModuleNotFoundError:
+    console = None
+
 
 # 3.1, 301016
 # 3.1.1 beta, 311008
@@ -49,6 +64,7 @@ if PYTHONISTA:
 
 if IOS:
     try:
+        from objc_util import ObjCClass
         IOS_VERSION = str(ObjCClass('UIDevice').currentDevice().systemVersion())
         IOS_VERSION_TUPLE = _version_tuple(IOS_VERSION)
     except Exception:
@@ -137,3 +153,24 @@ class Pythonista(_Available):
     '''
     def version(self):
         return PYTHONISTA_VERSION_TUPLE
+
+
+def catch_exceptions(func):
+    '''Catches all ``Exception`` exceptions and writes info to console.
+
+    Use this decorator for functions handling keyboard shortcuts,
+    keyboard events, ... to avoid Pythonista crash.
+    '''
+    @functools.wraps(func)
+    def new_func(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception:
+            if console:
+                console.set_color(1, 0, 0)
+            print(traceback.format_exc())
+            print('Please, file an issue at {}'.format('https://github.com/zrzka/blackmamba/issues'))
+            if console:
+                console.set_color()
+
+    return new_func

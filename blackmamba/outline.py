@@ -5,7 +5,6 @@ import ast
 import os
 from enum import Enum
 from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
-from objc_util import on_main_thread
 from ui import Image
 import blackmamba.ide as ide
 
@@ -60,7 +59,6 @@ class OutlineDataSource(PickerDataSource):
         return nodes
 
 
-@on_main_thread
 def outline_quickly():
     filename = editor.get_path()
     if not filename:

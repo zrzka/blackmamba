@@ -1,3 +1,5 @@
+#!python3
+
 from objc_util import ObjCClass, on_main_thread, UIApplication
 import os
 import urllib.parse
@@ -138,7 +140,6 @@ def action_exists(title):
     return _load_action(title) is not None
 
 
-@on_main_thread
 def run_action(title):
     action = _load_action(title)
     if not action:
@@ -148,7 +149,6 @@ def run_action(title):
     run_script(action.script_name)
 
 
-@on_main_thread
 def scroll_to_line(line_number):
     text = editor.get_text()
     if not text:
@@ -165,7 +165,6 @@ def scroll_to_line(line_number):
         editor.set_selection(line_start_indexes[line_number - 1])
 
 
-@on_main_thread
 def jump_to_line_dialog():
     try:
         input = console.input_alert('Jump to line...', 'Empty (or invalid) value  to dismiss.')

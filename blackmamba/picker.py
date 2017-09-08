@@ -2,8 +2,14 @@
 
 from ui import View, load_view, TableViewCell
 from objc_util import ObjCInstance, ObjCClass
-import blackmamba.uikit as uikit
-from blackmamba.key_events import register_key_event_handler, unregister_key_event_handler
+from blackmamba.uikit import UITableViewCellStyle
+from blackmamba.key_command import UIKeyModifierShift, UIKeyModifierControl
+from blackmamba.key_event import (
+    register_key_event_handler, unregister_key_event_handler,
+    UIEventKeyCodeUp, UIEventKeyCodeDown,
+    UIEventKeyCodeEnter, UIEventKeyCodeEscape,
+    UIEventKeyCodeLeftSquareBracket
+)
 
 
 class PickerItem(object):
@@ -134,7 +140,7 @@ class PickerDataSource(object):
 
     def tableview_cell_for_row(self, tv, section, row):
         item = self._filtered_items[row]
-        cell = TableViewCell(uikit.UITableViewCellStyleSubtitle)
+        cell = TableViewCell(UITableViewCellStyle.subtitle.value)
         cell.text_label.number_of_lines = 1
         cell.text_label.text = item.title
         cell.detail_text_label.text = item.subtitle
@@ -177,14 +183,14 @@ class PickerView(View):
         def handle_escape():
             self.close()
 
-        self._handlers.append(register_key_event_handler(uikit.UIEventKeyCodeUp, handle_key_up))
-        self._handlers.append(register_key_event_handler(uikit.UIEventKeyCodeDown, handle_key_down))
-        self._handlers.append(register_key_event_handler(uikit.UIEventKeyCodeEnter, handle_enter))
-        self._handlers.append(register_key_event_handler(uikit.UIEventKeyCodeEnter, handle_shift_enter,
-                                                         modifier_flags=uikit.UIKeyModifierShift))
-        self._handlers.append(register_key_event_handler(uikit.UIEventKeyCodeEscape, handle_escape))
-        self._handlers.append(register_key_event_handler(uikit.UIEventKeyCodeLeftSquareBracket, handle_escape,
-                                                         modifier_flags=uikit.UIKeyModifierControl))
+        self._handlers.append(register_key_event_handler(UIEventKeyCodeUp, handle_key_up))
+        self._handlers.append(register_key_event_handler(UIEventKeyCodeDown, handle_key_down))
+        self._handlers.append(register_key_event_handler(UIEventKeyCodeEnter, handle_enter))
+        self._handlers.append(register_key_event_handler(UIEventKeyCodeEnter, handle_shift_enter,
+                                                         modifier_flags=UIKeyModifierShift))
+        self._handlers.append(register_key_event_handler(UIEventKeyCodeEscape, handle_escape))
+        self._handlers.append(register_key_event_handler(UIEventKeyCodeLeftSquareBracket, handle_escape,
+                                                         modifier_flags=UIKeyModifierControl))
 
     def will_close(self):
         for handler in self._handlers:

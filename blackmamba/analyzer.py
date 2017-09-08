@@ -9,14 +9,25 @@ import editor
 import console
 from blackmamba.annotation import Annotation, Style
 from itertools import groupby
+from blackmamba.config import get_config_value
 
-hud_alert_delay = 1.0
-ignore_codes = [
-    'W391',  # Blank line at the end of file
-    'W293',  # Blank line contains whitespace
-]
-max_line_length = 79
-remove_whitespaces = True
+__all__ = ['analyze']
+
+
+def _hud_alert_delay():
+    return get_config_value('analyzer.hud_alert_delay', 1.0)
+
+
+def _ignore_codes():
+    return get_config_value('analyzer.ignore_codes', ['W391', 'W293'])
+
+
+def _max_line_length():
+    return get_config_value('analyzer.max_line_length', 79)
+
+
+def _remove_whitespaces():
+    return get_config_value('analyzer.remove_whitespaces', True)
 
 
 _REMOVE_TRAILING_WHITESPACES_REGEX = re.compile('[ \t]+$', re.MULTILINE)
@@ -166,7 +177,7 @@ def _editor_text():
 
     range_end = len(text)
 
-    if remove_whitespaces:
+    if _remove_whitespaces():
         text = _remove_trailing_whitespaces(text)
         text = _remove_trailing_lines(text)
         editor.replace_text(0, range_end, text)
@@ -193,14 +204,14 @@ def analyze():
 
     annotations = _pep8_annotations(
         text,
-        ignore=ignore_codes,
-        max_line_length=max_line_length
+        ignore=_ignore_codes(),
+        max_line_length=_max_line_length()
     )
 
     annotations += _pyflakes_annotations(path, text)
 
     if not annotations:
-        console.hud_alert('No Issues Found', 'iob:checkmark_32', hud_alert_delay)
+        console.hud_alert('No Issues Found', 'iob:checkmark_32', _hud_alert_delay())
         return None
 
     scroll = True

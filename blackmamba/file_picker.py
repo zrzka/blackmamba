@@ -1,17 +1,23 @@
 #!python3
 
-import editor
 import os
-from objc_util import on_main_thread
+import editor
 from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
 import blackmamba.ide as ide
+from blackmamba.config import get_config_value
+
+__all__ = ['script_quickly', 'open_quickly']
 
 
-ignore_folders = {
+_IGNORE_FOLDERS = {
     '': ['.git'],
     '.': ['.Trash', 'Examples',
           'site-packages', 'site-packages-2', 'site-packages-3']
 }
+
+
+def _ignore_folders():
+    return get_config_value('file_picker.ignore_folders', _IGNORE_FOLDERS)
 
 
 class FilePickerItem(PickerItem):
@@ -53,7 +59,6 @@ class FilePickerDataSource(PickerDataSource):
         self.items = sorted(items)
 
 
-@on_main_thread
 def open_quickly():
     def allow_file(root, name):
         return not name.startswith('.')
@@ -63,7 +68,7 @@ def open_quickly():
         editor.open_file(item.file_path, new_tab=new_tab)
 
     kwargs = {
-        'ignore_folders': ignore_folders,
+        'ignore_folders': _ignore_folders(),
         'allow_file': allow_file
     }
 
@@ -82,7 +87,6 @@ def open_quickly():
     v.wait_modal()
 
 
-@on_main_thread
 def script_quickly():
     def allow_file(root, name):
         return not name.startswith('.') and name.endswith('.py')
@@ -91,7 +95,7 @@ def script_quickly():
         ide.run_script(item.file_path, full_path=True)
 
     kwargs = {
-        'ignore_folders': ignore_folders,
+        'ignore_folders': _ignore_folders(),
         'allow_file': allow_file
     }
 

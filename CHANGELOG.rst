@@ -5,6 +5,8 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
+* Code cleanup (circular deps, ...)
+
 
 ``0.0.19`` (2017-09-05)
 -----------------------

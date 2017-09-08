@@ -2,29 +2,29 @@
 
 import collections
 from ctypes import CFUNCTYPE, c_void_p, c_char_p
-from objc_util import retain_global, ObjCInstance, UIApplication, c, ns, on_main_thread, sel
+from objc_util import retain_global, ObjCInstance, UIApplication, c, ns, on_main_thread, sel, ObjCClass
 from blackmamba.runtime import swizzle
-import blackmamba.uikit as uikit
-import inspect
 from blackmamba.log import error, info
 
-#
-# TODO
-#
-#  - replace _key_commands global with something more robust
-#  - find a way how to provide module/state specific key commands, ie. do not
-#    show editor key command if editor is not first responder, ... see
-#    _zrzka_keyCommands function for more details
-#
+_UIKeyCommand = ObjCClass('UIKeyCommand')
+
+# UIKeyModifierFlags
+
+UIKeyModifierAlphaShift = 1 << 16  # CapsLock
+UIKeyModifierShift = 1 << 17  # Shift
+UIKeyModifierControl = 1 << 18  # Control
+UIKeyModifierAlternate = 1 << 19  # Option
+UIKeyModifierCommand = 1 << 20  # Command
+UIKeyModifierNumericPad = 1 << 21  # Key is located on the numeric keypad
 
 # Keep it ordered to avoid different selector names for the same input & flags
 _UIKeyModifierNames = collections.OrderedDict([
-    (uikit.UIKeyModifierAlphaShift, 'CapsLock'),
-    (uikit.UIKeyModifierShift, 'Shift'),
-    (uikit.UIKeyModifierControl, 'Control'),
-    (uikit.UIKeyModifierAlternate, 'Option'),
-    (uikit.UIKeyModifierCommand, 'Command'),
-    (uikit.UIKeyModifierNumericPad, 'NumericPad')
+    (UIKeyModifierAlphaShift, 'CapsLock'),
+    (UIKeyModifierShift, 'Shift'),
+    (UIKeyModifierControl, 'Control'),
+    (UIKeyModifierAlternate, 'Option'),
+    (UIKeyModifierCommand, 'Command'),
+    (UIKeyModifierNumericPad, 'NumericPad')
 ])
 
 _UIKeyInputNames = {
@@ -95,15 +95,6 @@ def _shortcut_name(input, modifier_flags):
     return input
 
 
-def _function_name(function):
-    function_module = inspect.getmodule(function)
-
-    if function_module:
-        return '{}.{}'.format(function_module.__name__, function.__name__)
-
-    return function.__name__
-
-
 @on_main_thread
 def register_key_command(input, modifier_flags, function, title=None):
     if not UIApplication.sharedApplication().respondsToSelector_(sel('originalkeyCommands')):
@@ -114,7 +105,9 @@ def register_key_command(input, modifier_flags, function, title=None):
     obj = UIApplication.sharedApplication().keyWindow()
 
     info('Registering key command "{}" ({})'.format(
-        _shortcut_name(input, modifier_flags), _function_name(function)))
+        _shortcut_name(input, modifier_flags),
+        title or 'No discoverability title'
+    ))
 
     if not callable(function):
         error('Skipping, provided function is not callable')
@@ -125,11 +118,7 @@ def register_key_command(input, modifier_flags, function, title=None):
         return False
 
     def key_command_action(_sel, _cmd, sender):
-        try:
-            function()
-        except Exception as ex:
-            error('Exception in {} method'.format(selector_name))
-            error(ex)
+        function()
 
     IMPTYPE = CFUNCTYPE(None, c_void_p, c_void_p, c_void_p)
     imp = IMPTYPE(key_command_action)
@@ -143,10 +132,10 @@ def register_key_command(input, modifier_flags, function, title=None):
         return False
 
     if title:
-        kc = uikit.UIKeyCommand.keyCommandWithInput_modifierFlags_action_discoverabilityTitle_(
+        kc = _UIKeyCommand.keyCommandWithInput_modifierFlags_action_discoverabilityTitle_(
             ns(input), modifier_flags, selector, ns(title))
     else:
-        kc = uikit.UIKeyCommand.keyCommandWithInput_modifierFlags_action_(ns(input), modifier_flags, selector)
+        kc = _UIKeyCommand.keyCommandWithInput_modifierFlags_action_(ns(input), modifier_flags, selector)
 
     _key_commands.append(kc)
     return True

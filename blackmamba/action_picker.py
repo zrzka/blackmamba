@@ -1,9 +1,9 @@
 #!python3
 
-from objc_util import on_main_thread, ObjCClass
+from objc_util import ObjCClass
 from ui import TableViewCell
 from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
-from blackmamba.uikit import UITableViewCellStyleSubtitle
+from blackmamba.uikit import UITableViewCellStyle
 import blackmamba.ide
 import os
 
@@ -55,7 +55,7 @@ class ActionPickerDataSource(PickerDataSource):
 
     def tableview_cell_for_row(self, tv, section, row):
         item = self.filtered_items[row]
-        cell = TableViewCell(UITableViewCellStyleSubtitle)
+        cell = TableViewCell(UITableViewCellStyle.subtitle.value)
         cell.text_label.number_of_lines = 1
         cell.text_label.text = item.title
         cell.detail_text_label.text = item.subtitle
@@ -63,7 +63,6 @@ class ActionPickerDataSource(PickerDataSource):
         return cell
 
 
-@on_main_thread
 def action_quickly():
     def run_wrench_item(item, shift_enter):
         blackmamba.ide.run_script(item.action_info.script_name)

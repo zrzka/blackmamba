@@ -1,13 +1,18 @@
+#!python3
+
 import ui
-from objc_util import ObjCClass, ObjCInstance, ns, create_objc_class, on_main_thread, ObjCBlock, NSData
+from objc_util import ObjCClass, ObjCInstance, ns, create_objc_class, ObjCBlock, NSData
 import ctypes
 import editor
 import os
 import zipfile
 import blackmamba.runtime as runtime
-import blackmamba.system as system
-from blackmamba.key_events import register_key_event_handler, unregister_key_event_handler
-import blackmamba.uikit as uikit
+from blackmamba.uikit import UITableViewCellStyle
+from blackmamba.key_event import (
+    register_key_event_handler, unregister_key_event_handler,
+    UIEventKeyCodeLeftSquareBracket, UIEventKeyCodeEscape
+)
+from blackmamba.key_command import UIKeyModifierControl
 from blackmamba.log import error
 import console
 
@@ -149,7 +154,7 @@ class DragDataSource(ui.ListDataSource):
 
     def tableview_cell_for_row(self, tableview, section, row):
         item = self.items[row]
-        cell = ui.TableViewCell('subtitle')
+        cell = ui.TableViewCell(UITableViewCellStyle.subtitle.value)
         cell.text_label.text = item['title']
         cell.detail_text_label.text = item['subtitle']
         cell.image_view.image = ui.Image(item['image'])
@@ -216,9 +221,9 @@ class DragView(ui.View):
             self.close()
 
         self._handlers = []
-        self._handlers.append(register_key_event_handler(uikit.UIEventKeyCodeEscape, handle_escape))
-        self._handlers.append(register_key_event_handler(uikit.UIEventKeyCodeLeftSquareBracket, handle_escape,
-                                                         modifier_flags=uikit.UIKeyModifierControl))
+        self._handlers.append(register_key_event_handler(UIEventKeyCodeEscape, handle_escape))
+        self._handlers.append(register_key_event_handler(UIEventKeyCodeLeftSquareBracket, handle_escape,
+                                                         modifier_flags=UIKeyModifierControl))
 
     def will_close(self):
         for handler in self._handlers:
@@ -259,8 +264,6 @@ def _drag_path_items(path):
     return items
 
 
-@system.iOS('11.0')
-@on_main_thread
 def drag_provider_dialog():
     global _drag_items
 

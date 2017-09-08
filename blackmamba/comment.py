@@ -1,7 +1,5 @@
 #!python3
 
-import editor
-
 
 def _comment_line(line):
     return '# ' + line
@@ -21,6 +19,8 @@ def _uncomment_line(line):
 
 
 def toggle_comments():
+    import editor
+
     selection_range = editor.get_selection()
 
     if not selection_range:
