@@ -6,6 +6,7 @@ Change Log
 -----------------------
 
 * Code cleanup (circular deps, ...)
+* Fixed analyzer where ``ignore_code=None`` means real ``None``
 
 
 ``0.0.19`` (2017-09-05)

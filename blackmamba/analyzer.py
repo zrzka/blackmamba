@@ -84,7 +84,9 @@ def _pep8_annotations(text, ignore=None, max_line_length=None):
     options = style_guide.options
 
     if ignore:
-        options.ignore += tuple(ignore)
+        options.ignore = tuple(ignore)
+    else:
+        options.ignore = tuple()
 
     if max_line_length:
         options.max_line_length = max_line_length
@@ -111,7 +113,7 @@ def _get_annotations(path, stream, style):
         if not line.startswith(path):
             continue
 
-        line = line[(l+1):]  # Strip 'filename:'
+        line = line[(l + 1):]  # Strip 'filename:'
         match = _LINE_COL_MESSAGE_REGEX.fullmatch(line)
 
         if not match:
