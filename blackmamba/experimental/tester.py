@@ -9,6 +9,8 @@ from blackmamba.annotation import Annotation, Style
 from blackmamba.config import get_config_value
 import re
 
+_LOG_FILE_PATH = os.path.expanduser('~/Documents/.blackmamba_pytest_log.xml')
+
 
 def _hud_alert_delay():
     return get_config_value('tester.hud_alert_delay', 1.0)
@@ -16,8 +18,6 @@ def _hud_alert_delay():
 
 def _hide_console():
     return get_config_value('tester.hide_console', True)
-
-_LOG_FILE_PATH = os.path.expanduser('~/Documents/.blackmamba_pytest_log.xml')
 
 
 def _remove_log_file():
