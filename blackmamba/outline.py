@@ -52,7 +52,7 @@ class OutlineDataSource(PickerDataSource):
                     bc = '{} • {}'.format(breadcrumb, child.name)
                 else:
                     bc = child.name
-                child_nodes = OutlineDataSource._generate_nodes(child, level+1, bc)
+                child_nodes = OutlineDataSource._generate_nodes(child, level + 1, bc)
                 if child_nodes:
                     nodes.extend(child_nodes)
 

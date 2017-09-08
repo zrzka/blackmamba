@@ -36,11 +36,11 @@ def _query():
 
     # Try to select current keyword around current cursor position
     bi = selection[0]
-    while bi > 0 and _allowed_char(text[bi-1:bi]):
+    while bi > 0 and _allowed_char(text[bi - 1:bi]):
         bi -= 1
 
     ei = selection[1]
-    while ei < len(text) and _allowed_char(text[ei:ei+1]):
+    while ei < len(text) and _allowed_char(text[ei:ei + 1]):
         ei += 1
 
     return text[bi:ei]
