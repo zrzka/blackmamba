@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 import console
 from blackmamba.annotation import Annotation, Style
 from blackmamba.config import get_config_value
+from blackmamba.ide import save
 import re
 
 _LOG_FILE_PATH = os.path.expanduser('~/Documents/.blackmamba_pytest_log.xml')
@@ -122,5 +123,6 @@ def run_script_unit_tests():
 
     if not path.endswith('.py'):
         return
-
+        
+    save(all=True)
     _run_unit_tests(path)
