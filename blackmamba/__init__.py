@@ -1,6 +1,6 @@
 #!python3
 
-from blackmamba.log import info, error
+from blackmamba.log import info, error, get_level, set_level, ERROR
 import blackmamba.system as system
 
 __version__ = '0.0.21'
@@ -111,6 +111,12 @@ def _register_default_key_commands():
         register_key_command(str(i + 1), UIKeyModifierCommand, _make_select_tab(i))
 
     _register_ios11_default_key_commands()
+
+    # No need to log Cmd-S (Save) to users
+    _log_level = get_level()
+    set_level(ERROR)
+    register_key_command('S', UIKeyModifierCommand, blackmamba.ide.save)
+    set_level(_log_level)
 
     info('Default key commands registered')
 
