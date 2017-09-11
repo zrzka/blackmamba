@@ -1,6 +1,6 @@
 #!python3
 
-from objc_util import ObjCClass, on_main_thread, UIApplication
+from objc_util import ObjCClass, on_main_thread, UIApplication, sel
 import os
 import urllib.parse
 import webbrowser
@@ -33,6 +33,20 @@ def _tabs_count():
 
 def _selected_tab_index():
     return tabs_view_controller().tabBarView().selectedTabIndex()
+
+
+@on_main_thread
+def save(all=False):
+    tabs = tabs_view_controller()
+
+    if all:
+        tabs_to_save = tabs.tabViewControllers()
+    else:
+        tabs_to_save = [tabs.tabViewControllers()[_selected_tab_index()]]
+
+    for tab in tabs_to_save:
+        if tab.respondsToSelector(sel('saveData')):
+            tab.saveData()
 
 
 @on_main_thread
