@@ -10,8 +10,8 @@ log.set_level(log.INFO)
 # Check blackmamba.config._DEFAULTS for default values
 config = {
     'general': {
-# Uncomment to disable keyboard shortcuts        
-#        'register_key_commands': False        
+        # Uncomment to disable keyboard shortcuts
+        # 'register_key_commands': False
     },
     'update': {
         'enabled': True,

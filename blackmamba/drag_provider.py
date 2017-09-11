@@ -272,7 +272,7 @@ def drag_provider_dialog():
     if not path:
         console.hud_alert('You have to open file first', 'error', 1.0)
         return
-        
+
     ide.save(all=True)
 
     _drag_items = _drag_path_items(path)

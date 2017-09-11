@@ -160,7 +160,9 @@ class PickerView(View):
         self._handlers = []
         self.shift_enter_enabled = True
         self.did_select_item_action = None
+        self._register_key_event_handlers()
 
+    def _register_key_event_handlers(self):
         def handle_key_up():
             if not self._datasource:
                 return

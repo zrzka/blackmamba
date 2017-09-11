@@ -123,6 +123,6 @@ def run_script_unit_tests():
 
     if not path.endswith('.py'):
         return
-        
+
     save(all=True)
     _run_unit_tests(path)

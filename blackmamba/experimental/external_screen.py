@@ -19,14 +19,14 @@ _connected_handlers = []
 _disconnected_handlers = []
 
 __all__ = [
-        'register_connected_handler',
-        'unregister_connected_handler',
-        'register_disconnected_handler',
-        'unregister_disconnected_handler',
-        'present',
-        'dismiss',
-        'init',
-        'terminate'
+    'register_connected_handler',
+    'unregister_connected_handler',
+    'register_disconnected_handler',
+    'unregister_disconnected_handler',
+    'present',
+    'dismiss',
+    'init',
+    'terminate'
 ]
 
 
