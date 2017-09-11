@@ -3,6 +3,10 @@ Change Log
 ==========
 
 ``master`` (unreleased)
+
+* Config option to disable keyboard shortcuts registration
+
+``0.0.20`` (2017-09-11)
 -----------------------
 
 * Code cleanup (circular deps, ...)

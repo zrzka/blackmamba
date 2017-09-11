@@ -3,7 +3,7 @@
 from blackmamba.log import info, error
 import blackmamba.system as system
 
-__version__ = '0.0.20'
+__version__ = '0.0.21'
 __author__ = 'Robert Vojta'
 
 _LATEST_VERSION_COMPATIBILITY_TEST = (311009, '3.1.1')
@@ -139,12 +139,13 @@ def _check_compatibility_and_updates():
 @system.Pythonista()
 @system.catch_exceptions
 def main(config=None):
-    from blackmamba.config import update_config_with_dict
+    from blackmamba.config import update_config_with_dict, get_config_value
     info('Black Mamba initialization...')
     if config:
         update_config_with_dict(config)
     _check_compatibility_and_updates()
-    _register_default_key_commands()
+    if get_config_value('general.register_key_commands', True):
+        _register_default_key_commands()
     info('Black Mamba initialized')
 
 

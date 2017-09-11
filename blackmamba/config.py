@@ -12,6 +12,9 @@ from copy import deepcopy
 __all__ = ['get_config_value']
 
 _DEFAULTS = {
+    'general': {
+        'register_key_commands': True
+    },
     'update': {
         'enabled': True,
         'interval': 3600
