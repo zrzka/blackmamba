@@ -3,8 +3,16 @@ Change Log
 ==========
 
 ``master`` (unreleased)
+-----------------------
+
+*
+
+
+``0.0.21`` (2017-09-11)
+-----------------------
 
 * Config option to disable keyboard shortcuts registration
+
 
 ``0.0.20`` (2017-09-11)
 -----------------------
