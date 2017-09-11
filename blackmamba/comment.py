@@ -1,21 +1,27 @@
 #!python3
 
+import re
+
+
+_COMMENT_RE = re.compile('^(\s*)([^#]*?)$')
+
 
 def _comment_line(line):
-    return '# ' + line
+    match = _COMMENT_RE.search(line)
+    if match:
+        return match.group(1) + '# ' + match.group(2)
+    else:
+        return line
+
+
+_UNCOMMENT_RE = re.compile('^(\s*)#( ?)(.*?)$')
 
 
 def _uncomment_line(line):
-    if not line.strip().startswith('#'):
+    match = _UNCOMMENT_RE.search(line)
+    if not match:
         return line
-
-    start = line.find('# ')
-    if start == -1:
-        start = line.find('#') + 1
-    else:
-        start += 2
-
-    return line[start:]
+    return match.group(1) + match.group(3)
 
 
 def toggle_comments():

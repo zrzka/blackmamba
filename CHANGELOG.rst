@@ -5,7 +5,11 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
-*
+* Toggle comments improved
+    * Honors both tabs and spaces
+    * Indented comment if line is indented
+    * Commented lines are not commented again during comment
+    * Uncommented lines are not touched during uncomment
 
 
 ``0.0.21`` (2017-09-11)
