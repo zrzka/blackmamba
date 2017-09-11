@@ -14,6 +14,7 @@ from blackmamba.key_event import (
 )
 from blackmamba.key_command import UIKeyModifierControl
 from blackmamba.log import error
+import blackmamba.ide as ide
 import console
 
 _TMP_DIR = os.environ.get('TMPDIR', os.environ.get('TMP'))
@@ -271,6 +272,8 @@ def drag_provider_dialog():
     if not path:
         console.hud_alert('You have to open file first', 'error', 1.0)
         return
+        
+    ide.save(all=True)
 
     _drag_items = _drag_path_items(path)
 
