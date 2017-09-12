@@ -3,25 +3,34 @@
 import re
 
 
-_COMMENT_RE = re.compile('^(\s*)([^#]*?)$')
+_COMMENT_RE = re.compile('\A(\s*)(.*?)\Z', re.DOTALL)
 
 
 def _comment_line(line):
-    match = _COMMENT_RE.search(line)
-    if match:
-        return match.group(1) + '# ' + match.group(2)
-    else:
+    if not line.find('#') == -1:
         return line
 
+    match = _COMMENT_RE.search(line)
+    if match:
+        result = match.group(1) + '# ' + match.group(2)
+    else:
+        result = line
+    return result
 
-_UNCOMMENT_RE = re.compile('^(\s*)#( ?)(.*?)$')
+
+_UNCOMMENT_RE = re.compile('\A(\s*)#( ?)(.*)\Z', re.DOTALL)
 
 
 def _uncomment_line(line):
-    match = _UNCOMMENT_RE.search(line)
-    if not match:
+    if line.find('#') == -1:
         return line
-    return match.group(1) + match.group(3)
+
+    match = _UNCOMMENT_RE.search(line)
+    if match:
+        result = match.group(1) + match.group(3)
+    else:
+        result = line
+    return result
 
 
 def toggle_comments():

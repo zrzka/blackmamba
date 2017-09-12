@@ -7,6 +7,8 @@ _BASIC_TEST_CASES = {
     # Not indented lines
     'a': '# a',
     'a ': '# a ',
+    # Keep new line
+    'a\n': '# a\n',
     # Space indented lines
     '    a': '    # a',
     '        a': '        # a',
