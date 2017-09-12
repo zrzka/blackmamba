@@ -128,6 +128,9 @@ def script_exists(script_name, full_path=False):
 
 
 def run_script(script_name, full_path=False):
+    if not full_path and script_name.startswith('/'):
+        script_name = script_name[1:]
+
     if not script_exists(script_name, full_path):
         error('run_script: script does not exist {}'.format(script_name))
         return
@@ -139,10 +142,6 @@ def run_script(script_name, full_path=False):
     encoded_name = urllib.parse.quote_plus(script_name, safe='', encoding=None, errors=None)
     url = 'pythonista://{}?action=run'.format(encoded_name)
     webbrowser.open(url)
-
-#    docs = os.path.expanduser('~/Documents')
-#    file_path = os.path.join(docs, script_name)
-#    runpy.run_path(file_path, run_name='__main__')
 
 
 def _load_action(title):

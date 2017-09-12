@@ -10,6 +10,7 @@ Change Log
     * Indented comment if line is indented
     * Commented lines are not commented again during comment
     * Uncommented lines are not touched during uncomment
+* Fixed ``ide.run_action`` when ``script_name`` starts with ``/``
 
 
 ``0.0.21`` (2017-09-11)
