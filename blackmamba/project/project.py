@@ -6,6 +6,7 @@ from blackmamba.config import get_config_value
 import blackmamba.log as log
 import blackmamba.ide as ide
 
+
 class Project:
     _projects = {}
 

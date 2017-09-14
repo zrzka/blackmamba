@@ -143,5 +143,6 @@ def jump_to_definition():
     else:
         _select_location(symbol, locations)
 
+
 if __name__ == '__main__':
     jump_to_definition()
