@@ -68,9 +68,9 @@ def action_quickly():
         blackmamba.ide.run_script(item.action_info.script_name)
 
     v = load_picker_view()
+    v.name = 'Action Quickly...'
     v.datasource = ActionPickerDataSource()
     v.shift_enter_enabled = False
-    v.title_label.text = 'Action Quickly...'
     v.help_label.text = (
         '⇅ - select • Enter - run action item'
         '\n'
@@ -78,7 +78,7 @@ def action_quickly():
     )
     v.textfield.placeholder = 'Start typing to filter wrench items...'
     v.did_select_item_action = run_wrench_item
-    v.present('sheet', hide_title_bar=True)
+    v.present('sheet')
     v.wait_modal()
 
 

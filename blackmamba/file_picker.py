@@ -73,9 +73,9 @@ def open_quickly():
     }
 
     v = load_picker_view()
+    v.name = 'Open Quickly...'
     v.datasource = FilePickerDataSource(**kwargs)
     v.shift_enter_enabled = True
-    v.title_label.text = 'Open Quickly...'
     v.help_label.text = (
         '⇅ - select • Enter - open file in new tab • Shift + Enter - open file in current tab'
         '\n'
@@ -83,7 +83,7 @@ def open_quickly():
     )
     v.textfield.placeholder = 'Start typing to filter files...'
     v.did_select_item_action = open_file
-    v.present('sheet', hide_title_bar=True)
+    v.present('sheet')
     v.wait_modal()
 
 
@@ -100,9 +100,9 @@ def script_quickly():
     }
 
     v = load_picker_view()
+    v.name = 'Run Quickly...'
     v.datasource = FilePickerDataSource(**kwargs)
     v.shift_enter_enabled = False
-    v.title_label.text = 'Run Quickly...'
     v.help_label.text = (
         '⇅ - select • Enter - run Python script'
         '\n'
@@ -110,5 +110,5 @@ def script_quickly():
     )
     v.textfield.placeholder = 'Start typing to filter scripts...'
     v.did_select_item_action = run_script
-    v.present('sheet', hide_title_bar=True)
+    v.present('sheet')
     v.wait_modal()

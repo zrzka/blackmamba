@@ -75,9 +75,9 @@ def outline_quickly():
         ide.scroll_to_line(node.line)
 
     v = load_picker_view()
+    v.name = 'Outline'
     v.datasource = OutlineDataSource(text, os.path.basename(filename))
     v.shift_enter_enabled = False
-    v.title_label.text = 'Outline'
     v.help_label.text = (
         '⇅ - select • Enter - scroll to location'
         '\n'
@@ -85,7 +85,7 @@ def outline_quickly():
     )
     v.textfield.placeholder = 'Start typing to filter nodes...'
     v.did_select_item_action = scroll_to_node
-    v.present('sheet', hide_title_bar=True)
+    v.present('sheet')
     v.wait_modal()
 
 

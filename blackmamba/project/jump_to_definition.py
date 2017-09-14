@@ -99,10 +99,10 @@ def _select_location(symbol, locations):
         _open_and_scroll(item.path, item.line)
 
     v = load_picker_view()
+    v.name = '{} locations'.format(symbol)
     v.datasource = LocationDataSource(symbol, locations)
 
     v.shift_enter_enabled = False
-    v.title_label.text = 'Locations of {}'.format(symbol)
     v.help_label.text = (
         '⇅ - select • Enter - open file and scroll to location'
         '\n'
@@ -110,7 +110,7 @@ def _select_location(symbol, locations):
     )
     v.textfield.placeholder = 'Start typing to filter files...'
     v.did_select_item_action = open_location
-    v.present('sheet', hide_title_bar=True)
+    v.present('sheet')
     v.wait_modal()
 
 

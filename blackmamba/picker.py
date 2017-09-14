@@ -1,7 +1,6 @@
 #!python3
 
 from ui import View, load_view, TableViewCell
-from objc_util import ObjCInstance, ObjCClass
 from blackmamba.uikit import UITableViewCellStyle
 from blackmamba.key_command import UIKeyModifierShift, UIKeyModifierControl
 from blackmamba.key_event import (
@@ -10,6 +9,7 @@ from blackmamba.key_event import (
     UIEventKeyCodeEnter, UIEventKeyCodeEscape,
     UIEventKeyCodeLeftSquareBracket
 )
+from blackmamba.keyboard import is_in_hardware_keyboard_mode
 
 
 class PickerItem(object):
@@ -155,7 +155,6 @@ class PickerView(View):
         self._tableview = None
         self._textfield = None
         self._help_label = None
-        self._title_label = None
         self._datasource = None
         self._handlers = []
         self.shift_enter_enabled = True
@@ -218,10 +217,6 @@ class PickerView(View):
         return self._help_label
 
     @property
-    def title_label(self):
-        return self._title_label
-
-    @property
     def textfield(self):
         return self._textfield
 
@@ -229,17 +224,13 @@ class PickerView(View):
         self._tableview = self['tableview']
         self._textfield = self['textfield']
         self._help_label = self['helplabel']
-        self._title_label = self['titlelabel']
 
         self._tableview.allows_selection = True
         self._tableview.allows_multiple_selection = False
         self._textfield.delegate = self
 
-        UITextField = ObjCClass('UITextField')
-        tf = ObjCInstance(self._textfield._objc_ptr)
-        for sv in tf.subviews():
-            if sv.isKindOfClass_(UITextField):
-                sv.becomeFirstResponder()
+        if is_in_hardware_keyboard_mode:
+            self._textfield.begin_editing()
 
     def _did_select_item(self, shift_enter=False):
         if not self._datasource:
