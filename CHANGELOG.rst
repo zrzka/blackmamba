@@ -7,9 +7,9 @@ Change Log
 
 * Toggle comments improved
     * Honors both tabs and spaces
-    * Indented comment if line is indented
-    * Commented lines are not commented again during comment
-    * Uncommented lines are not touched during uncomment
+    * Indented ``#`` if line is indented
+    * Shortest indent is used for all lines ``#`` if commenting multiple of them
+    * Empty lines are ignored
 * Fixed ``ide.run_action`` when ``script_name`` starts with ``/``
 
 
