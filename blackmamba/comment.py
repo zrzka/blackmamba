@@ -8,6 +8,9 @@ def _comment_line(line, hash_col_index=0):
     if not line.find('#') == -1:
         return line
 
+    if not line.strip():
+        return line
+
     return line[:hash_col_index] + '# ' + line[hash_col_index:]
 
 
@@ -33,6 +36,9 @@ def _hash_col_index(lines):
     index = sys.maxsize
 
     for line in lines:
+        if not line.strip():
+            continue
+
         match = _HASH_INDEX_RE.search(line)
 
         if not match:

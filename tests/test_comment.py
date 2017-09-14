@@ -64,6 +64,18 @@ _LINES_TEST_CASES = [
     ),
     (
         [
+            "def hallo():",
+            "",
+            "    pass"
+        ],
+        [
+            "# def hallo():",
+            "",
+            "#     pass"
+        ]
+    ),
+    (
+        [
             "    def hallo():",
             "        pass"
         ],
@@ -74,11 +86,35 @@ _LINES_TEST_CASES = [
     ),
     (
         [
+            "    def hallo():",
+            "",
+            "        pass"
+        ],
+        [
+            "    # def hallo():",
+            "",
+            "    #     pass"
+        ],
+    ),
+    (
+        [
             "\t\tdef hallo():",
             "\t\t    pass"
         ],
         [
             "\t\t# def hallo():",
+            "\t\t#     pass"
+        ],
+    ),
+    (
+        [
+            "\t\tdef hallo():",
+            "",
+            "\t\t    pass"
+        ],
+        [
+            "\t\t# def hallo():",
+            "",
             "\t\t#     pass"
         ],
     )
