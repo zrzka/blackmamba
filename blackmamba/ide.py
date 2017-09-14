@@ -168,14 +168,12 @@ def scroll_to_line(line_number):
         return
 
     # https://github.com/omz/Pythonista-Issues/issues/365
-    line_start_indexes = [0]
     start = 0
-    for line in text.splitlines():
-        start += len(line) + 1
-        line_start_indexes.append(start)
-
-    if line_number >= 1 and line_number <= len(line_start_indexes):
-        editor.set_selection(line_start_indexes[line_number - 1])
+    for index, line in enumerate(text.splitlines(True)):
+        if index == line_number - 1:
+            editor.set_selection(start)
+            return
+        start += len(line)
 
 
 def jump_to_line_dialog():

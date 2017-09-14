@@ -10,6 +10,7 @@ Change Log
     * Do not focus on search field if HW keyboard is not connected
     * Show title bar instead of custom title to allow users to close
       dialogs with X button
+* ``ide.scroll_to_line`` optimized
 
 
 ``0.0.23`` (2017-09-14)
