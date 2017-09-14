@@ -6,6 +6,10 @@ Change Log
 -----------------------
 
 * ``blackmamba.keyboard`` module added
+* Pickers (open, script, ... quickly)
+    * Do not focus on search field if HW keyboard is not connected
+    * Show title bar instead of custom title to allow users to close
+      dialogs with X button
 
 
 ``0.0.23`` (2017-09-14)
