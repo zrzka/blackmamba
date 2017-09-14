@@ -2,10 +2,10 @@
 Change Log
 ==========
 
-``0.0.24`` (unreleased)
+``master`` (unreleased)
 -----------------------
 
-*
+* ``blackmamba.keyboard`` module added
 
 
 ``0.0.23`` (2017-09-14)
