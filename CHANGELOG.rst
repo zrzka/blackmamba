@@ -5,6 +5,11 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
+*
+
+``0.0.22`` (2017-09-14)
+-----------------------
+
 * Toggle comments improved
     * Honors both tabs and spaces
     * Indented ``#`` if line is indented
