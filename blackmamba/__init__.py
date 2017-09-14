@@ -3,7 +3,7 @@
 from blackmamba.log import info, error, get_level, set_level, ERROR
 import blackmamba.system as system
 
-__version__ = '0.0.22'
+__version__ = '0.0.23'
 __author__ = 'Robert Vojta'
 
 _LATEST_VERSION_COMPATIBILITY_TEST = (311009, '3.1.1')
@@ -35,6 +35,7 @@ def _register_default_key_commands():
     import blackmamba.analyzer
     import blackmamba.experimental.tester
     import blackmamba.outline
+    import blackmamba.project.jump_to_definition
     from blackmamba.key_command import (
         register_key_command, UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
     )
@@ -96,7 +97,10 @@ def _register_default_key_commands():
          'Outline Quickly...'),
         ('L', UIKeyModifierControl,
          blackmamba.ide.jump_to_line_dialog,
-         'Jump to line...')
+         'Jump to line...'),
+        ('D', UIKeyModifierCommand | UIKeyModifierShift,
+         blackmamba.project.jump_to_definition.jump_to_definition,
+         'Jump to definition...')
     ]
 
     for command in commands:
