@@ -5,19 +5,19 @@
         "nodes" : [
 
         ],
-        "frame" : "{{6, 46}, {528, 32}}",
+        "frame" : "{{6, 6}, {528, 32}}",
         "class" : "TextField",
         "attributes" : {
           "placeholder" : "",
           "flex" : "WB",
-          "name" : "textfield",
+          "font_size" : 17,
           "frame" : "{{170, 254}, {200, 32}}",
           "spellchecking_type" : "default",
           "class" : "TextField",
           "uuid" : "20082093-9C53-4F5D-B972-4B86882A47A2",
           "alignment" : "left",
           "autocorrection_type" : "default",
-          "font_size" : 17,
+          "name" : "textfield",
           "font_name" : "<System>"
         },
         "selected" : false
@@ -26,20 +26,20 @@
         "nodes" : [
 
         ],
-        "frame" : "{{6, 86}, {528, 403}}",
+        "frame" : "{{6, 46}, {528, 443}}",
         "class" : "TableView",
         "attributes" : {
           "flex" : "WH",
           "data_source_items" : "Row 1\nRow 2\nRow 3",
-          "row_height" : 44,
+          "data_source_font_size" : 18,
           "frame" : "{{170, 170}, {200, 200}}",
           "class" : "TableView",
           "uuid" : "B819D053-7352-4013-A551-393FA9603C78",
           "background_color" : "RGBA(1.0, 1.0, 1.0, 1.0)",
           "data_source_number_of_lines" : 1,
           "data_source_delete_enabled" : true,
-          "data_source_font_size" : 18,
-          "name" : "tableview"
+          "name" : "tableview",
+          "row_height" : 44
         },
         "selected" : false
       },
@@ -61,25 +61,6 @@
           "number_of_lines" : 2,
           "font_size" : 13,
           "font_name" : "<System>"
-        },
-        "selected" : false
-      },
-      {
-        "nodes" : [
-
-        ],
-        "frame" : "{{6, 6}, {528, 32}}",
-        "class" : "Label",
-        "attributes" : {
-          "font_size" : 18,
-          "flex" : "WB",
-          "frame" : "{{195, 254}, {150, 32}}",
-          "uuid" : "90EB513E-A1A3-4DDD-A939-595265592EEF",
-          "class" : "Label",
-          "alignment" : "center",
-          "text" : "Label",
-          "name" : "titlelabel",
-          "font_name" : "<System-Bold>"
         },
         "selected" : false
       }
