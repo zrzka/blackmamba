@@ -27,7 +27,8 @@ setup(
 
     packages=[
         'blackmamba',
-        'blackmamba.experimental'
+        'blackmamba.experimental',
+        'blackmamba.project'
     ],
     package_dir={'': '.'},
 
