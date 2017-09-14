@@ -91,6 +91,7 @@ Shortcut            Function
 ``Cmd 1..9``        Show nth tab
 ``Ctrl L``          Jump to line
 ``Cmd E``           Drag Provider
+``Cmd Shift D``     Jump to definition...
 ==================  ========================================
 
 **WARNING**: *Run Quickly...* and *Action Quickly...* works only and only
