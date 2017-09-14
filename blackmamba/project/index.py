@@ -216,12 +216,12 @@ class Index:
                 self.index_file(os.path.join(root, file))
         log.debug('Indexing finished')
 
-    def find_symbol(self, name):
-        result = {}
+    def find_symbol_locations(self, name):
+        locations = []
 
         for path, file_index in self._index.items():
-            filtered_symbols = [s for s in file_index.symbols if s.name == name]
-            if filtered_symbols:
-                result[path] = filtered_symbols
+            for symbol in file_index.symbols:
+                if symbol.name == name:
+                    locations.append((path, symbol.line))
 
-        return result
+        return locations

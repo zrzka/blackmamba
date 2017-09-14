@@ -4,7 +4,7 @@ import os
 from blackmamba.project.index import Index
 from blackmamba.config import get_config_value
 import blackmamba.log as log
-
+import blackmamba.ide as ide
 
 class Project:
     _projects = {}
@@ -49,13 +49,6 @@ class Project:
             self._index.save()
 
     def find_symbol_definition(self, name):
+        ide.save()
         self.reindex()
-        return self._index.find_symbol(name)
-
-
-log.set_level(log.DEBUG)
-p = Project.by_path(os.path.expanduser('~/Work/purposefly/blackmamba/blackmamba/project/project.py'))
-p.reindex(True)
-print(p.find_symbol_definition('Project'))
-
-
+        return self._index.find_symbol_locations(name)
