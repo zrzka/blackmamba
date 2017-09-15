@@ -199,7 +199,7 @@ class DragView(ui.View):
         self.tv.allows_selection_during_editing = False
         self.tv.data_source = self.ds
         self.tv.delegate = self.ds
-        self.tv.frame = (self.bounds.x, self.bounds.y, self.bounds.width, self.bounds.height - 32 -18)
+        self.tv.frame = (self.bounds.x, self.bounds.y, self.bounds.width, self.bounds.height - 32 - 18)
         self.add_subview(self.tv)
 
         tv_objc = ObjCInstance(self.tv)
