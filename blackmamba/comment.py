@@ -1,12 +1,16 @@
 #!python3
 
 import re
-import sys
 
 
 def _comment_line(line, hash_prefix=''):
-    if line.strip().startswith('#'):
+    stripped = line.strip()
+
+    if stripped.startswith('#'):
         return line
+
+    if not stripped:
+        return hash_prefix + '# \n'
 
     return hash_prefix + '# ' + line[len(hash_prefix):]
 
@@ -25,7 +29,7 @@ def _uncomment_line(line):
         result = line
 
     if not result.strip():
-        result = ''
+        result = '\n'
 
     return result
 

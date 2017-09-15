@@ -5,23 +5,21 @@ from blackmamba.comment import _comment_line, _uncomment_line, _toggle_lines
 
 _BASIC_TEST_CASES = {
     # Not indented lines
-    ('', 'a'): '# a',
-    ('', 'a '): '# a ',
-    # Keep new line
     ('', 'a\n'): '# a\n',
+    ('', 'a \n'): '# a \n',
     # Space indented lines
-    ('', '    a'): '#     a',
-    ('', '        a'): '#         a',
+    ('', '    a\n'): '#     a\n',
+    ('', '        a\n'): '#         a\n',
     # Tab indented lines
-    ('', '\ta'): '# \ta',
-    ('', '\t\ta'): '# \t\ta',
-    ('', '\t\ta '): '# \t\ta ',
+    ('', '\ta\n'): '# \ta\n',
+    ('', '\t\ta\n'): '# \t\ta\n',
+    ('', '\t\ta \n'): '# \t\ta \n',
     # Hash indexes
-    ('\t', '\ta'): '\t# a',
-    ('\t\t', '\t\ta'): '\t\t# a',
-    ('    ', '    a'): '    # a',
+    ('\t', '\ta\n'): '\t# a\n',
+    ('\t\t', '\t\ta\n'): '\t\t# a\n',
+    ('    ', '    a\n'): '    # a\n',
     # Comment even if there's inline comment
-    ('    ', '    def main():  # Hallo'): '    # def main():  # Hallo'
+    ('    ', '    def main():  # Hallo\n'): '    # def main():  # Hallo\n'
 }
 
 
@@ -53,71 +51,76 @@ def test_do_not_touch_not_commented_lines():
     assert '\ta b c' == _uncomment_line('\ta b c')
 
 
+def test_empty_lines():
+    assert '    # \n' == _comment_line('\n', '    ')
+    assert '\n' == _uncomment_line('     #     \n')
+
+
 _LINES_TEST_CASES = [
     (
         [
-            "def hallo():",
-            "    pass"
+            "def hallo():\n",
+            "    pass\n"
         ],
         [
-            "# def hallo():",
-            "#     pass"
+            "# def hallo():\n",
+            "#     pass\n"
         ]
     ),
     (
         [
-            "def hallo():",
-            "",
-            "    pass"
+            "def hallo():\n",
+            "\n",
+            "    pass\n"
         ],
         [
-            "# def hallo():",
-            "# ",
-            "#     pass"
+            "# def hallo():\n",
+            "# \n",
+            "#     pass\n"
         ]
     ),
     (
         [
-            "    def hallo():",
-            "        pass"
+            "    def hallo():\n",
+            "        pass\n"
         ],
         [
-            "    # def hallo():",
-            "    #     pass"
-        ],
-    ),
-    (
-        [
-            "    def hallo():",
-            "",
-            "        pass"
-        ],
-        [
-            "    # def hallo():",
-            "    # ",
-            "    #     pass"
+            "    # def hallo():\n",
+            "    #     pass\n"
         ],
     ),
     (
         [
-            "\t\tdef hallo():",
-            "\t\t    pass"
+            "    def hallo():\n",
+            "\n",
+            "        pass\n"
         ],
         [
-            "\t\t# def hallo():",
-            "\t\t#     pass"
+            "    # def hallo():\n",
+            "    # \n",
+            "    #     pass\n"
         ],
     ),
     (
         [
-            "\t\tdef hallo():",
-            "",
-            "\t\t    pass"
+            "\t\tdef hallo():\n",
+            "\t\t    pass\n"
         ],
         [
-            "\t\t# def hallo():",
-            "\t\t# ",
-            "\t\t#     pass"
+            "\t\t# def hallo():\n",
+            "\t\t#     pass\n"
+        ],
+    ),
+    (
+        [
+            "\t\tdef hallo():\n",
+            "\n",
+            "\t\t    pass\n"
+        ],
+        [
+            "\t\t# def hallo():\n",
+            "\t\t# \n",
+            "\t\t#     pass\n"
         ],
     )
 ]
