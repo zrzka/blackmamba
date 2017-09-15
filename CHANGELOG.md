@@ -15,6 +15,7 @@
       (even without external keyboard)
 * Drag Provider uses Pythonista title bar instead of custom title to allow users to close the
   the dialog without external keyboard
+* Unit tests (`tester.py`) moved from `blackmamba.experimental` to `blackmamba`
  
 ## 0.0.24 (2017-09-15)
 
