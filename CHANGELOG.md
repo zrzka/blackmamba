@@ -2,9 +2,20 @@
 
 ## master (unreleased)
 
-*
-
-
+* `blackmamba.script` introduced and it does contain following scripts
+    * `action_quickly.py`, `analyze.py`, `clear_annotations.py`, `close_all_tabs_except_current_one.py`,
+      `drag_provider.py`, `jump_to_definition.py`, `jump_to_line.py`,  `new_file.py`, `new_tab.py`,
+      `open_quickly.py`, `outline_quickly.py`, `run_quickly.py`, `run_unit_tests.py`,  `search_dash.py`,
+      `toggle_comments.py`
+    * These scripts can be used in the wrench icon (action)
+    * These scripts are binded to keyboard shortcuts, whenever you run it via wrench icon
+      or via keyboard shortcut, same script is executed
+    * It's still required to call `blackmamba.main` from within
+      `~/Documents/site-packages-3/pythonista_startup.py` file to properly configure it
+      (even without external keyboard)
+* Drag Provider uses Pythonista title bar instead of custom title to allow users to close the
+  the dialog without external keyboard
+ 
 ## 0.0.24 (2017-09-15)
 
 * `blackmamba.keyboard` module added

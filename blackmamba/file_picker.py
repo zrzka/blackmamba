@@ -6,7 +6,7 @@ from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
 import blackmamba.ide as ide
 from blackmamba.config import get_config_value
 
-__all__ = ['script_quickly', 'open_quickly']
+__all__ = ['run_quickly', 'open_quickly']
 
 
 _IGNORE_FOLDERS = {
@@ -87,7 +87,7 @@ def open_quickly():
     v.wait_modal()
 
 
-def script_quickly():
+def run_quickly():
     def allow_file(root, name):
         return not name.startswith('.') and name.endswith('.py')
 

@@ -176,7 +176,7 @@ def scroll_to_line(line_number):
         start += len(line)
 
 
-def jump_to_line_dialog():
+def jump_to_line():
     try:
         input = console.input_alert('Jump to line...', 'Empty (or invalid) value  to dismiss.')
         scroll_to_line(int(input))
