@@ -5,23 +5,23 @@ from blackmamba.comment import _comment_line, _uncomment_line, _toggle_lines
 
 _BASIC_TEST_CASES = {
     # Not indented lines
-    (0, 'a'): '# a',
-    (0, 'a '): '# a ',
+    ('', 'a'): '# a',
+    ('', 'a '): '# a ',
     # Keep new line
-    (0, 'a\n'): '# a\n',
+    ('', 'a\n'): '# a\n',
     # Space indented lines
-    (0, '    a'): '#     a',
-    (0, '        a'): '#         a',
+    ('', '    a'): '#     a',
+    ('', '        a'): '#         a',
     # Tab indented lines
-    (0, '\ta'): '# \ta',
-    (0, '\t\ta'): '# \t\ta',
-    (0, '\t\ta '): '# \t\ta ',
+    ('', '\ta'): '# \ta',
+    ('', '\t\ta'): '# \t\ta',
+    ('', '\t\ta '): '# \t\ta ',
     # Hash indexes
-    (1, '\ta'): '\t# a',
-    (2, '\t\ta'): '\t\t# a',
-    (4, '    a'): '    # a',
+    ('\t', '\ta'): '\t# a',
+    ('\t\t', '\t\ta'): '\t\t# a',
+    ('    ', '    a'): '    # a',
     # Comment even if there's inline comment
-    (4, '    def main():  # Hallo'): '    # def main():  # Hallo'
+    ('    ', '    def main():  # Hallo'): '    # def main():  # Hallo'
 }
 
 
@@ -43,8 +43,8 @@ def test_backward_compatible_uncomment():
 
 
 def test_do_not_comment_commented_lines():
-    assert '# a b c' == _comment_line('# a b c')
-    assert '\t# a b c' == _comment_line('\t# a b c')
+    assert '# a b c' == _comment_line('# a b c', '')
+    assert '\t# a b c' == _comment_line('\t# a b c', '\t')
 
 
 def test_do_not_touch_not_commented_lines():
@@ -72,7 +72,7 @@ _LINES_TEST_CASES = [
         ],
         [
             "# def hallo():",
-            "",
+            "# ",
             "#     pass"
         ]
     ),
@@ -94,7 +94,7 @@ _LINES_TEST_CASES = [
         ],
         [
             "    # def hallo():",
-            "",
+            "    # ",
             "    #     pass"
         ],
     ),
@@ -116,7 +116,7 @@ _LINES_TEST_CASES = [
         ],
         [
             "\t\t# def hallo():",
-            "",
+            "\t\t# ",
             "\t\t#     pass"
         ],
     )

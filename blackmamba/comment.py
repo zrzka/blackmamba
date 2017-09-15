@@ -4,14 +4,11 @@ import re
 import sys
 
 
-def _comment_line(line, hash_col_index=0):
+def _comment_line(line, hash_prefix=''):
     if line.strip().startswith('#'):
         return line
 
-    if not line.strip():
-        return line
-
-    return line[:hash_col_index] + '# ' + line[hash_col_index:]
+    return hash_prefix + '# ' + line[len(hash_prefix):]
 
 
 _UNCOMMENT_RE = re.compile('\A(\s*)#( ?)(.*)\Z', re.DOTALL)
@@ -26,14 +23,18 @@ def _uncomment_line(line):
         result = match.group(1) + match.group(3)
     else:
         result = line
+
+    if not result.strip():
+        result = ''
+
     return result
 
 
 _HASH_INDEX_RE = re.compile('\A(\s*)')
 
 
-def _hash_col_index(lines):
-    index = sys.maxsize
+def _hash_prefix(lines):
+    prefix = None
 
     for line in lines:
         if not line.strip():
@@ -44,13 +45,13 @@ def _hash_col_index(lines):
         if not match:
             continue
 
-        if len(match.group(1)) < index:
-            index = len(match.group(1))
+        if prefix is None or len(match.group(1)) < len(prefix):
+            prefix = match.group(1)
 
-    if index == sys.maxsize:
-        index = 0
+    if prefix is None:
+        prefix = ''
 
-    return index
+    return prefix
 
 
 def _toggle_lines(lines):
@@ -59,16 +60,16 @@ def _toggle_lines(lines):
 
     if lines[0].strip().startswith('#'):
         comment = False
-        hash_col_index = None
+        hash_prefix = ''
     else:
         comment = True
-        hash_col_index = _hash_col_index(lines)
+        hash_prefix = _hash_prefix(lines)
 
     replacement = []
 
     for line in lines:
         if comment:
-            replacement.append(_comment_line(line, hash_col_index))
+            replacement.append(_comment_line(line, hash_prefix))
         else:
             replacement.append(_uncomment_line(line))
 
