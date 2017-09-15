@@ -28,7 +28,8 @@ setup(
     packages=[
         'blackmamba',
         'blackmamba.experimental',
-        'blackmamba.project'
+        'blackmamba.project',
+        'blackmamba.script'
     ],
     package_dir={'': '.'},
 

@@ -180,18 +180,6 @@ class DragView(ui.View):
 
         self.background_color = '#ffffff'
 
-        self.title_label = ui.Label()
-        self.title_label.width = self.bounds.width - 12
-        self.title_label.height = 32
-        self.title_label.x = self.bounds.x + 6
-        self.title_label.y = self.bounds.y + 6
-        self.title_label.text_color = '#000000'
-        self.title_label.text = 'Drag File or Folder'
-        self.title_label.background_color = '#ffffff'
-        self.title_label.alignment = ui.ALIGN_CENTER
-        self.title_label.font = ('<system-bold>', 18)
-        self.add_subview(self.title_label)
-
         self.help_label = ui.Label()
         self.help_label.width = self.bounds.width - 12
         self.help_label.height = 32
@@ -211,8 +199,7 @@ class DragView(ui.View):
         self.tv.allows_selection_during_editing = False
         self.tv.data_source = self.ds
         self.tv.delegate = self.ds
-        self.tv.frame = (self.title_label.x, self.title_label.y + self.title_label.height + 6,
-                         self.title_label.width, self.bounds.height - 64 - 24)
+        self.tv.frame = (self.bounds.x, self.bounds.y, self.bounds.width, self.bounds.height - 32 -18)
         self.add_subview(self.tv)
 
         tv_objc = ObjCInstance(self.tv)
@@ -278,7 +265,8 @@ def drag_provider_dialog():
     _drag_items = _drag_path_items(path)
 
     v = DragView(path)
-    v.present('sheet', hide_title_bar=True)
+    v.name = 'Drag File or Folder'
+    v.present('sheet')
     v.wait_modal()
 
     _drag_items = []
