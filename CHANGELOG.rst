@@ -5,9 +5,15 @@ Change Log
 ``master`` (unreleased)
 -----------------------
 
+*
+
+
+``0.0.24`` (2017-09-15)
+-----------------------
+
 * ``blackmamba.keyboard`` module added
 * Pickers (open, script, ... quickly)
-    * Do not focus on search field if HW keyboard is not connected
+    * Do not focus search field if HW keyboard is not connected
     * Show title bar instead of custom title to allow users to close
       dialogs with X button
 * ``ide.scroll_to_line`` optimized
