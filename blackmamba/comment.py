@@ -5,7 +5,7 @@ import sys
 
 
 def _comment_line(line, hash_col_index=0):
-    if not line.find('#') == -1:
+    if line.strip().startswith('#'):
         return line
 
     if not line.strip():

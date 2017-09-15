@@ -19,7 +19,9 @@ _BASIC_TEST_CASES = {
     # Hash indexes
     (1, '\ta'): '\t# a',
     (2, '\t\ta'): '\t\t# a',
-    (4, '    a'): '    # a'
+    (4, '    a'): '    # a',
+    # Comment even if there's inline comment
+    (4, '    def main():  # Hallo'): '    # def main():  # Hallo'
 }
 
 
