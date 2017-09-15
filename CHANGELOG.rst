@@ -13,7 +13,8 @@ Change Log
 * ``ide.scroll_to_line`` optimized
 * Toggle comments various fixes
     * Line is properly commented when there's inline comment
-    * Uncommented line -> whitespaces only -> ''
+    * Uncommented line -> whitespaces only -> '\n'
+    * More test coverage to avoid future bugs
 
 
 ``0.0.23`` (2017-09-14)
