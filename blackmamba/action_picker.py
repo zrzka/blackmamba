@@ -65,7 +65,7 @@ class ActionPickerDataSource(PickerDataSource):
 
 def action_quickly():
     def run_wrench_item(item, shift_enter):
-        blackmamba.ide.run_script(item.action_info.script_name)
+        blackmamba.ide.run_script(item.action_info.script_name, delay=1.0)
 
     v = load_picker_view()
     v.name = 'Action Quickly...'

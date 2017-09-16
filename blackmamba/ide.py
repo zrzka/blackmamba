@@ -127,7 +127,7 @@ def script_exists(script_name, full_path=False):
     return os.path.exists(script_name)
 
 
-def run_script(script_name, full_path=False):
+def run_script(script_name, full_path=False, delay=None):
     if not full_path and script_name.startswith('/'):
         script_name = script_name[1:]
 
@@ -141,7 +141,18 @@ def run_script(script_name, full_path=False):
 
     encoded_name = urllib.parse.quote_plus(script_name, safe='', encoding=None, errors=None)
     url = 'pythonista://{}?action=run'.format(encoded_name)
-    webbrowser.open(url)
+
+    if delay:
+        import ui
+
+        def make_open_url(url):
+            def open():
+                webbrowser.open(url)
+            return open
+
+        ui.delay(make_open_url(url), 1.0)
+    else:
+        webbrowser.open(url)
 
 
 def _load_action(title):
@@ -153,13 +164,13 @@ def action_exists(title):
     return _load_action(title) is not None
 
 
-def run_action(title):
+def run_action(title, delay=None):
     action = _load_action(title)
     if not action:
         error('run_action: action does not exist {}'.format(title))
         return
 
-    run_script(action.script_name)
+    run_script(action.script_name, delay)
 
 
 def scroll_to_line(line_number):

@@ -16,6 +16,11 @@
 * Drag Provider uses Pythonista title bar instead of custom title to allow users to close the
   the dialog without external keyboard
 * Unit tests (`tester.py`) moved from `blackmamba.experimental` to `blackmamba`
+* `ide.run_script` and `ide.run_action` has new args named `delay`, which defaults to `None`
+* Run Quickly & Action Quickly runs scripts with 1.0s delay and that's because
+  both these actions are binded to scripts in the new script folder and if there's no
+  delay, nothing happens if these scripts are Python 3 (basically it runs script from script,
+  which doesn't ended yet)
  
 ## 0.0.24 (2017-09-15)
 

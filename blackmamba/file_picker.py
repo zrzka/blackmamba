@@ -92,7 +92,7 @@ def run_quickly():
         return not name.startswith('.') and name.endswith('.py')
 
     def run_script(item, shift_enter):
-        ide.run_script(item.file_path, full_path=True)
+        ide.run_script(item.file_path, full_path=True, delay=1.0)
 
     kwargs = {
         'ignore_folders': _ignore_folders(),
