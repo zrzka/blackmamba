@@ -32,6 +32,11 @@
     * `appex=None` - run in both case, just don't check
 * `blackmamba.key_command.register_key_command` is decorated with `Pythonista(appex=False)`
    to avoid shortcut registration if it's running as application extension
+* Page Up (`Ctrl Up`) and Page Down (`Ctrl Down`)
+    * It jumps up / down by 40 lines by [default](https://github.com/zrzka/blackmamba/blob/master/blackmamba/config.py#L17)
+    * You can modify this value via `general.page_line_count`
+    * See [#395](https://github.com/omz/Pythonista-Issues/issues/395), it's recommended
+      to hit Left / Right arrow key after page up / down to workaround iOS / Pythonista bug
 
 
 ## 0.0.24 (2017-09-15)
