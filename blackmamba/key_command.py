@@ -18,6 +18,12 @@ UIKeyModifierAlternate = 1 << 19  # Option
 UIKeyModifierCommand = 1 << 20  # Command
 UIKeyModifierNumericPad = 1 << 21  # Key is located on the numeric keypad
 
+UIKeyInputLeftArrow = 'UIKeyInputLeftArrow'
+UIKeyInputRightArrow = 'UIKeyInputRightArrow'
+UIKeyInputUpArrow = 'UIKeyInputUpArrow'
+UIKeyInputDownArrow = 'UIKeyInputDownArrow'
+
+
 # Keep it ordered to avoid different selector names for the same input & flags
 _UIKeyModifierNames = collections.OrderedDict([
     (UIKeyModifierAlphaShift, 'CapsLock'),
@@ -38,7 +44,11 @@ _UIKeyInputNames = {
     '_': 'Underscore',
     '\t': 'Tab',
     '[': 'LeftSquareBracket',
-    ']': 'RightSquareBracket'
+    ']': 'RightSquareBracket',
+    UIKeyInputLeftArrow: 'Left',
+    UIKeyInputRightArrow: 'Right',
+    UIKeyInputUpArrow: 'Up',
+    UIKeyInputDownArrow: 'Down'
 }
 
 _key_commands = []
@@ -58,13 +68,11 @@ def _normalize_input(input):
     special characters (like /) with name. If the input can't be
     normalized, ValueError is thrown."""
 
-    if not len(input) == 1:
-        raise ValueError('Key command input must be one character')
+    if len(input) == 1:
+        input = input.upper()
 
-    input = input.upper()
-
-    if (input >= 'A' and input <= 'Z') or (input >= '0' and input <= '9'):
-        return input
+        if (input >= 'A' and input <= 'Z') or (input >= '0' and input <= '9'):
+            return input
 
     if input not in _UIKeyInputNames:
         raise ValueError('Unsupported key command input: {}'.format(input))

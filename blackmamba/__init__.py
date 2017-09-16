@@ -49,7 +49,8 @@ def _register_ios11_default_key_commands():
 def _register_default_key_commands():
     import blackmamba.ide
     from blackmamba.key_command import (
-        UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl
+        UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl,
+        UIKeyInputUpArrow, UIKeyInputDownArrow
     )
 
     info('Registering default key commands...')
@@ -101,7 +102,11 @@ def _register_default_key_commands():
         (']', UIKeyModifierCommand | UIKeyModifierShift,
          blackmamba.ide.select_next_tab),
         ('[', UIKeyModifierCommand | UIKeyModifierShift,
-         blackmamba.ide.select_previous_tab)
+         blackmamba.ide.select_previous_tab),
+        (UIKeyInputUpArrow, UIKeyModifierControl,
+         blackmamba.ide.page_up),
+        (UIKeyInputDownArrow, UIKeyModifierControl,
+         blackmamba.ide.page_down)
     ]
 
     for command in commands:

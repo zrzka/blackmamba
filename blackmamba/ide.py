@@ -8,6 +8,7 @@ import blackmamba.action_picker
 from blackmamba.log import error
 import editor
 import console
+from blackmamba.config import get_config_value
 
 PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -185,6 +186,7 @@ def scroll_to_line(line_number):
             editor.set_selection(start)
             return
         start += len(line)
+    editor.set_selection(start)
 
 
 def jump_to_line():
@@ -197,3 +199,24 @@ def jump_to_line():
     except KeyboardInterrupt:
         # Cancel button
         pass
+
+
+def _page(line_count):
+    text = editor.get_text()
+    if not text:
+        return
+
+    start, end = editor.get_line_selection()
+
+    current_line = text.count('\n', 0, start if line_count < 0 else end) + 1
+
+    line = max(1, current_line + line_count)
+    scroll_to_line(line)
+
+
+def page_up():
+    _page(-get_config_value('general.page_line_count', 40))
+
+
+def page_down():
+    _page(get_config_value('general.page_line_count', 40))

@@ -12,14 +12,15 @@ from copy import deepcopy
 __all__ = ['get_config_value']
 
 _DEFAULTS = {
+    'general': {
+        'register_key_commands': True,
+        'page_line_count': 40
+    },
     'project': {
         'index': {
             'rate': 60,
             'auto_save': True
         }
-    },
-    'general': {
-        'register_key_commands': True
     },
     'update': {
         'enabled': True,
