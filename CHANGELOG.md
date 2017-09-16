@@ -2,6 +2,11 @@
 
 ## master (unreleased)
 
+*
+
+
+## 0.0.25 (2017-09-16)
+
 * `blackmamba.script` introduced and it does contain following scripts
     * `action_quickly.py`, `analyze.py`, `clear_annotations.py`, `close_all_tabs_except_current_one.py`,
       `drag_provider.py`, `jump_to_definition.py`, `jump_to_line.py`,  `new_file.py`, `new_tab.py`,
