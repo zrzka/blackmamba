@@ -21,7 +21,19 @@
   both these actions are binded to scripts in the new script folder and if there's no
   delay, nothing happens if these scripts are Python 3 (basically it runs script from script,
   which doesn't ended yet)
- 
+* Fixed #20 (Pythonista appex error)
+    * Allow to run `main`
+    * Do not check compatibility, updates
+    * Do not register keyboard shortcuts
+* `blackmamba.system.Pythonista` decorator has new arg `appex`
+    * Defaults to `None`
+    * `appex=True` - run decorated function if it's running as application extension
+    * `appex=False` - run decorated function if it's not running as application extension
+    * `appex=None` - run in both case, just don't check
+* `blackmamba.key_command.register_key_command` is decorated with `Pythonista(appex=False)`
+   to avoid shortcut registration if it's running as application extension
+
+
 ## 0.0.24 (2017-09-15)
 
 * `blackmamba.keyboard` module added

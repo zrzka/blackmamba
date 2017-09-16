@@ -132,10 +132,26 @@ class iOS(_Available):
 class Pythonista(_Available):
     '''Decorator to execute function under specific Pythonista versions.
 
+    By default, function is not executed under application extension.
+    You have to pass `appex=True` if you'd like to run some function
+    under appex as well.
+
     Examples:
         Run function only within any Pythonista version::
 
             @Pythonista()
+            def run_me():
+                pass
+
+        Run function only within any Pythonista version and allow appex::
+
+            @Pythonista(appex=True)
+            def run_me():
+                pass
+
+        Run function only within any Pythonista version and disallow appex::
+
+            @Pythonista(appex=False)
             def run_me():
                 pass
 
@@ -151,6 +167,19 @@ class Pythonista(_Available):
             def run_me():
                 pass
     '''
+    def __init__(self, from_version=None, to_version=None, appex=None):
+        super().__init__(from_version, to_version)
+        self._appex = appex
+
+    def _available(self):
+        available = super()._available()
+
+        if available and self._appex is not None:
+            import appex
+            available = appex.is_running_extension() == self._appex
+
+        return available
+
     def version(self):
         return PYTHONISTA_VERSION_TUPLE
 

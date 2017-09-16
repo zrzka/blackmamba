@@ -5,6 +5,7 @@ from ctypes import CFUNCTYPE, c_void_p, c_char_p
 from objc_util import retain_global, ObjCInstance, UIApplication, c, ns, on_main_thread, sel, ObjCClass
 from blackmamba.runtime import swizzle
 from blackmamba.log import error, info
+import blackmamba.system as system
 
 _UIKeyCommand = ObjCClass('UIKeyCommand')
 
@@ -95,6 +96,7 @@ def _shortcut_name(input, modifier_flags):
     return input
 
 
+@system.Pythonista(appex=False)
 @on_main_thread
 def register_key_command(input, modifier_flags, function, title=None):
     if not UIApplication.sharedApplication().respondsToSelector_(sel('originalkeyCommands')):

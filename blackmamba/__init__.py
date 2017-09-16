@@ -31,7 +31,7 @@ def _register_key_command(input, modifier_flags, function, title=None):
     register_key_command(input, modifier_flags, function, title)
 
 
-@system.Pythonista()
+@system.Pythonista(appex=False)
 @system.iOS('11.0')
 def _register_ios11_default_key_commands():
     from blackmamba.key_command import UIKeyModifierCommand
@@ -45,7 +45,7 @@ def _register_ios11_default_key_commands():
         _register_key_command(*command)
 
 
-@system.Pythonista()
+@system.Pythonista(appex=False)
 def _register_default_key_commands():
     import blackmamba.ide
     from blackmamba.key_command import (
@@ -115,8 +115,6 @@ def _register_default_key_commands():
     for i in range(9):
         _register_key_command(str(i + 1), UIKeyModifierCommand, _make_select_tab(i))
 
-    _register_ios11_default_key_commands()
-
     # No need to log Cmd-S (Save) to users
     _log_level = get_level()
     set_level(ERROR)
@@ -126,7 +124,7 @@ def _register_default_key_commands():
     info('Default key commands registered')
 
 
-@system.Pythonista()
+@system.Pythonista(appex=False)
 def _check_compatibility_and_updates():
     import blackmamba.update
     info('Pythonista {} ({})'.format(system.PYTHONISTA_VERSION, system.PYTHONISTA_BUNDLE_VERSION))
@@ -157,6 +155,7 @@ def main(config=None):
     _check_compatibility_and_updates()
     if get_config_value('general.register_key_commands', True):
         _register_default_key_commands()
+        _register_ios11_default_key_commands()
     info('Black Mamba initialized')
 
 
