@@ -2,7 +2,9 @@
 
 ## master (unreleased)
 
-*
+* Jedi experiment
+    * `blackmamba.project` trashed
+    * Jump to definition does use Jedi directly
 
 
 ## 0.0.25 (2017-09-16)

@@ -16,12 +16,6 @@ _DEFAULTS = {
         'register_key_commands': True,
         'page_line_count': 40
     },
-    'project': {
-        'index': {
-            'rate': 60,
-            'auto_save': True
-        }
-    },
     'update': {
         'enabled': True,
         'interval': 3600

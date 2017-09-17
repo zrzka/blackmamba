@@ -220,3 +220,29 @@ def page_up():
 
 def page_down():
     _page(get_config_value('general.page_line_count', 40))
+
+
+def get_line_number():
+    text = editor.get_text()
+
+    if text is None:
+        return None
+
+    return text.count('\n', 0, editor.get_selection()[0]) + 1
+
+
+def get_column_index():
+    text = editor.get_text()
+
+    if text is None:
+        return None
+
+    col = 0
+    index = editor.get_selection()[0]
+    while index > 0:
+        if text[index - 1] == '\n':
+            break
+        index -= 1
+        col += 1
+
+    return col

@@ -1,44 +1,12 @@
 #!python3
 
-from blackmamba.project.project import Project
 from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
-import blackmamba.log as log
 import editor
-import re
 import console
 import blackmamba.ide as ide
 import os
 import ui
-
-ALLOWED_CHAR = re.compile('[a-zA-Z0-9_]')
-
-
-def _allowed_char(ch):
-    return ALLOWED_CHAR.match(ch) is not None
-
-
-def _query():
-    text = editor.get_text()
-
-    if not text:
-        return None
-
-    selection = editor.get_selection()
-
-    # Begin/end differs, query for selection
-    if not selection[0] == selection[1]:
-        return text[selection[0]:selection[1]]
-
-    # Try to select current keyword around current cursor position
-    bi = selection[0]
-    while bi > 0 and _allowed_char(text[bi - 1:bi]):
-        bi -= 1
-
-    ei = selection[1]
-    while ei < len(text) and _allowed_char(text[ei:ei + 1]):
-        ei += 1
-
-    return text[bi:ei]
+import jedi
 
 
 def _open_and_scroll(path, line):
@@ -77,30 +45,30 @@ class LocationPickerItem(PickerItem):
 
 
 class LocationDataSource(PickerDataSource):
-    def __init__(self, symbol, locations):
+    def __init__(self, definitions):
         super().__init__()
 
         home_folder = os.path.expanduser('~/Documents')
 
         items = [
             LocationPickerItem(
-                location[0],
-                location[1],
-                ' • '.join(os.path.dirname(location[0])[len(home_folder) + 1:].split(os.sep))
+                definition.module_path,
+                definition.line,
+                ' • '.join(os.path.dirname(definition.module_path)[len(home_folder) + 1:].split(os.sep))
             )
-            for location in locations
+            for definition in definitions
         ]
 
         self.items = items
 
 
-def _select_location(symbol, locations):
+def _select_location(definitions):
     def open_location(item, shift_enter):
         _open_and_scroll(item.path, item.line)
 
     v = load_picker_view()
-    v.name = '{} locations'.format(symbol)
-    v.datasource = LocationDataSource(symbol, locations)
+    v.name = 'Multiple definitions found'
+    v.datasource = LocationDataSource(definitions)
 
     v.shift_enter_enabled = False
     v.help_label.text = (
@@ -115,33 +83,26 @@ def _select_location(symbol, locations):
 
 
 def jump_to_definition():
-    path = editor.get_path()
-    if not path:
-        console.hud_alert('Open some file', 'error')
+    ide.save()
+
+    text = editor.get_text()
+    if not text:
         return
 
-    symbol = _query()
-    log.debug('Jump to definition symbol "{}"'.format(symbol))
+    line = ide.get_line_number()
+    column = ide.get_column_index()
 
-    if not symbol:
-        console.hud_alert('Select symbol or place cursor in it', 'error')
+    script = jedi.api.Script(text, line, column, editor.get_path())
+    definitions = script.goto_definitions()
+
+    if not definitions:
+        console.hud_alert('Definition not found', 'error')
         return
 
-    p = Project.by_path(path)
-    if not p:
-        console.hud_alert('File not in a project', 'error')
-        return
-
-    locations = p.find_symbol_definition(symbol)
-    if not locations:
-        console.hud_alert('Symbol not found', 'error')
-        return
-
-    if len(locations) == 1:
-        path, line = locations[0]
-        _open_and_scroll(path, line)
+    if len(definitions) == 1:
+        _open_and_scroll(definitions[0].module_path, definitions[0].line)
     else:
-        _select_location(symbol, locations)
+        _select_location(definitions)
 
 
 if __name__ == '__main__':
