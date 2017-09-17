@@ -6,6 +6,8 @@ import console
 import blackmamba.ide as ide
 import os
 import jedi
+from blackmamba.config import get_config_value
+import blackmamba.log as log
 
 
 class LocationPickerItem(PickerItem):
@@ -77,6 +79,10 @@ def _select_location(definitions):
 
 
 def show_documentation():
+    if not get_config_value('general.jedi', False):
+        log.warn('show_documentation disabled, you can enable it by setting general.jedi to True')
+        return
+
     path = editor.get_path()
     if path is None:
         return

@@ -2,12 +2,25 @@
 
 ## master (unreleased)
 
-* `blackmamba.project` trashed (replaced with Jedi, thanks to )
-* Jump to definition does use Jedi directly
+* `blackmamba.project` trashed (replaced with Jedi, thanks to @JonB)
 * Jump to definition shortcut synced with Xcode (`Control Command J`)
 * Find usages added (`script/find_usages.py` & `Control Command U`)
 * Show documentation (`script/show_documentation.py` & `Control Command ?`)
-    * As `success` annotation on the current line
+    * Displayed as `success` annotation on the current line
+    * You can clear annotation with `Cmd Shift K` (already there)
+* All these three featues does `jedi` now. Jedi is not thread safe and
+  because I haven't lot of time to investigate how and when is the Jedi
+  used by Pythonista, I decided to disable these three features by
+  default. To enable them, just set `general.jedi` to `True` when
+  passing configuration to the `main`. BTW this `.` notation is a shortcut
+  for documentation and you have pass it as dictionary.
+  
+```json
+{
+    'general': {
+        'jedi': True
+    }
+}
 
 
 ## 0.0.25 (2017-09-16)

@@ -7,6 +7,8 @@ import blackmamba.ide as ide
 import os
 import ui
 import jedi
+from blackmamba.config import get_config_value
+import blackmamba.log as log
 
 
 def _open_and_scroll(path, line):
@@ -83,6 +85,10 @@ def _select_location(definitions):
 
 
 def find_usages():
+    if not get_config_value('general.jedi', False):
+        log.warn('find_usages disabled, you can enable it by setting general.jedi to True')
+        return
+
     path = editor.get_path()
     if path is None:
         return
