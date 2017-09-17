@@ -67,7 +67,7 @@ def _select_location(definitions):
         _open_and_scroll(item.path, item.line)
 
     v = load_picker_view()
-    v.name = 'Multiple definitions found'
+    v.name = 'Usages'
     v.datasource = LocationDataSource(definitions)
 
     v.shift_enter_enabled = False
@@ -82,7 +82,7 @@ def _select_location(definitions):
     v.wait_modal()
 
 
-def jump_to_definition():
+def find_usages():
     path = editor.get_path()
     if not path:
         return
@@ -100,17 +100,14 @@ def jump_to_definition():
     column = ide.get_column_index()
 
     script = jedi.api.Script(text, line, column, path)
-    definitions = script.goto_definitions()
+    definitions = script.usages()
 
     if not definitions:
         console.hud_alert('Definition not found', 'error')
         return
 
-    if len(definitions) == 1:
-        _open_and_scroll(definitions[0].module_path, definitions[0].line)
-    else:
-        _select_location(definitions)
+    _select_location(definitions)
 
 
 if __name__ == '__main__':
-    jump_to_definition()
+    find_usages()

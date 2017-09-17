@@ -83,8 +83,10 @@ def _register_default_key_commands():
          'outline_quickly.py', 'Outline Quickly...'),
         ('L', UIKeyModifierControl,
          'jump_to_line.py', 'Jump to line...'),
-        ('D', UIKeyModifierCommand | UIKeyModifierShift,
+        ('J', UIKeyModifierCommand | UIKeyModifierControl,
          'jump_to_definition.py', 'Jump to definition...'),
+        ('U', UIKeyModifierCommand | UIKeyModifierControl,
+         'find_usages.py', 'Find usages...'),
 
         # Still keyboard only
         ('0', UIKeyModifierCommand,

@@ -2,9 +2,10 @@
 
 ## master (unreleased)
 
-* Jedi experiment
-    * `blackmamba.project` trashed
-    * Jump to definition does use Jedi directly
+* `blackmamba.project` trashed (replaced with Jedi, thanks to )
+* Jump to definition does use Jedi directly
+* Jump to definition shortcut synced with Xcode (`Control Command J`)
+* Find usages added (`script/find_usages.py` & `Control Command U`)
 
 
 ## 0.0.25 (2017-09-16)
@@ -16,7 +17,7 @@
       `toggle_comments.py`
     * These scripts can be used in the wrench icon (action)
     * These scripts are binded to keyboard shortcuts, whenever you run it via wrench icon
-      or via keyboard shortcut, same script is executed
+      or via keyboard shortcut, esame script is executed
     * It's still required to call `blackmamba.main` from within
       `~/Documents/site-packages-3/pythonista_startup.py` file to properly configure it
       (even without external keyboard)
