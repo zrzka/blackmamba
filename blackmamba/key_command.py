@@ -45,6 +45,7 @@ _UIKeyInputNames = {
     '\t': 'Tab',
     '[': 'LeftSquareBracket',
     ']': 'RightSquareBracket',
+    '?': 'QuestionMark',
     UIKeyInputLeftArrow: 'Left',
     UIKeyInputRightArrow: 'Right',
     UIKeyInputUpArrow: 'Up',

@@ -6,6 +6,8 @@
 * Jump to definition does use Jedi directly
 * Jump to definition shortcut synced with Xcode (`Control Command J`)
 * Find usages added (`script/find_usages.py` & `Control Command U`)
+* Show documentation (`script/show_documentation` & `Control Command ?`)
+    * As `success` annotation on the current line
 
 
 ## 0.0.25 (2017-09-16)

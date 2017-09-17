@@ -87,6 +87,8 @@ def _register_default_key_commands():
          'jump_to_definition.py', 'Jump to definition...'),
         ('U', UIKeyModifierCommand | UIKeyModifierControl,
          'find_usages.py', 'Find usages...'),
+        ('?', UIKeyModifierCommand | UIKeyModifierControl,
+         'show_documentation.py', 'Show Documentation'),
 
         # Still keyboard only
         ('0', UIKeyModifierCommand,
