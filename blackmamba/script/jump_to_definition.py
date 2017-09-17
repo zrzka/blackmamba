@@ -22,13 +22,14 @@ def _open_and_scroll(path, line):
 
 
 class LocationPickerItem(PickerItem):
-    def __init__(self, path, line, display_folder):
+    def __init__(self, path, line, display_folder, definition):
         super().__init__(
             '{}, line {}'.format(os.path.basename(path), line),
             display_folder
         )
         self.path = path
         self.line = line
+        self.definition
 
     def matches_title(self, terms):
         if not terms:
@@ -65,7 +66,8 @@ class LocationDataSource(PickerDataSource):
 
 def _select_location(definitions):
     def open_location(item, shift_enter):
-        _open_and_scroll(item.path, item.line)
+        definition = item.definition
+        _open_and_scroll(definition.module_path, definition.line)
 
     v = load_picker_view()
     v.name = 'Multiple definitions found'
@@ -108,7 +110,10 @@ def jump_to_definition():
         return
 
     script = jedi.api.Script(text, line, column, path)
-    definitions = script.goto_definitions()
+    definitions = [
+        d for d in script.goto_definitions()
+        if d.module_path and d.line
+    ]
 
     if not definitions:
         console.hud_alert('Definition not found', 'error')

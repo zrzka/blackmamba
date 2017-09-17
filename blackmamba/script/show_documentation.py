@@ -103,7 +103,10 @@ def show_documentation():
         return
 
     script = jedi.api.Script(text, line, column, path)
-    definitions = script.goto_definitions()
+    definitions = [
+        d for d in script.goto_definitions()
+        if d.module_path and d.line
+    ]
 
     if not definitions:
         console.hud_alert('Documentation not found', 'error')

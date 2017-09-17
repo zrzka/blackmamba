@@ -109,7 +109,10 @@ def find_usages():
         return
 
     script = jedi.api.Script(text, line, column, path)
-    definitions = script.usages()
+    definitions = [
+        d for d in script.goto_definitions()
+        if d.module_path and d.line
+    ]
 
     if not definitions:
         console.hud_alert('Definition not found', 'error')
