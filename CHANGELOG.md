@@ -2,6 +2,11 @@
 
 ## master (unreleased)
 
+*
+
+
+## 0.0.26 (2017-09-17)
+
 * `blackmamba.project` trashed (replaced with Jedi, thanks to @JonB)
 * Jump to definition shortcut synced with Xcode (`Control Command J`)
 * Find usages added (`script/find_usages.py` & `Control Command U`)
