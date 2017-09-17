@@ -78,7 +78,7 @@ def _select_location(definitions):
 
 def show_documentation():
     path = editor.get_path()
-    if not path:
+    if path is None:
         return
 
     if not path.endswith('.py'):
@@ -92,6 +92,9 @@ def show_documentation():
 
     line = ide.get_line_number()
     column = ide.get_column_index()
+
+    if not line or not column:
+        return
 
     script = jedi.api.Script(text, line, column, path)
     definitions = script.goto_definitions()
