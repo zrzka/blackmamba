@@ -29,7 +29,7 @@ class LocationPickerItem(PickerItem):
         )
         self.path = path
         self.line = line
-        self.definition
+        self.definition = definition
 
     def matches_title(self, terms):
         if not terms:
