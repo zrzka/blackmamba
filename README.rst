@@ -33,7 +33,7 @@ iPhone - some of these scripts should work on iPhone as well, but the UI is not 
 for UI at all. It has not much sense to optimise it for iPhone. You can try it, but it's
 not officially supported.
 
-External keyboard is a must. Some of these [scripts](https://github.com/zrzka/blackmamba/tree/master/blackmamba/script)
+External keyboard is a must. Some of these `scripts <https://github.com/zrzka/blackmamba/tree/master/blackmamba/script>`_
 can be used as actions (wrench menu icon), but it's not great as with external keyboard.
 
 Status
