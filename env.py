@@ -6,7 +6,7 @@ import console
 
 _ROOT_FOLDER = os.path.expanduser('~/Documents/site-packages-3/blackmamba')
 _BACKUP_FOLDER = os.path.expanduser('~/Documents/Development/bm-pip-backup')
-_GIT_FOLDER = os.path.expanduser('~/Documents/Development/bm-git')
+_GIT_FOLDER = os.path.expanduser('~/Documents/Development/blackmamba')
 _GIT_MODULE_FOLDER = os.path.join(_GIT_FOLDER, 'blackmamba')
 
 
