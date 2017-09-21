@@ -5,14 +5,10 @@
 *
 
 
-## 0.0.27 (2017-09-21)
+## 0.0.26 (2017-09-21)
 
 * Jump to definition fixes
 * Jedi - ignore definitions if there's no path & line number
-
-
-## 0.0.26 (2017-09-17)
-
 * `blackmamba.project` trashed (replaced with Jedi, thanks to @JonB)
 * Jump to definition shortcut synced with Xcode (`Control Command J`)
 * Find usages added (`script/find_usages.py` & `Control Command U`)
