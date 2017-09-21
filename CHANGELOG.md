@@ -2,6 +2,11 @@
 
 ## master (unreleased)
 
+*
+
+
+## 0.0.27 (2017-09-21)
+
 * Jump to definition fixes
 * Jedi - ignore definitions if there's no path & line number
 
