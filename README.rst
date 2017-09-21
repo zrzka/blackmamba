@@ -33,7 +33,7 @@ iPhone - some of these scripts should work on iPhone as well, but the UI is not 
 for UI at all. It has not much sense to optimise it for iPhone. You can try it, but it's
 not officially supported.
 
-External keyboard is a must. Some of these [scripts](https://github.com/zrzka/blackmamba/tree/master/blackmamba/script)
+External keyboard is a must. Some of these `scripts <https://github.com/zrzka/blackmamba/tree/master/blackmamba/script>`_
 can be used as actions (wrench menu icon), but it's not great as with external keyboard.
 
 Status
@@ -66,6 +66,30 @@ via ``check_for_updates`` and ``check_interval`` variables in the ``updates``
 module. Anyway, if you see a message about new version available, just repeat
 package installation steps to install new version until real update will be
 implemented.
+
+
+PIP
+---
+
+If you have `StaSh <https://github.com/ywangd/stash>`_ installed and you do use
+``dev`` branch, you can use ``pip`` to install / update Black Mamba. Why ``dev``?
+``pip`` in ``master`` does use XML-RPC, which is a legacy PyPI API.
+`This pull request <https://github.com/ywangd/stash/pull/269>`_ replaces it with
+JSON API and is merged into ``dev`` only.
+
+So, you've got ``StaSh`` & ``dev``?
+
+.. code-block:: bash
+
+    pip install blackmamba -d ~/Documents/site-packages-3
+
+How to update Black Mamba via ``pip``? Until `this PR <https://github.com/ywangd/stash/pull/272>`_
+will be merged, you have to:
+
+.. code-block:: bash
+
+    pip remove blackmamba
+    pip install blackmamba -d ~/Documents/site-packages-3
 
 
 pythonista_startup.py
