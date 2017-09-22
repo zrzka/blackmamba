@@ -5,6 +5,11 @@
 * Drag provider trashed (`Cmd E`)
 * Drag & Drop introduced (`Cmd E`)
     * Allows bidirectional drag & drop of files & folders & repos
+    * List of ignored folders is configurable via `drag_and_drop.ignored_folders`,
+      check [config.py](https://github.com/zrzka/blackmamba/blob/master/blackmamba/config.py)
+      for default values
+    * There's one limitation (will be fixed) - whenever you drop folder, UI isn't
+      updated, you have to close Drag & Drop window and open it again      
 
 
 ## 0.0.26 (2017-09-21)
