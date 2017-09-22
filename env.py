@@ -5,13 +5,13 @@ import os
 import console
 
 _ROOT_FOLDER = os.path.expanduser('~/Documents/site-packages-3/blackmamba')
-_BACKUP_FOLDER = os.path.expanduser('~/Documents/Development/bm-pip-backup')
-_GIT_FOLDER = os.path.expanduser('~/Documents/Development/blackmamba')
+_BACKUP_FOLDER = os.path.expanduser('~/Documents/site-packages-3/bm-pip-backup')
+_GIT_FOLDER = os.path.expanduser('~/Documents/Working Copy/blackmamba')
 _GIT_MODULE_FOLDER = os.path.join(_GIT_FOLDER, 'blackmamba')
 
 
-def switch_to_git():
-    print('Switching Black Mamba to GIT version')
+def switch_to_working_copy():
+    print('Switching Black Mamba to Working Copy version')
 
     if not os.path.isdir(_ROOT_FOLDER):
         print('Failed, folder does not exist: {}'.format(_ROOT_FOLDER))
@@ -37,7 +37,7 @@ def switch_to_git():
         print('Failed, folder is not a symlink: {}'.format(_ROOT_FOLDER))
         return
 
-    print('Black Mamba switched to GIT version')
+    print('Black Mamba switched to Working Copy version')
 
 
 def switch_to_installer():
@@ -74,9 +74,9 @@ def toggle():
             switch_to_installer()
         else:
             console.alert('Black Mamba',
-                          'Switch to GitHub version?',
+                          'Switch to Working Copy version?',
                           'OK')
-            switch_to_git()
+            switch_to_working_copy()
     except:
         pass
 
