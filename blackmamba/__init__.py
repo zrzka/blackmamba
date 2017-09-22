@@ -38,7 +38,7 @@ def _register_ios11_default_key_commands():
 
     commands = [
         ('E', UIKeyModifierCommand,
-         'drag_provider.py', 'Drag Provider')
+         'drag_and_drop.py', 'Drag & Drop')
     ]
 
     for command in commands:

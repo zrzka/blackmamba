@@ -2,7 +2,9 @@
 
 ## master (unreleased)
 
-*
+* Drag provider trashed (`Cmd E`)
+* Drag & Drop introduced (`Cmd E`)
+    * Allows bidirectional drag & drop of files & folders & repos
 
 
 ## 0.0.26 (2017-09-21)
