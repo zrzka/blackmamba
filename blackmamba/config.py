@@ -36,6 +36,13 @@ _DEFAULTS = {
     'tester': {
         'hud_alert_delay': 1.0,
         'hide_console': True
+    },
+    'drag_and_drop': {
+        'ignore_folders': {
+            '': ['.git'],
+            '.': ['.Trash', 'Examples',
+                  'site-packages', 'site-packages-2', 'site-packages-3', 'stash_extensions']
+        }
     }
 }
 

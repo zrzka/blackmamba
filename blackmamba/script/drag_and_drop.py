@@ -17,6 +17,7 @@ import blackmamba.ide as ide
 import console
 import io
 import shutil
+from blackmamba.config import get_config_value
 
 _TMP_DIR = os.environ.get('TMPDIR', os.environ.get('TMP'))
 
@@ -374,12 +375,24 @@ def build_folder_tree(folder, parent=None, ignore=None):
 
 
 def ignore(folder, file):
-    ignore_folders = [
-        '.git', '.Trash', 'Examples', 'Pythonista', 'site-packages',
-        'site-packages-2', 'site-packages-3', 'stash_extensions'
-    ]
+    if file.startswith('.'):
+        return True
 
-    return file in ignore_folders or file.startswith('.')
+    ignore_folders = get_config_value('drag_and_drop.ignore_folders', None)
+    if not ignore_folders:
+        return False
+
+    for parent, folders in ignore_folders.items():
+        if not parent and file in folders:
+            return True
+
+        if parent == '.' and folder == os.path.expanduser('~/Documents') and file in folders:
+            return True
+
+        if parent == os.path.basename(folder) and file in folders:
+            return True
+
+    return False
 
 
 class FolderPickerDataSource:
