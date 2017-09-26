@@ -101,7 +101,11 @@ Copy & paste ...
 
     #!python3
     import blackmamba as bm
+    import console
+
     bm.main()
+    console.clear()
+    console.hide_output()
 
 ... into ``~/Documents/site-packages-3/pythonista_startup.py`` and you're
 ready to use following shortcuts:
