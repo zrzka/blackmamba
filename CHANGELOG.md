@@ -2,7 +2,8 @@
 
 ## master (unreleased)
 
-* Keyboard shortcut to close dialogs (`Ctrl [`) replaced with `Cmd .` (Apple does use it)
+* Keyboard shortcut to close dialogs (`Ctrl [`) replaced with `Cmd .`
+    * This shortcut is used by Apple itself (learned from Anders @ Working Copy)
 * Open, run, action, ... dialogs
     * Default width is 80% of window width (max 700)
     * Default height is 80% of window height
@@ -10,6 +11,9 @@
     * Filtering works on folders too
         * `bl __init` matches any file where full path does contain `bl` and `__init`
         * Folders up to `~/Documents` are not matched, only subfolders of `~/Documents`
+* Drag & Drop
+    * Changed way how a folder / file is provided, works with Kaleidoscope now
+    * Still works with Working Copy
 
 
 ## 0.0.27 (2017-09-22)
