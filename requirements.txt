@@ -1,3 +1,5 @@
+numpy
+jedi
 flake8
 mock
 pytest
