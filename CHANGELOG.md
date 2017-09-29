@@ -15,6 +15,7 @@
 * Drag & Drop
     * Changed way how a folder / file is provided, works with Kaleidoscope now
     * Still works with Working Copy
+    * All opened files are show in the dialog
 * Open Quickly
     * If file is already opened, tab with file is selected
 

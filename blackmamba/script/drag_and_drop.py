@@ -567,7 +567,7 @@ class DragAndDropView(ui.View):
         path = editor.get_path()
         if path:
             expanded_folder = os.path.dirname(path)
-            files = [path]
+            files = tab.get_paths()
         else:
             expanded_folder = None
             files = None
