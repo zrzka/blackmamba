@@ -2,11 +2,12 @@
 
 ## master (unreleased)
 
-* Keyboard shortcut to close dialogs (`Ctrl [`) replaced with `Cmd .`
-    * This shortcut is used by Apple itself (learned from Anders @ Working Copy)
-* Open, run, action, ... dialogs
+* Dialogs (all)
+    * Keyboard shortcut to close dialogs (`Ctrl [`) replaced with `Cmd .`
+        * This shortcut is used by Apple itself (learned from Anders @ Working Copy)
     * Default width is 80% of window width (max 700)
     * Default height is 80% of window height
+* Open, run, action, ... dialogs
     * Properly sorted (by lowercased file names)
     * Filtering works on folders too
         * `bl __init` matches any file where full path does contain `bl` and `__init`

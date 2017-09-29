@@ -560,8 +560,9 @@ class FolderPickerDataSource:
 class DragAndDropView(ui.View):
     def __init__(self):
         self.name = 'Drag & Drop'
-        self.width = 540
-        self.height = 540
+
+        self.width = min(ui.get_window_size()[0] * 0.8, 700)
+        self.height = ui.get_window_size()[1] * 0.8
 
         path = editor.get_path()
         if path:
@@ -607,8 +608,8 @@ class DragAndDropView(ui.View):
 
         self._handlers = []
         self._handlers.append(register_key_event_handler(UIEventKeyCode.escape, handle_escape))
-        self._handlers.append(register_key_event_handler(UIEventKeyCode.leftSquareBracket, handle_escape,
-                                                         modifier=UIKeyModifier.control))
+        self._handlers.append(register_key_event_handler(UIEventKeyCode.dot, handle_escape,
+                                                         modifier=UIKeyModifier.command))
 
     def will_close(self):
         for handler in self._handlers:
