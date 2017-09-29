@@ -115,7 +115,7 @@ def toggle_comments():
 
     editor.replace_text(selected_lines_range[0], selected_lines_range[1], replacement)
     editor.set_selection(selected_lines_range[0], selected_lines_range[0] + len(replacement))
-    
+
 
 if __name__ == '__main__':
     toggle_comments()

@@ -1,7 +1,6 @@
 #!python3
 
 import os
-import editor
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import blackmamba.ide.script as script
 from blackmamba.config import get_config_value
@@ -87,7 +86,7 @@ def run_quickly():
     v.did_select_item_action = run_script
     v.present('sheet')
     v.wait_modal()
-    
+
 
 if __name__ == '__main__':
     run_quickly()
