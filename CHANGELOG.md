@@ -15,6 +15,8 @@
 * Drag & Drop
     * Changed way how a folder / file is provided, works with Kaleidoscope now
     * Still works with Working Copy
+* Open Quickly
+    * If file is already opened, tab with file is selected
 
 
 ## 0.0.27 (2017-09-22)

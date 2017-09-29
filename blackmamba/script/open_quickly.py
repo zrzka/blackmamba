@@ -1,10 +1,10 @@
 #!python3
 
 import os
-import editor
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 from blackmamba.config import get_config_value
 from blackmamba.util.path import strip_documents_folder
+import blackmamba.ide.tab as tab
 
 _IGNORE_FOLDERS = {
     '': ['.git'],
@@ -66,7 +66,7 @@ def open_quickly():
 
     def open_file(item, shift_enter):
         new_tab = not shift_enter
-        editor.open_file(item.file_path, new_tab=new_tab)
+        tab.open_file(item.file_path, new_tab=new_tab)
 
     kwargs = {
         'ignore_folders': _ignore_folders(),

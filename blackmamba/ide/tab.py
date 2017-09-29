@@ -155,3 +155,40 @@ def new_file():
     tabs.addTab_(tabs.addTabButtonItem())
     tab = tabs.tabViewControllers()[-1]
     tab.addNewFile_(tab.addNewFileButton())
+
+
+@on_main_thread
+def get_path():
+    tab = _get_selected_tab_view_controller()
+
+    if not tab:
+        return None
+
+    return str(tab.filePath())
+
+
+@on_main_thread
+def get_paths():
+    tabs = _get_tabs_view_controller()
+
+    if not tabs:
+        return None
+
+    return [str(tab.filePath()) for tab in tabs.tabViewControllers()]
+
+
+def open_file(path, new_tab=True):
+    index = None
+    paths = get_paths()
+
+    if paths:
+        try:
+            index = paths.index(path)
+        except ValueError:
+            pass
+
+    if index is None:
+        import editor
+        editor.open_file(path, new_tab=new_tab)
+    else:
+        select_tab(index)
