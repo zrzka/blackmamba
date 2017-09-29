@@ -9,35 +9,35 @@ __author__ = 'Robert Vojta'
 _LATEST_VERSION_COMPATIBILITY_TEST = (311009, '3.1.1')
 
 
-def _register_key_command(input, modifier_flags, function, title=None):
-    from blackmamba.key_command import register_key_command
-    import blackmamba.ide
+def _register_key_command(input, modifier, function, title=None):
+    from blackmamba.uikit.keyboard import register_key_command
+    import blackmamba.ide.script as script
     import os
 
-    def make_run_script(script):
+    def make_run_script(path):
         path = os.path.join(
             os.path.expanduser('site-packages-3/blackmamba/script'),
-            script
+            path
         )
 
         def run():
-            blackmamba.ide.run_script(path)
+            script.run_script(path)
 
         return run
 
     if isinstance(function, str):
         function = make_run_script(function)
 
-    register_key_command(input, modifier_flags, function, title)
+    register_key_command(input, modifier, function, title)
 
 
 @system.Pythonista(appex=False)
 @system.iOS('11.0')
 def _register_ios11_default_key_commands():
-    from blackmamba.key_command import UIKeyModifierCommand
+    from blackmamba.uikit.keyboard import UIKeyModifier
 
     commands = [
-        ('E', UIKeyModifierCommand,
+        ('E', UIKeyModifier.command,
          'drag_and_drop.py', 'Drag & Drop')
     ]
 
@@ -47,70 +47,68 @@ def _register_ios11_default_key_commands():
 
 @system.Pythonista(appex=False)
 def _register_default_key_commands():
-    import blackmamba.ide
-    from blackmamba.key_command import (
-        UIKeyModifierCommand, UIKeyModifierShift, UIKeyModifierControl,
-        UIKeyInputUpArrow, UIKeyInputDownArrow
-    )
+    from blackmamba.uikit.keyboard import UIKeyModifier, UIKeyInput
+    import blackmamba.ide.tab as tab
+    import blackmamba.ide.source as source
 
     info('Registering default key commands...')
 
     commands = [
         # Scripts allowed to be used in the wrench
-        ('/', UIKeyModifierCommand,
+        ('/', UIKeyModifier.command,
          'toggle_comments.py', 'Toggle Comments'),
-        ('N', UIKeyModifierCommand,
+        ('N', UIKeyModifier.command,
          'new_file.py', 'New File'),
-        ('T', UIKeyModifierCommand,
+        ('T', UIKeyModifier.command,
          'new_tab.py', 'New Tab'),
-        ('W', UIKeyModifierCommand | UIKeyModifierShift,
+        ('W', UIKeyModifier.command | UIKeyModifier.shift,
          'close_all_tabs_except_current_one.py', 'Close Tabs Except Current One'),
-        ('O', UIKeyModifierCommand | UIKeyModifierShift,
+        ('O', UIKeyModifier.command | UIKeyModifier.shift,
          'open_quickly.py', 'Open Quickly...'),
-        ('0', UIKeyModifierCommand | UIKeyModifierShift,
+        ('0', UIKeyModifier.command | UIKeyModifier.shift,
          'search_dash.py', 'Search in Dash'),
-        ('R', UIKeyModifierCommand | UIKeyModifierShift,
+        ('R', UIKeyModifier.command | UIKeyModifier.shift,
          'run_quickly.py', 'Run Quickly...'),
-        ('A', UIKeyModifierCommand | UIKeyModifierShift,
+        ('A', UIKeyModifier.command | UIKeyModifier.shift,
          'action_quickly.py', 'Action Quickly...'),
-        ('B', UIKeyModifierControl | UIKeyModifierShift,
+        ('B', UIKeyModifier.control | UIKeyModifier.shift,
          'analyze.py', 'Analyze & Check Style'),
-        ('K', UIKeyModifierCommand | UIKeyModifierShift,
+        ('K', UIKeyModifier.command | UIKeyModifier.shift,
          'clear_annotations.py', 'Clear Annotations'),
-        ('U', UIKeyModifierCommand,
+        ('U', UIKeyModifier.command,
          'run_unit_tests.py', 'Run Unit Tests...'),
-        ('L', UIKeyModifierCommand | UIKeyModifierShift,
+        ('L', UIKeyModifier.command | UIKeyModifier.shift,
          'outline_quickly.py', 'Outline Quickly...'),
-        ('L', UIKeyModifierControl,
+        ('L', UIKeyModifier.control,
          'jump_to_line.py', 'Jump to line...'),
-        ('J', UIKeyModifierCommand | UIKeyModifierControl,
+        ('J', UIKeyModifier.command | UIKeyModifier.control,
          'jump_to_definition.py', 'Jump to definition...'),
-        ('U', UIKeyModifierCommand | UIKeyModifierControl,
+        ('U', UIKeyModifier.command | UIKeyModifier.control,
          'find_usages.py', 'Find usages...'),
-        ('?', UIKeyModifierCommand | UIKeyModifierControl,
+        ('?', UIKeyModifier.command | UIKeyModifier.control,
          'show_documentation.py', 'Show Documentation'),
 
         # Still keyboard only
-        ('0', UIKeyModifierCommand,
-         blackmamba.ide.toggle_navigator,
+        ('0', UIKeyModifier.command,
+         tab.toggle_navigator,
          'Toggle Navigator'),
-        ('W', UIKeyModifierCommand,
-         blackmamba.ide.close_current_tab,
+        ('W', UIKeyModifier.command,
+         tab.close_selected_tab,
          'Close Tab'),
-        ('\t', UIKeyModifierControl,
-         blackmamba.ide.select_next_tab,
+        ('\t', UIKeyModifier.control,
+         tab.select_next_tab,
          'Show Next Tab'),
-        ('\t', UIKeyModifierControl | UIKeyModifierShift,
-         blackmamba.ide.select_previous_tab,
+        ('\t', UIKeyModifier.control | UIKeyModifier.shift,
+         tab.select_previous_tab,
          'Show Previous Tab'),
-        (']', UIKeyModifierCommand | UIKeyModifierShift,
-         blackmamba.ide.select_next_tab),
-        ('[', UIKeyModifierCommand | UIKeyModifierShift,
-         blackmamba.ide.select_previous_tab),
-        (UIKeyInputUpArrow, UIKeyModifierControl,
-         blackmamba.ide.page_up),
-        (UIKeyInputDownArrow, UIKeyModifierControl,
-         blackmamba.ide.page_down)
+        (']', UIKeyModifier.command | UIKeyModifier.shift,
+         tab.select_next_tab),
+        ('[', UIKeyModifier.command | UIKeyModifier.shift,
+         tab.select_previous_tab),
+        (UIKeyInput.upArrow, UIKeyModifier.control,
+         source.page_up),
+        (UIKeyInput.downArrow, UIKeyModifier.control,
+         source.page_down)
     ]
 
     for command in commands:
@@ -118,16 +116,21 @@ def _register_default_key_commands():
 
     def _make_select_tab(index):
         def select_tab():
-            blackmamba.ide.select_tab(index)
+            tab.select_tab(index)
         return select_tab
 
     for i in range(9):
-        _register_key_command(str(i + 1), UIKeyModifierCommand, _make_select_tab(i))
+        _register_key_command(str(i + 1), UIKeyModifier.command, _make_select_tab(i))
 
-    # No need to log Cmd-S (Save) to users
+    # No need to show Cmd-[Shift]-S to users
     _log_level = get_level()
     set_level(ERROR)
-    _register_key_command('S', UIKeyModifierCommand, blackmamba.ide.save)
+
+    def save_all():
+        tab.save(True)
+
+    _register_key_command('S', UIKeyModifier.command, tab.save)
+    _register_key_command('S', UIKeyModifier.command | UIKeyModifier.shift, save_all)
     set_level(_log_level)
 
     info('Default key commands registered')

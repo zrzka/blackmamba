@@ -1,22 +1,23 @@
 #!python3
 
-from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
+from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import editor
 import console
-import blackmamba.ide as ide
 import os
 import ui
 import jedi
 from blackmamba.config import get_config_value
 import blackmamba.log as log
+import blackmamba.ide.tab as tab
+import blackmamba.ide.source as source
 
 
 def _open_and_scroll(path, line):
     if editor.get_path() == path:
-        ide.scroll_to_line(line)
+        source.scroll_to_line(line)
     else:
         def scroll():
-            ide.scroll_to_line(line)
+            source.scroll_to_line(line)
         editor.open_file(path, new_tab=True)
         ui.delay(scroll, 0.2)
 
@@ -68,7 +69,7 @@ def _select_location(definitions):
     def open_location(item, shift_enter):
         _open_and_scroll(item.path, item.line)
 
-    v = load_picker_view()
+    v = PickerView()
     v.name = 'Usages'
     v.datasource = LocationDataSource(definitions)
 
@@ -76,7 +77,7 @@ def _select_location(definitions):
     v.help_label.text = (
         '⇅ - select • Enter - open file and scroll to location'
         '\n'
-        'Esc - close • Ctrl [ - close with Apple smart keyboard'
+        'Esc - close • Cmd . - close with Apple smart keyboard'
     )
     v.textfield.placeholder = 'Start typing to filter files...'
     v.did_select_item_action = open_location
@@ -96,16 +97,16 @@ def find_usages():
     if not path.endswith('.py'):
         return
 
-    ide.save()
+    tab.save()
 
     text = editor.get_text()
     if not text:
         return
 
-    line = ide.get_line_number()
-    column = ide.get_column_index()
+    line = source.get_line_number()
+    column = source.get_column_index()
 
-    if not line or not column:
+    if line is None or column is None:
         return
 
     script = jedi.api.Script(text, line, column, path)

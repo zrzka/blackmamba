@@ -1,6 +1,6 @@
 #!python3
 
-from blackmamba.comment import _comment_line, _uncomment_line, _toggle_lines
+from blackmamba.script.toggle_comments import _comment_line, _uncomment_line, _toggle_lines
 
 
 _BASIC_TEST_CASES = {

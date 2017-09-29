@@ -3,8 +3,7 @@
 from enum import Enum
 
 
-class Style(Enum):
-    '''Value represents value for style parameter in editor.annotate_line function.'''
+class Style(str, Enum):
     error = 'error'
     warning = 'warning'
 
@@ -15,7 +14,3 @@ class Annotation(object):
         self.text = text
         self.style = style
         self.filename = filename
-
-    @property
-    def editor_annotation_style(self):
-        return self.style.value

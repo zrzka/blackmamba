@@ -1,9 +1,10 @@
 #!python3
 
-from blackmamba.picker import load_picker_view, PickerItem, PickerDataSource
+from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import editor
 import console
-import blackmamba.ide as ide
+import blackmamba.ide.tab as tab
+import blackmamba.ide.source as source
 import os
 import jedi
 from blackmamba.config import get_config_value
@@ -54,7 +55,7 @@ class LocationDataSource(PickerDataSource):
 
 
 def _show_documentation(definition):
-    line = ide.get_line_number()
+    line = source.get_line_number()
     editor.annotate_line(line, definition.docstring(), 'success')
 
 
@@ -62,7 +63,7 @@ def _select_location(definitions):
     def action(item, shift_enter):
         _show_documentation(item.definition)
 
-    v = load_picker_view()
+    v = PickerView()
     v.name = 'Multiple definitions found'
     v.datasource = LocationDataSource(definitions)
 
@@ -70,7 +71,7 @@ def _select_location(definitions):
     v.help_label.text = (
         '⇅ - select • Enter - show documentation'
         '\n'
-        'Esc - close • Ctrl [ - close with Apple smart keyboard'
+        'Esc - close • Cmd . - close with Apple smart keyboard'
     )
     v.textfield.placeholder = 'Start typing to filter files...'
     v.did_select_item_action = action
@@ -90,16 +91,16 @@ def show_documentation():
     if not path.endswith('.py'):
         return
 
-    ide.save()
+    tab.save()
 
     text = editor.get_text()
     if not text:
         return
 
-    line = ide.get_line_number()
-    column = ide.get_column_index()
+    line = source.get_line_number()
+    column = source.get_column_index()
 
-    if not line or not column:
+    if line is None or column is None:
         return
 
     script = jedi.api.Script(text, line, column, path)

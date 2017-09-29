@@ -1,10 +1,10 @@
 #!python3
 
-import blackmamba.ide
+import blackmamba.ide.tab as tab
 
 
 def close_all_tabs_except_current_one():
-    blackmamba.ide.close_all_tabs_except_current_one()
+    tab.close_tabs_except_current()
 
 
 if __name__ == '__main__':

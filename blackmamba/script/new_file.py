@@ -1,10 +1,10 @@
 #!python3
 
-import blackmamba.ide
+import blackmamba.ide.tab as tab
 
 
 def new_file():
-    blackmamba.ide.new_file()
+    tab.new_file()
 
 
 if __name__ == '__main__':

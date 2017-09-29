@@ -27,9 +27,10 @@ setup(
 
     packages=[
         'blackmamba',
-        'blackmamba.experimental',
-        'blackmamba.project',
-        'blackmamba.script'
+        'blackmamba.uikit'
+        'blackmamba.ide',
+        'blackmamba.script',
+        'blackmamba.util'
     ],
     package_dir={'': '.'},
 

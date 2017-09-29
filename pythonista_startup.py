@@ -1,4 +1,4 @@
-#!python3
+# !python3
 
 import blackmamba
 import blackmamba.log as log
@@ -10,6 +10,7 @@ log.set_level(log.INFO)
 # Check blackmamba.config._DEFAULTS for default values
 config = {
     'general': {
+        'jedi': True
         # Uncomment to disable keyboard shortcuts
         # 'register_key_commands': False
     },
@@ -20,50 +21,44 @@ config = {
     'file_picker': {
         'ignore_folders': {
             '': ['.git'],
-            '.': ['Pythonista', '.Trash', 'Examples',
-                  'site-packages-2', 'site-packages', 'stash_extensions'],
-            'site-packages-3': ['blackmamba'],
-            'Development': ['bm-pip-backup']
+            '.': ['.Trash', 'Examples', 'stash_extensions']
         }
     },
     'analyzer': {
         'hud_alert_delay': 1.0,
-        'ignore_codes': None,
+        'ignore_codes': ['E114', 'E116'],
         'max_line_length': 127,
         'remove_whitespaces': True
     },
     'tester': {
         'hud_alert_delay': 1.0,
         'hide_console': True
+    },
+    'drag_and_drop': {
+        'ignore_folders': {
+            '': ['.git'],
+            '.': ['.Trash', 'Examples', 'stash_extensions']
+        }
     }
 }
 
 
 def register_custom_shortcuts():
-    import blackmamba.ide as ide
-    import blackmamba.key_command as kc
+    import blackmamba.ide.action as action
+    from blackmamba.uikit.keyboard import register_key_command, UIKeyModifier
 
-    # Launch `StaSh` (= custom action title) via Cmd-Shift-S
-    if ide.action_exists('StaSh'):
+    # Launch `StaSh` (= custom action title) via Ctrl-S
+    action = action.get_action('StaSh')
+    if action:
         def launch_stash():
-            ide.run_action('StaSh')
+            action.run()
 
-        kc.register_key_command(
-            'S',  # Shortcut key
-            kc.UIKeyModifierCommand | kc.UIKeyModifierShift,  # Shortcut modifier keys
-            launch_stash,  # Function to call
-            'Launch StaSh')  # Optional discoverability title (hold down Cmd)
-
-# Or you can use run_script instead of action to launch StaSh
-# if ide.script_exists('launch_stash.py'):
-#     def launch_stash():
-#         ide.run_script('launch_stash.py')
-#
-#     kc.register_key_command(
-#         'S',
-#         kc.UIKeyModifierCommand | kc.UIKeyModifierShift,
-#         launch_stash,
-#         'Launch StaSh')
+        register_key_command(
+            'S',
+            UIKeyModifier.control,
+            launch_stash,
+            'Launch StaSh'
+        )
 
 
 def main():
@@ -71,6 +66,11 @@ def main():
     # if you'd like to use default config.
     blackmamba.main(config=config)
     register_custom_shortcuts()
+
+    # If you'd like to hide console after Black Mamba starts, just uncomment
+    # following lines
+    # import console
+    # console.hide_output()
 
 
 if __name__ == 'pythonista_startup':

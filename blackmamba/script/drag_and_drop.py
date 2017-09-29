@@ -2,18 +2,17 @@
 
 import os
 import ui
-from objc_util import ns, ObjCClass, ObjCInstance, ObjCBlock, create_objc_class, NSData
+from objc_util import ns, ObjCClass, ObjCInstance, ObjCBlock, create_objc_class
 from blackmamba.log import error
-import blackmamba.runtime as runtime
+import blackmamba.util.runtime as runtime
 import editor
 import ctypes
 import zipfile
-from blackmamba.key_event import (
+from blackmamba.uikit.keyboard import (
     register_key_event_handler, unregister_key_event_handler,
-    UIEventKeyCodeLeftSquareBracket, UIEventKeyCodeEscape
+    UIEventKeyCode, UIKeyModifier
 )
-from blackmamba.key_command import UIKeyModifierControl
-import blackmamba.ide as ide
+import blackmamba.ide.tab as tab
 import console
 import io
 import shutil
@@ -48,74 +47,27 @@ def _type_identifier(path):
 
 
 def _suggested_name(path):
-    name = os.path.basename(path)
-
-    if os.path.isdir(path):
-        name += '.zip'
-
-    return name
-
-
-def _provide_file_data(path):
-    data = NSData.dataWithContentsOfFile_(path)
-    if not data:
-        error('Failed to read file: {}'.format(path))
-        return None
-
-    return data
-
-
-def _provide_folder_data(path):
-    saved_dir = os.getcwd()
-    os.chdir(os.path.dirname(path))
-    folder_name = os.path.basename(path)
-
-    zip_file_path = os.path.join(_TMP_DIR, '{}.zip'.format(folder_name))
-
-    if os.path.exists(zip_file_path):
-        os.remove(zip_file_path)
-
-    ignore_folders = ['.git']
-    ignore_files = ['.DS_Store']
-
-    with zipfile.ZipFile(zip_file_path, 'w') as zip:
-        for root, subdirs, files in os.walk(folder_name, topdown=True):
-            if ignore_folders:
-                subdirs[:] = [d for d in subdirs if d not in ignore_folders]
-            for file in files:
-                if file not in ignore_files:
-                    zip.write(os.path.join(root, file))
-
-    os.chdir(saved_dir)
-
-    return _provide_file_data(zip_file_path)
-
-
-def _provide_data(path):
-    if os.path.isfile(path):
-        return _provide_file_data(path)
-    elif os.path.isdir(path):
-        return _provide_folder_data(path)
-
-    return None
+    return os.path.basename(path)
 
 
 def _load_data_imp(_cmd, _block_ptr):
     global _dragged_item_path
     handler = runtime.ObjCBlockPointer(_block_ptr,
-                                       argtypes=[ctypes.c_void_p, ctypes.c_void_p])
+                                       argtypes=[ctypes.c_void_p, ctypes.c_bool, ctypes.c_void_p])
 
     if _dragged_item_path:
-        data = _provide_data(_dragged_item_path)
+        NSURL = ObjCClass('NSURL')
+        url = NSURL.fileURLWithPath_isDirectory_(ns(_dragged_item_path), os.path.isdir(_dragged_item_path))
+
         _dragged_item_path = None
     else:
-        data = None
+        url = None
 
-    if not data:
+    if not url:
         error = NSError.errorWithDomain_code_userInfo_('com.robertvojta.blackmamba', 1, None)
-        handler(None, error)
+        handler(None, None, error)
     else:
-        handler(data, None)
+        handler(url.ptr, False, None)
 
 
 _load_data = ObjCBlock(_load_data_imp, restype=ctypes.c_void_p,
@@ -142,10 +94,12 @@ def tableView_itemsForBeginningDragSession_atIndexPath_(_self, _cmd, tv_ptr, ses
         suggested_name = _suggested_name(path)
 
         provider = NSItemProvider.alloc().init()
-
-        # 0 = NSItemProviderRepresentationVisibilityAll
-        args = [type_identifier, 0, _load_data]
-        provider.registerDataRepresentationForTypeIdentifier_visibility_loadHandler_(*args)
+        provider.registerFileRepresentationForTypeIdentifier_fileOptions_visibility_loadHandler_(
+            type_identifier,
+            0,
+            0,
+            _load_data
+        )
 
         if not provider:
             error('Failed to create item provider.')
@@ -652,9 +606,9 @@ class DragAndDropView(ui.View):
             self.close()
 
         self._handlers = []
-        self._handlers.append(register_key_event_handler(UIEventKeyCodeEscape, handle_escape))
-        self._handlers.append(register_key_event_handler(UIEventKeyCodeLeftSquareBracket, handle_escape,
-                                                         modifier_flags=UIKeyModifierControl))
+        self._handlers.append(register_key_event_handler(UIEventKeyCode.escape, handle_escape))
+        self._handlers.append(register_key_event_handler(UIEventKeyCode.leftSquareBracket, handle_escape,
+                                                         modifier=UIKeyModifier.control))
 
     def will_close(self):
         for handler in self._handlers:
@@ -662,7 +616,7 @@ class DragAndDropView(ui.View):
 
 
 def main():
-    ide.save(True)
+    tab.save(True)
     view = DragAndDropView()
     view.present('sheet')
 

@@ -1,10 +1,10 @@
 #!python3
 
-import blackmamba.analyzer
+import editor
 
 
 def clear_annotations():
-    blackmamba.analyzer.clear_annotations()
+    editor.clear_annotations()
 
 
 if __name__ == '__main__':

@@ -2,7 +2,14 @@
 
 ## master (unreleased)
 
-*
+* Keyboard shortcut to close dialogs (`Ctrl [`) replaced with `Cmd .` (Apple does use it)
+* Open, run, action, ... dialogs
+    * Default width is 80% of window width (max 700)
+    * Default height is 80% of window height
+    * Properly sorted (by lowercased file names)
+    * Filtering works on folders too
+        * `bl __init` matches any file where full path does contain `bl` and `__init`
+        * Folders up to `~/Documents` are not matched, only subfolders of `~/Documents`
 
 
 ## 0.0.27 (2017-09-22)

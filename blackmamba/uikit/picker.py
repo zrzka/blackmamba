@@ -1,31 +1,48 @@
 #!python3
 
-from ui import View, load_view, TableViewCell
-from blackmamba.uikit import UITableViewCellStyle
-from blackmamba.key_command import UIKeyModifierShift, UIKeyModifierControl
-from blackmamba.key_event import (
+import ui
+from blackmamba.uikit.table import UITableViewCellStyle
+from blackmamba.uikit.keyboard import (
+    UIKeyModifier, UIEventKeyCode,
     register_key_event_handler, unregister_key_event_handler,
-    UIEventKeyCodeUp, UIEventKeyCodeDown,
-    UIEventKeyCodeEnter, UIEventKeyCodeEscape,
-    UIEventKeyCodeLeftSquareBracket
+    is_in_hardware_keyboard_mode
 )
-from blackmamba.keyboard import is_in_hardware_keyboard_mode
+from blackmamba.uikit.autolayout import LayoutProxy
 
 
-class PickerItem(object):
+class PickerItem:
     def __init__(self, title, subtitle=None, image=None):
-        self.title = title
+        self._title = title
+        self._normalized_title = title.lower()
+
         self.subtitle = subtitle
         self.image = image
-        self._norm_title = title.lower()
+        self.title = title
 
-    def matches_title(self, terms):
-        if not terms:
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, new_value):
+        self._title = new_value
+        self._normalized_title = new_value.lower() if new_value else None
+
+    @property
+    def sort_value(self):
+        return self._normalized_title
+
+    @property
+    def match_value(self):
+        return self._normalized_title
+
+    def matches(self, search_terms):
+        if not search_terms:
             return True
 
         start = 0
-        for t in terms:
-            start = self._norm_title.find(t, start)
+        for t in search_terms:
+            start = self.match_value.find(t, start)
 
             if start == -1:
                 return False
@@ -35,7 +52,7 @@ class PickerItem(object):
         return True
 
     def __lt__(self, other):
-        return self.title < other.title
+        return self.sort_value < other.sort_value
 
     def __str__(self):
         return self.title
@@ -53,8 +70,14 @@ class PickerDataSource(object):
 
     def _filter_items(self):
         if self._filter:
+            search_terms = [
+                x.strip()
+                for x in self._filter.split(' ')
+                if x.strip()
+            ]
+
             self._filtered_items = [
-                i for i in self._items if i.matches_title(self._filter)
+                i for i in self._items if i.matches(search_terms)
             ]
         else:
             self._filtered_items = self._items
@@ -62,8 +85,7 @@ class PickerDataSource(object):
         self.reload()
 
     def filter_by(self, filter):
-        new_filter = [s for s in filter.strip().lower().split(' ') if s]
-        self._filter = new_filter
+        self._filter = filter
         self._filter_items()
 
     @property
@@ -140,7 +162,7 @@ class PickerDataSource(object):
 
     def tableview_cell_for_row(self, tv, section, row):
         item = self._filtered_items[row]
-        cell = TableViewCell(UITableViewCellStyle.subtitle.value)
+        cell = ui.TableViewCell(UITableViewCellStyle.subtitle.value)
         cell.text_label.number_of_lines = 1
         cell.text_label.text = item.title
         cell.detail_text_label.text = item.subtitle
@@ -150,15 +172,56 @@ class PickerDataSource(object):
         return cell
 
 
-class PickerView(View):
-    def __init__(self):
-        self._tableview = None
-        self._textfield = None
-        self._help_label = None
+class PickerView(ui.View):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        if 'background_color' not in kwargs:
+            self.background_color = 'white'
+
+        if 'frame' not in kwargs:
+            self.width = min(ui.get_window_size()[0] * 0.8, 700)
+            self.height = ui.get_window_size()[1] * 0.8
+
+        self._tableview = ui.TableView()
+        self._textfield = ui.TextField()
+        self._help_label = ui.Label()
         self._datasource = None
         self._handlers = []
         self.shift_enter_enabled = True
         self.did_select_item_action = None
+
+        tf = LayoutProxy(self._textfield)
+        self.add_subview(tf)
+        tf.layout.align_left_with_superview.equal = 8
+        tf.layout.align_top_with_superview.equal = 8
+        tf.layout.align_right_with_superview.equal = -8
+        tf.layout.height.equal = 31
+        tf.delegate = self
+
+        tv = LayoutProxy(self._tableview)
+        self.add_subview(tv)
+        tv.layout.align_left_to(tf).equal = 0
+        tv.layout.align_right_to(tf).equal = 0
+        tv.layout.top_offset_to(tf).equal = 8
+        tv.allows_selection = True
+        tv.allows_multiple_selection = False
+
+        hl = LayoutProxy(self._help_label)
+        self.add_subview(hl)
+        hl.layout.align_left_to(tv).equal = 0
+        hl.layout.align_right_to(tv).equal = 0
+        hl.layout.top_offset_to(tv).equal = 8
+        hl.layout.align_bottom_with_superview.equal = -8
+        hl.layout.height.max = 66
+        hl.font = ('<system>', 13.0)
+        hl.alignment = ui.ALIGN_CENTER
+        hl.text_color = (0, 0, 0, 0.5)
+        hl.number_of_lines = 2
+
+        if is_in_hardware_keyboard_mode:
+            tf.view.begin_editing()
+
         self._register_key_event_handlers()
 
     def _register_key_event_handlers(self):
@@ -184,14 +247,14 @@ class PickerView(View):
         def handle_escape():
             self.close()
 
-        self._handlers.append(register_key_event_handler(UIEventKeyCodeUp, handle_key_up))
-        self._handlers.append(register_key_event_handler(UIEventKeyCodeDown, handle_key_down))
-        self._handlers.append(register_key_event_handler(UIEventKeyCodeEnter, handle_enter))
-        self._handlers.append(register_key_event_handler(UIEventKeyCodeEnter, handle_shift_enter,
-                                                         modifier_flags=UIKeyModifierShift))
-        self._handlers.append(register_key_event_handler(UIEventKeyCodeEscape, handle_escape))
-        self._handlers.append(register_key_event_handler(UIEventKeyCodeLeftSquareBracket, handle_escape,
-                                                         modifier_flags=UIKeyModifierControl))
+        self._handlers.append(register_key_event_handler(UIEventKeyCode.up, handle_key_up))
+        self._handlers.append(register_key_event_handler(UIEventKeyCode.down, handle_key_down))
+        self._handlers.append(register_key_event_handler(UIEventKeyCode.enter, handle_enter))
+        self._handlers.append(register_key_event_handler(UIEventKeyCode.enter, handle_shift_enter,
+                                                         modifier=UIKeyModifier.shift))
+        self._handlers.append(register_key_event_handler(UIEventKeyCode.escape, handle_escape))
+        self._handlers.append(register_key_event_handler(UIEventKeyCode.dot, handle_escape,
+                                                         modifier=UIKeyModifier.command))
 
     def will_close(self):
         for handler in self._handlers:
@@ -220,18 +283,6 @@ class PickerView(View):
     def textfield(self):
         return self._textfield
 
-    def did_load(self):
-        self._tableview = self['tableview']
-        self._textfield = self['textfield']
-        self._help_label = self['helplabel']
-
-        self._tableview.allows_selection = True
-        self._tableview.allows_multiple_selection = False
-        self._textfield.delegate = self
-
-        if is_in_hardware_keyboard_mode:
-            self._textfield.begin_editing()
-
     def _did_select_item(self, shift_enter=False):
         if not self._datasource:
             return
@@ -252,7 +303,3 @@ class PickerView(View):
             string = textfield.text[:range[0]] + replacement + textfield.text[range[1]:]
             self._datasource.filter_by(string)
         return True
-
-
-def load_picker_view():
-    return load_view()
