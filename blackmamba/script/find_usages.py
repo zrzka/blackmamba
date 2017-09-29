@@ -111,7 +111,7 @@ def find_usages():
 
     script = jedi.api.Script(text, line, column, path)
     definitions = [
-        d for d in script.goto_definitions()
+        d for d in script.usages()
         if d.module_path and d.line
     ]
 

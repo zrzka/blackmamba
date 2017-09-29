@@ -18,6 +18,8 @@
     * All opened files are show in the dialog
 * Open Quickly
     * If file is already opened, tab with file is selected
+* Find usages
+    * It actually did show definitions instead of usages, fixed
 
 
 ## 0.0.27 (2017-09-22)
