@@ -13,7 +13,7 @@ setup(
     long_description=open('README.rst', 'rt').read(),
 
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
         'Operating System :: iOS',
         'Programming Language :: Python :: 3.5',
