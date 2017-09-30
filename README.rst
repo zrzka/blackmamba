@@ -1,3 +1,11 @@
+###########
+Black Mamba
+###########
+
+
+Build status
+============
+
 .. image:: https://travis-ci.org/zrzka/blackmamba.svg?branch=master
     :alt: Travis CI Build Status
 
@@ -5,10 +13,8 @@
     :target: http://blackmamba.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-###########
-Black Mamba
-###########
 
-Everything you need to know is available at:
+Documentation
+=============
 
-* `Black Mamba Documentation <http://blackmamba.readthedocs.io/>`_.
+Everything you need to know is available in the `Black Mamba Documentation <http://blackmamba.readthedocs.io/>`_.
