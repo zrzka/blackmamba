@@ -29,10 +29,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 project = 'Black Mamba'
-copyright = '2017, Robert Vojta'
-author = 'Robert Vojta'
 
-
+copyright = '2017, {}'.format(blackmamba.__author__)
+author = blackmamba.__author__
 version = blackmamba.__version__
 release = blackmamba.__version__
 
