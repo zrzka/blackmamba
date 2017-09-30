@@ -12,7 +12,7 @@ import functools
 
 try:
     import console
-except ModuleNotFoundError:
+except ImportError:
     console = None
 
 

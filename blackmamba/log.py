@@ -11,7 +11,7 @@ Todo:
 
 try:
     import console
-except:
+except ImportError:
     console = None
 
 ERROR = 40
