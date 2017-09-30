@@ -4,7 +4,7 @@ import blackmamba.ide.source as source
 import console
 
 
-def jump_to_line():
+def main():
     try:
         input = console.input_alert('Jump to line...', 'Empty (or invalid) value  to dismiss.')
         source.scroll_to_line(int(input))
@@ -17,4 +17,4 @@ def jump_to_line():
 
 
 if __name__ == '__main__':
-    jump_to_line()
+    main()

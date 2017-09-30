@@ -60,7 +60,7 @@ class FilePickerDataSource(PickerDataSource):
         self.items = sorted(items)
 
 
-def open_quickly():
+def main():
     def allow_file(root, name):
         return not name.startswith('.')
 
@@ -89,4 +89,4 @@ def open_quickly():
 
 
 if __name__ == '__main__':
-    open_quickly()
+    main()

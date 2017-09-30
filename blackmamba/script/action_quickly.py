@@ -40,7 +40,7 @@ class ActionPickerDataSource(PickerDataSource):
         return cell
 
 
-def action_quickly():
+def main():
     def run_wrench_item(item, shift_enter):
         item.action_info.run(delay=1.0)
 
@@ -60,4 +60,4 @@ def action_quickly():
 
 
 if __name__ == '__main__':
-    action_quickly()
+    main()

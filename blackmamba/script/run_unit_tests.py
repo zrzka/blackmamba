@@ -115,7 +115,7 @@ def _run_unit_tests(path):
         console.hide_output()
 
 
-def run_script_unit_tests():
+def main():
     path = editor.get_path()
 
     if not path:
@@ -129,4 +129,4 @@ def run_script_unit_tests():
 
 
 if __name__ == '__main__':
-    run_script_unit_tests()
+    main()

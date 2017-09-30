@@ -3,9 +3,9 @@
 import blackmamba.ide.tab as tab
 
 
-def new_file():
+def main():
     tab.new_file()
 
 
 if __name__ == '__main__':
-    new_file()
+    main()

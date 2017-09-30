@@ -59,7 +59,7 @@ class OutlineDataSource(PickerDataSource):
         return nodes
 
 
-def outline_quickly():
+def main():
     filename = editor.get_path()
     if not filename:
         return
@@ -90,4 +90,4 @@ def outline_quickly():
 
 
 if __name__ == '__main__':
-    outline_quickly()
+    main()

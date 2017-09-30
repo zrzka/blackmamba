@@ -44,7 +44,7 @@ def _query():
     return text[bi:ei]
 
 
-def search_dash(query=None):
+def main(query=None):
     """Opens Dash documentation browser.
 
     If you do not provide query, current selection will be used. If there's
@@ -65,4 +65,4 @@ def search_dash(query=None):
 
 
 if __name__ == '__main__':
-    search_dash()
+    main()

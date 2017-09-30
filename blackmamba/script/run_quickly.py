@@ -61,7 +61,7 @@ class FilePickerDataSource(PickerDataSource):
         self.items = sorted(items)
 
 
-def run_quickly():
+def main():
     def allow_file(root, name):
         return path.is_python_file(name) and not name.startswith('.')
 
@@ -89,4 +89,4 @@ def run_quickly():
 
 
 if __name__ == '__main__':
-    run_quickly()
+    main()

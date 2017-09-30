@@ -79,7 +79,7 @@ def _select_location(definitions):
     v.wait_modal()
 
 
-def show_documentation():
+def main():
     if not get_config_value('general.jedi', False):
         log.warn('show_documentation disabled, you can enable it by setting general.jedi to True')
         return
@@ -120,4 +120,4 @@ def show_documentation():
 
 
 if __name__ == '__main__':
-    show_documentation()
+    main()

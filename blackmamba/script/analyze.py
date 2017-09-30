@@ -185,7 +185,7 @@ def _editor_text():
     return text
 
 
-def analyze():
+def main():
     path = editor.get_path()
 
     if not path:
@@ -218,4 +218,4 @@ def analyze():
 
 
 if __name__ == '__main__':
-    analyze()
+    main()

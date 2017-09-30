@@ -86,7 +86,7 @@ def _select_location(definitions):
     v.wait_modal()
 
 
-def jump_to_definition():
+def main():
     if not get_config_value('general.jedi', False):
         log.warn('jump_to_definition disabled, you can enable it by setting general.jedi to True')
         return
@@ -127,4 +127,4 @@ def jump_to_definition():
 
 
 if __name__ == '__main__':
-    jump_to_definition()
+    main()

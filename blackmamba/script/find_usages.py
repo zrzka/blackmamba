@@ -85,7 +85,7 @@ def _select_location(definitions):
     v.wait_modal()
 
 
-def find_usages():
+def main():
     if not get_config_value('general.jedi', False):
         log.warn('find_usages disabled, you can enable it by setting general.jedi to True')
         return
@@ -123,4 +123,4 @@ def find_usages():
 
 
 if __name__ == '__main__':
-    find_usages()
+    main()

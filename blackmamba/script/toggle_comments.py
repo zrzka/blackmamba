@@ -82,7 +82,7 @@ def _toggle_lines(lines):
 
 
 @Pythonista()
-def toggle_comments():
+def main():
     import editor
 
     selection_range = editor.get_selection()
@@ -118,4 +118,4 @@ def toggle_comments():
 
 
 if __name__ == '__main__':
-    toggle_comments()
+    main()
