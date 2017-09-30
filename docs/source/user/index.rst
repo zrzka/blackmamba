@@ -18,4 +18,5 @@ classes contained in the package, see the :ref:`reference`.
    requirements
    install
    configuration
+   shortcuts
    scripts
