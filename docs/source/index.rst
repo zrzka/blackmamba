@@ -15,3 +15,5 @@ Welcome stranger. Use one of the following links to continue.
    user/index
    reference/index
    contribution
+   development
+   faq
