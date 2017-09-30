@@ -48,6 +48,10 @@ Here's the default Black Mamba configuration.
         }
     }
 
+
+I strongly suggests to check `config.py:_DEFAULTS <https://github.com/zrzka/blackmamba/blob/master/blackmamba/config.py>`_
+from time to time. Just to check if this documentation isn't outdated.
+
 general
 =======
 
