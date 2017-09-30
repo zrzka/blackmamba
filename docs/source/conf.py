@@ -5,14 +5,15 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
-import blackmamba
+import blackmamba  # noqa: E402
 
 
-extensions = ['sphinx.ext.autodoc',
+extensions = [
+    'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode']
-
+    'sphinx.ext.viewcode'
+]
 
 templates_path = ['_templates']
 
