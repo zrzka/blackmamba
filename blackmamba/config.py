@@ -13,6 +13,7 @@ __all__ = ['get_config_value']
 
 _DEFAULTS = {
     'general': {
+        'jedi': False,
         'register_key_commands': True,
         'page_line_count': 40
     },
