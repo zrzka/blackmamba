@@ -1,4 +1,11 @@
 #!python3
+"""
+Run unit tests
+==============
+
+* Script name: ``run_unit_tests.py``
+* Keyboard shortcut: ``Cmd U``
+"""
 
 import pytest
 import editor

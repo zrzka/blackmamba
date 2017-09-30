@@ -1,4 +1,11 @@
 #!python3
+"""
+Toggle comments
+===============
+
+* Script name: ``toggle_comments.py``
+* Keyboard shortcut: ``Cmd /``
+"""
 
 import re
 from blackmamba.system import Pythonista

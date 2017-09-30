@@ -1,4 +1,11 @@
 #!python3
+"""
+Search documentation
+====================
+
+* Script name: ``show_documentation.py``
+* Keyboard shortcut: ``Ctrl Cmd ?``
+"""
 
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import editor

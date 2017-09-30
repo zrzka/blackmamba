@@ -1,4 +1,11 @@
 #!python3
+"""
+Find usages
+===========
+
+* Script name: ``find_usages.py``
+* Keyboard shortcut: ``Ctrl Cmd U``
+"""
 
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import editor

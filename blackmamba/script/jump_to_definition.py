@@ -1,4 +1,11 @@
 #!python3
+"""
+Jump to definition
+==================
+
+* Script name: ``jump_to_definition.py``
+* Keyboard shortcut: ``Ctrl Cmd J``
+"""
 
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import editor

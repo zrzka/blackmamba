@@ -1,4 +1,11 @@
 #!python3
+"""
+Run quickly
+===========
+
+* Script name: ``run_quickly.py``
+* Keyboard shortcut: ``Cmd Shift R``
+"""
 
 import os
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource

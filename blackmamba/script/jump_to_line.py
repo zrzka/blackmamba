@@ -1,4 +1,11 @@
 #!python3
+"""
+Jump to line
+============
+
+* Script name: ``jump_to_line.py``
+* Keyboard shortcut: ``Ctrl L``
+"""
 
 import blackmamba.ide.source as source
 import console

@@ -4,4 +4,4 @@
 Scripts
 #######
 
-.. module:: blackmamba.script
+.. automodule:: blackmamba.script

@@ -1,4 +1,11 @@
 #!python3
+"""
+Search Dash
+===========
+
+* Script name: ``search_dash.py``
+* Keyboard shortcut: ``Cmd Shift 0``
+"""
 
 import editor
 import urllib.parse

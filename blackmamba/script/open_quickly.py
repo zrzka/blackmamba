@@ -1,4 +1,11 @@
 #!python3
+"""
+Open quickly
+============
+
+* Script name: ``open_quickly.py``
+* Keyboard shortcut: ``Cmd Shift O``
+"""
 
 import os
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource

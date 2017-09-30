@@ -7,7 +7,7 @@ Black Mamba Reference
 :Release: |version|
 :Date: |today|
 
-.. module:: blackmamba
+.. automodule:: blackmamba
 
 This reference manual details functions, modules, and objects
 included in Black Mamba, describing what they are and what they do.

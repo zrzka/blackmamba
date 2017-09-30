@@ -1,4 +1,12 @@
 #!python3
+"""
+Drag & Drop
+===========
+
+* Script name: ``drag_and_drop.py``
+* Keyboard shortcut: ``Cmd E``
+* iOS >= 11.0 required
+"""
 
 import os
 import ui

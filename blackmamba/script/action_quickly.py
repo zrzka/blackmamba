@@ -1,4 +1,14 @@
 #!python3
+"""
+Action quickly
+==============
+
+* Script name: ``action_quickly.py``
+* Keyboard shortcut: ``Cmd Shift A``
+
+Shows dialog with user defined action items (wrench icon). You can filter them
+by title, use arrow keys to change selection and run action with ``Enter`` key.
+"""
 
 import os
 from ui import TableViewCell

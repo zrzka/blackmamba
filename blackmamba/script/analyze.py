@@ -1,4 +1,11 @@
 #!python3
+"""
+Analyze
+=======
+
+* Script name: ``analyze.py``
+* Keyboard shortcut: ``Ctrl Shift B``
+"""
 
 import io
 import pep8

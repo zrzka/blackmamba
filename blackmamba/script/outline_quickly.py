@@ -1,4 +1,11 @@
 #!python3
+"""
+Outline quickly
+===============
+
+* Script name: ``outline_quickly.py``
+* Keyboard shortcut: ``Cmd Shift L``
+"""
 
 import editor
 import ast
