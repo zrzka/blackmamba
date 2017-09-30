@@ -48,7 +48,7 @@ todo_include_todos = False
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
-html_sidebars = {'**': ['localtoc.html', 'relations.html', 'global_root.html']}
+html_sidebars = {'**': ['navigation.html', 'localtoc.html', 'relations.html']}
 
 
 # -- Options for HTMLHelp output ------------------------------------------

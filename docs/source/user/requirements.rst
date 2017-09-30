@@ -16,3 +16,5 @@ but it's not great as with external keyboard.
 
 .. note:: Black Mamba should work on iPhone as well, but the UI is not optimized
    for this device at all. You can try it, but it's not officially supported.
+
+Continue to :ref:`install`.
