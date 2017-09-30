@@ -7,13 +7,16 @@ Scripts
 Following scripts are usable as Pythonista action items (wrench menu icon). In other
 words, you can use them even without external keyboard.
 
+
 Action quickly
 ==============
 
 Script name ``action_quickly.py``.
 
 Shows dialog with user defined action items (wrench icon). You can filter them
-by title, use arrow keys to change selection and run any of it with ``Enter`` key.
+by title, use arrow keys to change selection and run any of them with ``Enter`` key.
+
+Only **user defined action items** are listed.
 
 
 Analyze
@@ -22,8 +25,7 @@ Analyze
 Script name ``analyze.py``.
 
 Source code analysis with ``pep8`` and ``pyflakes``. Results are displayed as
-Pythonista annotations. If there's no error / warning, HUD informs you that there
-are no issues.
+Pythonista annotations. If there's no error / warning, HUD informs you about that.
 
 This script is configurable, see :ref:`configuration`.
 
@@ -49,7 +51,7 @@ Drag & Drop
 
 Script name ``drag_and_drop.py``. **iOS >= 11.0 required**.
 
-Shows dialog with opened files and folder tree. You can drag a file / folder to
+Shows dialog with opened files and folders tree. You can drag a file / folder to
 any other iOS application. Works well with `Working Copy <http://workingcopyapp.com/>`_
 and `Kaleidoscope <https://www.kaleidoscopeapp.com/>`_ for example.
 
@@ -57,7 +59,7 @@ You can drag a file / folder from any other iOS application as well. But there's
 limitation, you can drop them at the folder only.
 
 .. note:: If you drop a folder, folder tree is not refreshed. You have to close
-   dialog and open it again.
+   dialog and open it again to see a new folder. Will be fixed.
 
 This script is configurable, see :ref:`configuration`.
 
@@ -80,7 +82,7 @@ Script name ``jump_to_definition.py``.
 
 Jumps to symbol definition. If definition can't be found, HUD informs you.
 Otherwise it jumps to definition location or shows dialog where you can choose
-location if more than one definition is found.
+location if more than one definition was found.
 
 JEDI must be enabled, see :ref:`configuration`.
 
@@ -129,7 +131,7 @@ Outline quickly
 Script name ``outline_quickly.py``.
 
 Shows source code outline. You can filter functions, ... by name. Use arrows key to
-change selection and then hit ``Enter`` to scroll to symbol.
+change selection and then hit ``Enter`` to scroll to the symbol.
 
 
 Run quickly

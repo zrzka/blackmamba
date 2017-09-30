@@ -13,19 +13,20 @@ General
 Dialogs
 =======
 
-You can close all dialogs with ``Esc`` key. If you have a keyboard without
-``Esc`` key, you can do it with ``Cmd .``. Dialogs with tables do support
-arrow keys to change selection and ``Enter`` key to select item.
+You can close all dialogs with ``Esc`` key. Use ``Cmd .`` if you have a keyboard without
+``Esc`` key.
 
-Some of these dialogs do support ``Shift Enter`` for an alternate action.
-Example is Open Quickly where you can open file in a new tab with ``Enter``
-and in the current tab with ``Shift Enter``.
+Dialogs with tables support arrow keys to change selection and ``Enter`` key to select item.
+
+Some of these dialogs support ``Shift Enter`` for an alternate action.
+Example is the Open Quickly script where you can open file in a new tab (``Enter``)
+or in the current tab (``Shift Enter``).
 
 
 Tabs
 ====
 
-``Cmd 1`` .. ``Cmd 9`` allows you to quickly switch between tabs.
+``Cmd 1`` .. ``Cmd 9`` quickly switches between tabs.
 
 ``Ctrl Tab`` or ``Cmd Shift ]`` selects next tab and
 ``Ctrl Shift Tab`` or ``Cmd Shift [`` selects previous tab.
@@ -40,7 +41,7 @@ dialog.
 Editor
 ======
 
-``Ctrl UpArrow`` for page up, ``Ctrl DownArrow`` for page down. Page
+``Ctrl Up`` for page up, ``Ctrl Down`` for page down. Page
 line count is configurable, see :ref:`configuration`.
 
 

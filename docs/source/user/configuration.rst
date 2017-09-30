@@ -4,203 +4,134 @@
 Configuration
 #############
 
-
-Default configuration
-=====================
-
-Here's the default Black Mamba configuration.
-
-.. code-block:: python
-
-    {
-        'general': {
-            'jedi': False,
-            'register_key_commands': True,
-            'page_line_count': 40
-        },
-        'update': {
-            'enabled': True,
-            'interval': 3600
-        },
-        'file_picker': {
-            'ignore_folders': {
-                '': ['.git'],
-                '.': ['.Trash', 'Examples',
-                      'site-packages', 'site-packages-2', 'site-packages-3']
-            }
-        },
-        'analyzer': {
-            'hud_alert_delay': 1.0,
-            'ignore_codes': None,
-            'max_line_length': 127,
-            'remove_whitespaces': True
-        },
-        'tester': {
-            'hud_alert_delay': 1.0,
-            'hide_console': True
-        },
-        'drag_and_drop': {
-            'ignore_folders': {
-                '': ['.git'],
-                '.': ['.Trash', 'Examples',
-                      'site-packages', 'site-packages-2', 'site-packages-3', 'stash_extensions']
-            }
-        }
-    }
-
-
 I strongly suggests to check `config.py:_DEFAULTS <https://github.com/zrzka/blackmamba/blob/master/blackmamba/config.py>`_
 from time to time. Just to check if this documentation isn't outdated.
 
-general
-=======
 
-jedi
-----
+Sections
+========
 
-`JEDI <http://jedi.readthedocs.io/en/latest/>`_ is used as a backend for Find usages,
-Jump to definition and Show documentation :ref:`scripts`.
-
-But because JEDI is also used by Pythonista, JEDI is not thread safe
-and I don't know when and how it is used, it's disabled by default.
-
-Set it to ``True`` to enable mentioned scripts.
-
-register_key_commands
----------------------
-
-Controls if default :ref:`shortcuts` are registered during Black Mamba startup or not.
-
-page_line_count
----------------
-
-Number of lines to scroll up / down for page up / down.
-
-
-update
-======
-
-enabled
+General
 -------
 
-Set to `False` if you'd like to disable updates.
-
-interval
---------
-
-Update check interval in seconds, updates are checked only during Black Mamba startup.
-
-
-file_picker
-===========
-
-Used by Open quickly and Run quickly :ref:`scripts`.
-
-ignore_folders
---------------
-
-Key is parent directory name (not full path, just name). Two special values
-are supported:
-
-* ``''`` - any parent directory
-* ``'.'`` - parent directory is ``~/Documents``
-
-Example:
+Defaults:
 
 .. code-block:: python
 
-    'ignore_folders': {
-        '': ['.git'],
-        '.': ['.Trash', 'Examples',
-              'site-packages', 'site-packages-2', 'site-packages-3']
+    'general': {
+        'jedi': False,
+        'register_key_commands': True,
+        'page_line_count': 40
     }
 
-It says that ``.git`` folder inside any folder is ignored. And ``.Trash``,
-``Examples``, ... folders inside ``~/Documents`` folder are ignore as well.
+
+``jedi: bool`` - `JEDI <http://jedi.readthedocs.io/en/latest/>`_ is used as a backend for Find usages,
+Jump to definition and Show documentation :ref:`scripts`. But because JEDI is also used by the Pythonista,
+JEDI is not thread safe and I don't know when and how it is used, it's disabled by default. You have to
+set it to ``True`` to enable mentioned scripts.
+
+``register_key_commands: bool`` - set to ``False`` to disable default :ref:`shortcuts`.
+
+``page_line_count: int`` - number of lines to scroll up / down for page up / down.
 
 
-Sample configuration
-====================
+Updates
+-------
 
-.. note:: Passed configuration is **merged** with the default one. You can
-   make it much more shorter if you're happy with default values.
-
-Example of ``~/Documents/site-packages-3/pythonista_startup.py``:
+Defaults:
 
 .. code-block:: python
 
-    import blackmamba
-    import blackmamba.log as log
+    'update': {
+        'enabled': True,
+        'interval': 3600
+    }
 
-    # Default value is INFO. Use ERROR if you'd like to make Black
-    # Mamba quiet. Only errors will be printed.
-    log.set_level(log.INFO)
+``enabled: bool`` - set to ``False`` to disable check for updates.
 
-    # Check blackmamba.config._DEFAULTS for default values
-    config = {
-        'general': {
-            'jedi': True
-            # Uncomment to disable keyboard shortcuts
-            # 'register_key_commands': False
-        },
-        'update': {
-            'enabled': True,
-            'interval': 3600
-        },
-        'file_picker': {
-            'ignore_folders': {
-                '': ['.git'],
-                '.': ['.Trash', 'Examples', 'stash_extensions']
-            }
-        },
-        'analyzer': {
-            'hud_alert_delay': 1.0,
-            'ignore_codes': ['E114', 'E116'],
-            'max_line_length': 127,
-            'remove_whitespaces': True
-        },
-        'tester': {
-            'hud_alert_delay': 1.0,
-            'hide_console': True
-        },
-        'drag_and_drop': {
-            'ignore_folders': {
-                '': ['.git'],
-                '.': ['.Trash', 'Examples', 'stash_extensions']
-            }
+``interval: int`` - check for updates time interval (in seconds).
+
+
+
+File picker
+-----------
+
+Defaults:
+
+.. code-block:: python
+
+    'file_picker': {
+        'ignore_folders': {
+            '': ['.git'],
+            '.': ['.Trash', 'Examples',
+                  'site-packages', 'site-packages-2', 'site-packages-3']
         }
     }
 
-
-    def register_custom_shortcuts():
-        import blackmamba.ide.action as action
-        from blackmamba.uikit.keyboard import register_key_command, UIKeyModifier
-
-        # Launch `StaSh` (= custom action title) via Ctrl-S
-        action = action.get_action('StaSh')
-        if action:
-            def launch_stash():
-                action.run()
-
-            register_key_command(
-                'S',
-                UIKeyModifier.control,
-                launch_stash,
-                'Launch StaSh'
-            )
+``ignore_folders: dict`` - key is a parent directory (not full path, just name) and value is a list of
+folders to ignore. You can use two special values as keys:
 
 
-    def main():
-        # The only requirement is to call main(). You can omit `config=config`
-        # if you'd like to use default config.
-        blackmamba.main(config=config)
-        register_custom_shortcuts()
+* ``''`` - any parent directory,
+* ``'.'`` - parent directory is ``~/Documents``.
 
-        # If you'd like to hide console after Black Mamba starts, just uncomment
-        # following lines
-        # import console
-        # console.hide_output()
+Default value says that ``.git`` folder inside any folder is ignored. ``.Trash``,
+``Examples``, ... folders inside ``~/Documents`` folder are ignored as well.
+
+Affects Open quickly and Run quickly scripts, see :ref:`scripts`.
 
 
-    if __name__ == 'pythonista_startup':
-        main()
+Analyzer
+--------
+
+Defaults:
+
+.. code-block:: python
+
+    'analyzer': {
+        'hud_alert_delay': 1.0,
+        'ignore_codes': None,
+        'max_line_length': 127,
+        'remove_whitespaces': True
+    }
+
+Affects Analyze script, see :ref:`scripts`.
+
+
+Tester
+------
+
+Defaults:
+
+.. code-block:: python
+
+    'tester': {
+        'hud_alert_delay': 1.0,
+        'hide_console': True
+    }
+
+Affects Run unit tests script, see :ref:`scripts`.
+
+
+Drag and Drop
+-------------
+
+Defaults:
+
+.. code-block:: python
+
+    'drag_and_drop': {
+        'ignore_folders': {
+            '': ['.git'],
+            '.': ['.Trash', 'Examples',
+                  'site-packages', 'site-packages-2', 'site-packages-3', 'stash_extensions']
+        }
+    }
+
+Affects Drag & Drop script, see :ref:`scripts`.
+
+
+Sample
+======
+
+See `pythonista_startup.py <https://github.com/zrzka/blackmamba/blob/master/pythonista_startup.py>`_.

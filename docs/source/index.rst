@@ -6,6 +6,7 @@
 Black Mamba documentation
 =========================
 
+Welcome stranger. Use one of the following links to continue.
 
 .. toctree::
    :maxdepth: 1
