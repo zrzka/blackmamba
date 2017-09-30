@@ -51,7 +51,6 @@ html_static_path = ['_static']
 html_sidebars = {'**': ['localtoc.html', 'relations.html', 'global_root.html']}
 
 
-
 # -- Options for HTMLHelp output ------------------------------------------
 
 htmlhelp_basename = 'BlackMambadoc'
