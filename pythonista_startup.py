@@ -1,5 +1,11 @@
 #!python3
 
+#
+# Must be added to:
+#
+#   ~/Documents/site-packages-3
+#
+
 # Check blackmamba.config._DEFAULTS for default values
 config = {
     'general': {

@@ -215,6 +215,9 @@ def main(config=None):
 
         blackmamba.main(config)
 
+    See `pythonista_startup.py <https://github.com/zrzka/blackmamba/blob/master/pythonista_startup.py>`_
+    for more examples.
+
     """
     _main(config)
 
