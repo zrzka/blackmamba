@@ -71,3 +71,9 @@ Shortcut          Function
 
 Just hold ``Cmd`` key and iOS will show you all available shortcuts
 if you can't remember them.
+
+
+Custom shortcuts
+================
+
+See :ref:`blackmamba.uikit.keyboard` to learn how to register custom keyboard shortcuts.

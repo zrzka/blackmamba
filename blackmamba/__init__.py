@@ -1,4 +1,24 @@
 #!python3
+"""
+Black Mamba initialization module.
+
+Module is Python 3 compatible only.
+
+The only requirement is to call :func:`blackmamba.main`. Example:
+
+.. code-block:: python
+
+    import blackmamba
+    blackmamba.main()
+
+.. warning:: Do not add top level imports which depends on Pythonista modules. Module
+    must be importable on any other platform. Add these imports to specific functions
+    decorated with :obj:`blackmamba.system.Pythonista` and / or
+    :obj:`blackmamba.system.iOS`.
+
+Reference
+=========
+"""
 
 from blackmamba.log import info, error, get_level, set_level, ERROR
 import blackmamba.system as system
@@ -159,7 +179,9 @@ def _check_compatibility_and_updates():
 
 @system.Pythonista()
 @system.catch_exceptions
-def main(config=None):
+def _main(config=None):
+    # It's here because Sphinx doesn't show documentation for decorated
+    # functions
     from blackmamba.config import update_config_with_dict, get_config_value
     info('Black Mamba initialization...')
     if config:
@@ -169,6 +191,32 @@ def main(config=None):
         _register_default_key_commands()
         _register_ios11_default_key_commands()
     info('Black Mamba initialized')
+
+
+def main(config=None):
+    """
+    Black Mamba initialization.
+
+    Call this function from ``pythonista_startup.py`` (``site-packages-3``) file.
+
+    :param config: Optional dictionary, see :ref:`configuration`
+
+    Example:
+
+    .. code-block:: python
+
+        import blackmamba
+
+        config = {
+            'general': {
+                'jedi': True
+            }
+        }
+
+        blackmamba.main(config)
+
+    """
+    _main(config)
 
 
 if __name__ == '__main__':

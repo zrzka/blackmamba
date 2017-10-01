@@ -1,10 +1,13 @@
 #!python3
-'''System info and decorators.
+"""
+System info and decorators.
 
-Note:
-    This module must not introduce dependency on any other Black Mamba
+.. warning:: This module must not introduce dependency on any other Black Mamba
     modules and must be importable on any other platform as well.
-'''
+
+Reference
+=========
+"""
 
 import sys
 import traceback
@@ -20,25 +23,25 @@ except ImportError:
 # 3.1.1 beta, 311008
 
 PYTHONISTA = sys.platform == 'ios'
-'''bool: ``True`` if we're running within Pythonista or ``False``.'''
+"""bool: ``True`` if we're running within Pythonista or ``False``."""
 
 PYTHONISTA_VERSION = None
-'''str: Pythonista version or ``None`` if we're not within Pythonista.'''
+"""str: Pythonista version or ``None`` if we're not within Pythonista."""
 
 PYTHONISTA_BUNDLE_VERSION = None
-'''int: Pythonista bundle version or ``None`` if we're not within Pythonista.'''
+"""int: Pythonista bundle version or ``None`` if we're not within Pythonista."""
 
 PYTHONISTA_VERSION_TUPLE = None
-'''tuple(int): Pythonista version tuple (3, 1, 1) or ``None`` if we're not within Pythonista.'''
+"""tuple(int): Pythonista version tuple (3, 1, 1) or ``None`` if we're not within Pythonista."""
 
 IOS = sys.platform == 'ios'
-'''bool: ``True`` if we're running within iOS or ``False``.'''
+"""bool: ``True`` if we're running within iOS or ``False``."""
 
 IOS_VERSION = None
-'''str: iOS version or ``None`` if we're not within iOS.'''
+"""str: iOS version or ``None`` if we're not within iOS."""
 
 IOS_VERSION_TUPLE = None
-'''tuple(int): iOS version tuple (11, 0) or ``None`` if we're not within iOS.'''
+"""tuple(int): iOS version tuple (11, 0) or ``None`` if we're not within iOS."""
 
 
 def _version_tuple(version):
@@ -71,7 +74,7 @@ if IOS:
         pass
 
 
-class _Available():
+class _Available:
     def __init__(self, from_version=None, to_version=None):
         if from_version and to_version:
             raise ValueError('Either from_version or to_version can be provided, not both')
@@ -104,9 +107,14 @@ class _Available():
 
 
 class iOS(_Available):
-    '''Decorator to execute function under specific iOS versions.
+    """
+    Decorator to execute function under specific iOS versions.
+
+    Return value is return value of decorated function or ``None``
+    if iOS condition isn't met.
 
     Examples:
+
         Run function only within any iOS version::
 
             @iOS()
@@ -124,19 +132,24 @@ class iOS(_Available):
             @iOS(None, '11.0')  # or @iOS(to_version='11.0')
             def run_me():
                 pass
-    '''
+    """
     def version(self):
         return IOS_VERSION_TUPLE
 
 
 class Pythonista(_Available):
-    '''Decorator to execute function under specific Pythonista versions.
+    """
+    Decorator to execute function under specific Pythonista versions.
 
     By default, function is not executed under application extension.
-    You have to pass `appex=True` if you'd like to run some function
+    You have to pass ``appex=True`` if you'd like to run some function
     under appex as well.
 
+    Return value is return value of decorated function or ``None``
+    if Pythonista condition isn't met.
+
     Examples:
+
         Run function only within any Pythonista version::
 
             @Pythonista()
@@ -166,7 +179,7 @@ class Pythonista(_Available):
             @Pythonista(None, '3.2')  # or @Pythonista(to_version='3.2')
             def run_me():
                 pass
-    '''
+    """
     def __init__(self, from_version=None, to_version=None, appex=None):
         super().__init__(from_version, to_version)
         self._appex = appex
@@ -185,11 +198,15 @@ class Pythonista(_Available):
 
 
 def catch_exceptions(func):
-    '''Catches all ``Exception`` exceptions and writes info to console.
+    """
+    Decorator catching all ``Exception`` exceptions and writing info to console.
 
     Use this decorator for functions handling keyboard shortcuts,
     keyboard events, ... to avoid Pythonista crash.
-    '''
+
+    :param func: Function to decorate
+    :return: Return value of ``func``
+    """
     @functools.wraps(func)
     def new_func(*args, **kwargs):
         try:
