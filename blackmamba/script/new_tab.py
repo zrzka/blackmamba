@@ -1,10 +1,8 @@
 #!python3
 """
-New tab
-=======
+Script name ``new_tab.py``.
 
-* Script name: ``new_tab.py``
-* Keyboard shortcut: ``Cmd T``
+Creates new empty tab.
 """
 
 import blackmamba.ide.tab as tab

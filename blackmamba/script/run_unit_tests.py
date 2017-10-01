@@ -1,10 +1,10 @@
 #!python3
 """
-Run unit tests
-==============
+Script name ``run_unit_tests.py``.
 
-* Script name: ``run_unit_tests.py``
-* Keyboard shortcut: ``Cmd U``
+Runs unit tests and show results as Pythonista annotations.
+
+This script is configurable, see :ref:`configuration`.
 """
 
 import pytest

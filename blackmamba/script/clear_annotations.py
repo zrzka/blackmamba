@@ -1,10 +1,8 @@
 #!python3
 """
-Clear annotations
-=================
+Script name ``clear_annotations.py``.
 
-* Script name: ``clear_annotations.py``
-* Keyboard shortcut: ``Cmd Shift K``
+Clears all Pythonista annotations.
 """
 
 import editor

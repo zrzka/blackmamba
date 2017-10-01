@@ -1,10 +1,8 @@
 #!python3
 """
-Search Dash
-===========
+Script name ``search_dash.py``.
 
-* Script name: ``search_dash.py``
-* Keyboard shortcut: ``Cmd Shift 0``
+Opens `Dash <https://kapeli.com/dash_ios>`_ application with selected text or a symbol around cursor position.
 """
 
 import editor

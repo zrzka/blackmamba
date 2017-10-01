@@ -1,10 +1,11 @@
 #!python3
 """
-Find usages
-===========
+Script name ``find_usages.py``.
 
-* Script name: ``find_usages.py``
-* Keyboard shortcut: ``Ctrl Cmd U``
+Finds usages of a symbol. If there're no usage, HUD informs you.
+Otherwise dialog appears where you can select location and scroll to it.
+
+JEDI must be enabled, see :ref:`configuration`.
 """
 
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource

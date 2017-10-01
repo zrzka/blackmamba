@@ -1,10 +1,11 @@
 #!python3
 """
-Analyze
-=======
+Script name ``analyze.py``.
 
-* Script name: ``analyze.py``
-* Keyboard shortcut: ``Ctrl Shift B``
+Source code analysis with ``pep8`` and ``pyflakes``. Results are displayed as
+Pythonista annotations. If there's no error / warning, HUD informs you about that.
+
+This script is configurable, see :ref:`configuration`.
 """
 
 import io

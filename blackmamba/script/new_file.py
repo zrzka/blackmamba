@@ -1,10 +1,8 @@
 #!python3
 """
-New file
-========
+Script name ``new_file.py``.
 
-* Script name: ``new_file.py``
-* Keyboard shortcut: ``Cmd N``
+Shows Pythonista new file dialog.
 """
 
 import blackmamba.ide.tab as tab

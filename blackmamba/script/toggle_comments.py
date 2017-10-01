@@ -1,10 +1,8 @@
 #!python3
 """
-Toggle comments
-===============
+Script name ``toggle_comments.py``.
 
-* Script name: ``toggle_comments.py``
-* Keyboard shortcut: ``Cmd /``
+Toggles current line / selected lines comments.
 """
 
 import re

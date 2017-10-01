@@ -1,10 +1,14 @@
 #!python3
 """
-Search documentation
-====================
+Script name ``show_documentation.py``.
 
-* Script name: ``show_documentation.py``
-* Keyboard shortcut: ``Ctrl Cmd ?``
+Shows documentation for the symbol around cursor. If definition can't be found,
+HUD informs you. If there're more than one definitions, dialog appears where
+you can select which one to show.
+
+Documentation is displayed as Pythonista annotation.
+
+JEDI must be enabled, see :ref:`configuration`.
 """
 
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource

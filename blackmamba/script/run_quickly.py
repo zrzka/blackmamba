@@ -1,10 +1,12 @@
 #!python3
 """
-Run quickly
-===========
+Script name ``run_quickly.py``.
 
-* Script name: ``run_quickly.py``
-* Keyboard shortcut: ``Cmd Shift R``
+Shows dialog with all your Python files. You can filter these files by directories,
+file name, etc. Use arrows keys to change selection and then hit ``Enter`` to
+run selected file.
+
+This script is configurable, see :ref:`configuration`.
 """
 
 import os

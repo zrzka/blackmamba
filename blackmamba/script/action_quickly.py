@@ -1,13 +1,11 @@
 #!python3
 """
-Action quickly
-==============
-
-* Script name: ``action_quickly.py``
-* Keyboard shortcut: ``Cmd Shift A``
+Script name ``action_quickly.py``.
 
 Shows dialog with user defined action items (wrench icon). You can filter them
-by title, use arrow keys to change selection and run action with ``Enter`` key.
+by title, use arrow keys to change selection and run any of them with ``Enter`` key.
+
+Only **user defined action items** are listed.
 """
 
 import os
