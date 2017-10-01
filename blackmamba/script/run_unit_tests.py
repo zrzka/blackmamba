@@ -115,7 +115,7 @@ def _run_unit_tests(path):
 
     scroll = True
     for a in annotations:
-        editor.annotate_line(a.line, a.text, a.editor_annotation_style, True, filename=a.filename, scroll=scroll)
+        editor.annotate_line(a.line, a.text, a.style.value, True, filename=a.filename, scroll=scroll)
         scroll = False
 
     if _hide_console():

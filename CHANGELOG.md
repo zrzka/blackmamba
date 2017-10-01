@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-*
+* Fixed unit tests annotations
 
 ## 1.0.0 (2017-10-01)
 
