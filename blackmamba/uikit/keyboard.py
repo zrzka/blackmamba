@@ -348,7 +348,7 @@ def register_key_command(input, modifier_flags, function, title=None):
     :param title: Optional discoverability title
     :return: ``True`` if key command was registered otherwise ``False``
     """
-    return _register_key_event_handler(input, modifier_flags, function, title)
+    return _register_key_command(input, modifier_flags, function, title)
 
 
 _key_event_handlers = []
