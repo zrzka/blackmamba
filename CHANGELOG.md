@@ -5,6 +5,11 @@
 *
 
 
+## 1.0.2 (2017-10-01)
+
+* Fixed Black Mamba for stable Pythonista version (Python 3.5)
+
+
 ## 1.0.1 (2017-10-01)
 
 * Fixed unit tests annotations
