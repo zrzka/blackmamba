@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-*
+* Find usages contains symbol name in the dialog title
 
 
 ## 1.0.2 (2017-10-01)

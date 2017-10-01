@@ -78,7 +78,7 @@ def _select_location(definitions):
         _open_and_scroll(item.path, item.line)
 
     v = PickerView()
-    v.name = 'Usages'
+    v.name = '{} usages'.format(definitions[0].name)
     v.datasource = LocationDataSource(definitions)
 
     v.shift_enter_enabled = False
@@ -87,7 +87,7 @@ def _select_location(definitions):
         '\n'
         'Esc - close • Cmd . - close with Apple smart keyboard'
     )
-    v.textfield.placeholder = 'Start typing to filter files...'
+    v.textfield.placeholder = 'Start typing to filter usages...'
     v.did_select_item_action = open_location
     v.present('sheet')
     v.wait_modal()
