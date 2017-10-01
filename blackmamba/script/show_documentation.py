@@ -75,7 +75,7 @@ def _select_location(definitions):
         _show_documentation(item.definition)
 
     v = PickerView()
-    v.name = 'Multiple definitions found'
+    v.name = '{} definitions'.format(definitions[0].name)
     v.datasource = LocationDataSource(definitions)
 
     v.shift_enter_enabled = False
@@ -84,7 +84,7 @@ def _select_location(definitions):
         '\n'
         'Esc - close • Cmd . - close with Apple smart keyboard'
     )
-    v.textfield.placeholder = 'Start typing to filter files...'
+    v.textfield.placeholder = 'Start typing to filter location...'
     v.did_select_item_action = action
     v.present('sheet')
     v.wait_modal()
