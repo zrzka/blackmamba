@@ -27,7 +27,7 @@ setup(
 
     packages=[
         'blackmamba',
-        'blackmamba.uikit'
+        'blackmamba.uikit',
         'blackmamba.ide',
         'blackmamba.script',
         'blackmamba.util'
