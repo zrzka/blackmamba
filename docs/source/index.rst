@@ -17,3 +17,4 @@ Welcome stranger. Use one of the following links to continue.
    contribution
    development
    faq
+   gallery
