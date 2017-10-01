@@ -2,25 +2,35 @@
 
 ## master (unreleased)
 
-* Dialogs (all)
-    * Keyboard shortcut to close dialogs (`Ctrl [`) replaced with `Cmd .`
-        * This shortcut is used by Apple itself (learned from Anders @ Working Copy)
+*
+
+## 1.0.0 (2017-10-01)
+
+* Development status changed to `5 - Production/Stable`
+* Fixed programming language classifier (Python 3.6)
+* Detailed documentation available at [blackmamba.readthedocs.io](http://blackmamba.readthedocs.io)
+    * Contains About, User Guide, Reference, Contribution, Development and FAQ
+    * If you're just Black Mamba user, read User Guide
+    * If you'd like to use Black Mamba functions, read Reference
+* Dialogs
+    * Keyboard shortcut to close dialogs (`Ctrl [`) replaced with `Cmd .` (Apple one)
     * Default width is 80% of window width (max 700)
     * Default height is 80% of window height
 * Open, run, action, ... dialogs
-    * Properly sorted (by lowercased file names)
+    * Properly sorted items (by lowercased file names)
     * Filtering works on folders too
         * `bl __init` matches any file where full path does contain `bl` and `__init`
         * Folders up to `~/Documents` are not matched, only subfolders of `~/Documents`
 * Drag & Drop
-    * Changed way how a folder / file is provided, works with Kaleidoscope now
-    * Still works with Working Copy
-    * All opened files are show in the dialog
+    * New way how a folder / file is provided
+    * Works with [Kaleidoscope](https://www.kaleidoscopeapp.com/) for example
+    * Still compatible with Working Copy
+    * All opened files are listed in the dialog
 * Open Quickly
     * If file is already opened, tab with file is selected
 * Find usages
     * It actually did show definitions instead of usages, fixed
-
+* Some other bugfixes I can't recall now
 
 ## 0.0.27 (2017-09-22)
 
