@@ -2,7 +2,6 @@
 
 import editor
 from blackmamba.config import get_config_value
-import numpy
 
 
 def get_line_count():
@@ -52,7 +51,7 @@ def scroll_to_line(line_number, relative=False):
         if current_line is None or line_count is None:
             return
 
-        line_number = numpy.clip(current_line + line_number, 1, line_count)
+        line_number = max(min(current_line + line_number, line_count), 1)
 
     # https://github.com/omz/Pythonista-Issues/issues/365
     start = 0
