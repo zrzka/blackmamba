@@ -4,7 +4,7 @@ import ui
 from blackmamba.uikit.table import UITableViewCellStyle
 from blackmamba.uikit.keyboard import (
     UIKeyModifier, UIEventKeyCode,
-    register_key_event_handler, unregister_key_event_handler,
+    register_key_event_handler, unregister_key_event_handlers,
     is_in_hardware_keyboard_mode
 )
 from blackmamba.uikit.autolayout import LayoutProxy
@@ -187,7 +187,7 @@ class PickerView(ui.View):
         self._textfield = ui.TextField()
         self._help_label = ui.Label()
         self._datasource = None
-        self._handlers = []
+        self._handlers = None
         self.shift_enter_enabled = True
         self.did_select_item_action = None
 
@@ -247,18 +247,20 @@ class PickerView(ui.View):
         def handle_escape():
             self.close()
 
-        self._handlers.append(register_key_event_handler(UIEventKeyCode.up, handle_key_up))
-        self._handlers.append(register_key_event_handler(UIEventKeyCode.down, handle_key_down))
-        self._handlers.append(register_key_event_handler(UIEventKeyCode.enter, handle_enter))
-        self._handlers.append(register_key_event_handler(UIEventKeyCode.enter, handle_shift_enter,
-                                                         modifier=UIKeyModifier.shift))
-        self._handlers.append(register_key_event_handler(UIEventKeyCode.escape, handle_escape))
-        self._handlers.append(register_key_event_handler(UIEventKeyCode.dot, handle_escape,
-                                                         modifier=UIKeyModifier.command))
+        self._handlers = [
+            register_key_event_handler(UIEventKeyCode.up, handle_key_up),
+            register_key_event_handler(UIEventKeyCode.down, handle_key_down),
+            register_key_event_handler(UIEventKeyCode.enter, handle_enter),
+            register_key_event_handler(UIEventKeyCode.enter, handle_shift_enter,
+                                       modifier=UIKeyModifier.shift),
+            register_key_event_handler(UIEventKeyCode.escape, handle_escape),
+            register_key_event_handler(UIEventKeyCode.dot, handle_escape,
+                                       modifier=UIKeyModifier.command)
+        ]
 
     def will_close(self):
-        for handler in self._handlers:
-            unregister_key_event_handler(handler)
+        if self._handlers:
+            unregister_key_event_handlers(self._handlers)
 
     @property
     def datasource(self):
