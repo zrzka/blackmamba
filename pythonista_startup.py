@@ -1,11 +1,4 @@
-# !python3
-
-import blackmamba
-import blackmamba.log as log
-
-# Default value is INFO. Use ERROR if you'd like to make Black
-# Mamba quiet. Only errors will be printed.
-log.set_level(log.INFO)
+#!python3
 
 # Check blackmamba.config._DEFAULTS for default values
 config = {
@@ -21,7 +14,10 @@ config = {
     'file_picker': {
         'ignore_folders': {
             '': ['.git'],
-            '.': ['.Trash', 'Examples', 'stash_extensions']
+            '.': ['Pythonista', '.Trash', 'Examples',
+                  'site-packages-2', 'site-packages', 'stash_extensions'],
+            'site-packages-3': ['blackmamba', 'bm-pip-backup'],
+            'Working Copy': ['bm-pip-backup']
         }
     },
     'analyzer': {
@@ -37,7 +33,9 @@ config = {
     'drag_and_drop': {
         'ignore_folders': {
             '': ['.git'],
-            '.': ['.Trash', 'Examples', 'stash_extensions']
+            '.': ['Pythonista', '.Trash', 'Examples',
+                  'site-packages-2', 'site-packages', 'stash_extensions'],
+            'Working Copy': ['bm-pip-backup']
         }
     }
 }
@@ -62,6 +60,13 @@ def register_custom_shortcuts():
 
 
 def main():
+    import blackmamba
+    import blackmamba.log as log
+
+    # Default value is INFO. Use ERROR if you'd like to make Black
+    # Mamba quiet. Only errors will be printed.
+    log.set_level(log.INFO)
+
     # The only requirement is to call main(). You can omit `config=config`
     # if you'd like to use default config.
     blackmamba.main(config=config)
@@ -72,6 +77,10 @@ def main():
     # import console
     # console.hide_output()
 
-
 if __name__ == 'pythonista_startup':
-    main()
+    import traceback
+    try:
+        main()
+    except Exception:
+        print(traceback.format_exc())
+        print('Failed to process pythonista_startup.py')
