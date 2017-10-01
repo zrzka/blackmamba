@@ -77,7 +77,7 @@ from objc_util import retain_global, ObjCInstance, UIApplication, c, ns, on_main
 from blackmamba.util.runtime import swizzle
 from blackmamba.log import error, info
 import blackmamba.system as system
-from enum import Enum, IntEnum, IntFlag
+from enum import Enum, IntEnum
 
 if system.IOS:
     _UIKeyboardImpl = ObjCClass('UIKeyboardImpl')
@@ -100,7 +100,7 @@ def is_in_hardware_keyboard_mode():
 UIKeyCommand = ObjCClass('UIKeyCommand')
 
 
-class UIKeyModifier(IntFlag):
+class UIKeyModifier(IntEnum):
     """
     Key modifiers enumeration.
 
@@ -136,18 +136,6 @@ class UIKeyModifier(IntFlag):
 
     numericPad = 1 << 21  # Key on numeric keypad
     """Key is on numberic pad"""
-
-    @property
-    def selector_name(self):
-        flags = [
-            name.title()
-            for name, value in UIKeyModifier.__members__.items()
-            if value & self is value and not value == 0
-        ]
-        if flags:
-            return ''.join(flags)
-        else:
-            return ''
 
 
 class UIEventType(IntEnum):
@@ -273,18 +261,41 @@ def _input_selector_name(input):
     return _UIKeyInputNames[input]
 
 
-def _key_command_selector_name(input, modifier):
-    assert(isinstance(modifier, UIKeyModifier))
+def _modifier_selector_name(modifier):
+    _names = {
+        UIKeyModifier.alphaShift: 'AlphaShift',
+        UIKeyModifier.shift: 'Shift',
+        UIKeyModifier.control: 'Control',
+        UIKeyModifier.alternate: 'Alternate',
+        UIKeyModifier.command: 'Command',
+        UIKeyModifier.numericPad: 'NumericPad'
+    }
 
+    if isinstance(modifier, UIKeyModifier):
+        modifier = modifier.value
+
+    flags = [
+        name
+        for mod, name in _names.items()
+        if mod.value & modifier == modifier
+    ]
+
+    if flags:
+        return ''.join(flags)
+    else:
+        return ''
+
+
+def _key_command_selector_name(input, modifier):
     return 'blackMambaHandleKey{}{}'.format(
-        modifier.selector_name,
+        _modifier_selector_name(modifier),
         _input_selector_name(input)
     )
 
 
 def _shortcut_name(input, modifier):
     return '{} {}'.format(
-        modifier.selector_name,
+        _modifier_selector_name(modifier),
         _input_selector_name(input)
     )
 
@@ -326,6 +337,9 @@ def _register_key_command(input, modifier_flags, function, title=None):
         error('Failed to add key command method {}'.format(selector_name))
         return False
 
+    if isinstance(modifier_flags, UIKeyModifier):
+        modifier_flags = modifier_flags.value
+
     if title:
         kc = UIKeyCommand.keyCommandWithInput_modifierFlags_action_discoverabilityTitle_(
             ns(input), modifier_flags, selector, ns(title))
@@ -343,7 +357,7 @@ def register_key_command(input, modifier_flags, function, title=None):
     .. note:: There's no function to unregister key commands.
 
     :param input: ``str`` or :obj:`UIKeyInput`
-    :param modifier_flags: :obj:`UIKeyModifier`
+    :param modifier_flags: :obj:`UIKeyModifier` or ``int``
     :param function: Function to call
     :param title: Optional discoverability title
     :return: ``True`` if key command was registered otherwise ``False``
@@ -360,7 +374,10 @@ class KeyEventHandler(object):
             self.key_code = key_code.value
         else:
             self.key_code = key_code
-        self.modifier = modifier
+        if isinstance(modifier, UIKeyModifier):
+            self.modifier = modifier.value
+        else:
+            self.modifier = modifier
         self.fn = fn
 
 
@@ -370,7 +387,7 @@ def _blackmamba_handleKeyUIEvent(_self, _cmd, event):
     consume = False
     if e.type() == UIEventType.physicalKeyboard.value and e.subtype() == UIEventSubtype.none.value:
         for h in _key_event_handlers:
-            if h.key_code == e._keyCode() and h.modifier.value == e._modifierFlags():
+            if h.key_code == e._keyCode() and h.modifier == e._modifierFlags():
                 if e._isKeyDown():
                     consume = True
                 else:
@@ -404,7 +421,7 @@ def register_key_event_handler(key_code, func, *, modifier=UIKeyModifier.none):
 
     :param key_code: :obj:`UIEventKeyCode` or ``int``
     :param func: Function to call
-    :param modifier: :obj:`UIKeyModifier`
+    :param modifier: :obj:`UIKeyModifier` or ``int``
     :return: Handler to use in :func:`unregister_key_event_handler`
     """
     return _register_key_event_handler(key_code, func, modifier=modifier)
