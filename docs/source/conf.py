@@ -4,11 +4,17 @@
 import os
 import sys
 import unittest.mock
+import enum
 
+# Mock Pythonista modules
 sys.modules['console'] = unittest.mock.MagicMock()
 sys.modules['editor'] = unittest.mock.MagicMock()
 sys.modules['ui'] = unittest.mock.MagicMock()
 sys.modules['objc_util'] = unittest.mock.MagicMock()
+sys.modules['clipboard'] = unittest.mock.MagicMock()
+
+# readthedocs.org doesn't support Python 3.6 yet
+enum.IntFlag = enum.Enum
 
 sys.path.insert(0, os.path.abspath('../..'))
 import blackmamba  # noqa: E402
