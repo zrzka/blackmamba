@@ -77,6 +77,7 @@ def main():
     # import console
     # console.hide_output()
 
+
 if __name__ == 'pythonista_startup':
     import traceback
     try:
