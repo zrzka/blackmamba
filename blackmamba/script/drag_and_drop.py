@@ -24,7 +24,7 @@ import editor
 import ctypes
 import zipfile
 from blackmamba.uikit.keyboard import (
-    register_key_event_handler, unregister_key_event_handler,
+    register_key_event_handler, unregister_key_event_handlers,
     UIEventKeyCode, UIKeyModifier
 )
 import blackmamba.ide.tab as tab
@@ -621,14 +621,15 @@ class DragAndDropView(ui.View):
         def handle_escape():
             self.close()
 
-        self._handlers = []
-        self._handlers.append(register_key_event_handler(UIEventKeyCode.escape, handle_escape))
-        self._handlers.append(register_key_event_handler(UIEventKeyCode.dot, handle_escape,
-                                                         modifier=UIKeyModifier.command))
+        self._handlers = [
+            register_key_event_handler(UIEventKeyCode.escape, handle_escape),
+            register_key_event_handler(UIEventKeyCode.dot, handle_escape,
+                                       modifier=UIKeyModifier.command)
+        ]
 
     def will_close(self):
-        for handler in self._handlers:
-            unregister_key_event_handler(handler)
+        if self._handlers:
+            unregister_key_event_handlers(self._handlers)
 
 
 def main():
