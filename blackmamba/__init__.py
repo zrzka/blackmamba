@@ -177,9 +177,24 @@ def _check_compatibility_and_updates():
     blackmamba.update.check()
 
 
+def setup_lib_path():
+    """
+    Add blackmamba.lib to sys.path if it's not there.
+    """
+    import sys
+    import os
+
+    lib = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
+    try:
+        sys.path.index(lib)
+    except ValueError:
+        sys.path.insert(0, lib)
+
+
 @system.Pythonista()
 @system.catch_exceptions
 def _main(config=None):
+    setup_lib_path()
     # It's here because Sphinx doesn't show documentation for decorated
     # functions
     from blackmamba.config import update_config_with_dict, get_config_value
@@ -220,20 +235,6 @@ def main(config=None):
 
     """
     _main(config)
-
-
-def setup_lib_path():
-    """
-    Add blackmamba.lib to sys.path if it's not there.
-    """
-    import sys
-    import os
-
-    lib = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
-    try:
-        sys.path.index(lib)
-    except ValueError:
-        sys.path.insert(0, lib)
 
 
 if __name__ == '__main__':

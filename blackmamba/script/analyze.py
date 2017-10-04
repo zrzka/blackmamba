@@ -8,6 +8,9 @@ Pythonista annotations. If there's no error / warning, HUD informs you about tha
 This script is configurable, see :ref:`configuration`.
 """
 
+import blackmamba
+blackmamba.setup_lib_path()
+
 import io
 import pep8
 import re
@@ -212,12 +215,7 @@ def _parse_flake8_output(path, output_path):
 
 
 def _flake8_annotations(path, options):
-    import blackmamba
     import os
-
-    blackmamba.setup_lib_path()
-
-    from flake8.main import application
 
     _tmp = os.environ.get('TMPDIR', os.environ.get('TMP'))
     _output_file = os.path.join(_tmp, 'blackmamba.flake8.txt')
@@ -226,6 +224,8 @@ def _flake8_annotations(path, options):
 
     for o in options:
         try:
+            from flake8.main import application
+
             if os.path.exists(_output_file):
                 os.remove(_output_file)
 
