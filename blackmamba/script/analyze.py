@@ -8,14 +8,13 @@ Pythonista annotations. If there's no error / warning, HUD informs you about tha
 This script is configurable, see :ref:`configuration`.
 """
 
-import blackmamba
-blackmamba.setup_lib_path()
+import blackmamba.module as module
+
+module.preflight()
 
 import io
-import pep8
 import re
 from enum import Enum
-import pyflakes.api as pyflakes
 import editor
 import console
 from blackmamba.ide.annotation import Annotation, Style
@@ -78,21 +77,22 @@ class _AnalyzerAnnotation(Annotation):
 # pep8
 #
 
-class _Pep8AnnotationReport(pep8.BaseReport):
-    def __init__(self, options):
-        super().__init__(options)
-        self.annotations = []
-
-    def error(self, line_number, offset, text, check):
-        # If super doesn't return code, this one is ignored
-        if not super().error(line_number, offset, text, check):
-            return
-
-        annotation = _AnalyzerAnnotation(self.line_offset + line_number, text, _Source.pep8, Style.warning)
-        self.annotations.append(annotation)
-
-
 def _pep8_annotations(text, ignore=None, max_line_length=None):
+    import pep8
+
+    class _Pep8AnnotationReport(pep8.BaseReport):
+        def __init__(self, options):
+            super().__init__(options)
+            self.annotations = []
+
+        def error(self, line_number, offset, text, check):
+            # If super doesn't return code, this one is ignored
+            if not super().error(line_number, offset, text, check):
+                return
+
+            annotation = _AnalyzerAnnotation(self.line_offset + line_number, text, _Source.pep8, Style.warning)
+            self.annotations.append(annotation)
+
     # pep8 requires you to include \n at the end of lines
     lines = text.splitlines(True)
 
@@ -157,6 +157,8 @@ def _get_annotations(path, stream, style):
 
 
 def _pyflakes_annotations(path, text):
+    import pyflakes.api as pyflakes
+
     warning_stream = io.StringIO()
     error_stream = io.StringIO()
     reporter = pyflakes.modReporter.Reporter(warning_stream, error_stream)
