@@ -5,6 +5,8 @@
 * Find usages contains symbol name in the dialog title
 * Jump to definition contains symbol name in the dialog title
 * Show documentation contains symbol name in the dialog title
+* `tab.open_file` has new `line` argument
+    * Jump to definition, Find usages utilizes `tab.open_file` instead of `editor`'s one
 
 
 ## 1.0.2 (2017-10-01)

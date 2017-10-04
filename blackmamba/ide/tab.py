@@ -1,7 +1,8 @@
 #!python3
 
 from objc_util import on_main_thread, ObjCClass, sel
-
+import blackmamba.ide.source as source
+import ui
 
 _PASlidingContainerViewController = ObjCClass('PASlidingContainerViewController')
 _PA2UniversalTextEditorViewController = ObjCClass('PA2UniversalTextEditorViewController')
@@ -177,7 +178,7 @@ def get_paths():
     return [str(tab.filePath()) for tab in tabs.tabViewControllers()]
 
 
-def open_file(path, new_tab=True):
+def open_file(path, new_tab=True, line=None):
     index = None
     paths = get_paths()
 
@@ -192,3 +193,8 @@ def open_file(path, new_tab=True):
         editor.open_file(path, new_tab=new_tab)
     else:
         select_tab(index)
+
+    if line is not None:
+        def scroll():
+            source.scroll_to_line(line)
+        ui.delay(scroll, 0.2)

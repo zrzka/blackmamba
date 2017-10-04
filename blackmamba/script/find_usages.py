@@ -20,16 +20,6 @@ import blackmamba.ide.tab as tab
 import blackmamba.ide.source as source
 
 
-def _open_and_scroll(path, line):
-    if editor.get_path() == path:
-        source.scroll_to_line(line)
-    else:
-        def scroll():
-            source.scroll_to_line(line)
-        editor.open_file(path, new_tab=True)
-        ui.delay(scroll, 0.2)
-
-
 class LocationPickerItem(PickerItem):
     def __init__(self, path, line, display_folder):
         super().__init__(
@@ -75,7 +65,7 @@ class LocationDataSource(PickerDataSource):
 
 def _select_location(definitions):
     def open_location(item, shift_enter):
-        _open_and_scroll(item.path, item.line)
+        tab.open_file(item.path, line=item.line)
 
     v = PickerView()
     v.name = '{} usages'.format(definitions[0].name)
