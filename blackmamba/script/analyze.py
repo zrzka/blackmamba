@@ -18,6 +18,9 @@ import console
 from blackmamba.ide.annotation import Annotation, Style
 from itertools import groupby
 from blackmamba.config import get_config_value
+import blackmamba.ide.tab as tab
+import os
+import blackmamba.log as log
 
 
 def _hud_alert_delay():
@@ -47,6 +50,7 @@ _REMOVE_TRAILING_LINES_REGEX = re.compile('\s+\Z', re.MULTILINE)
 class _Source(Enum):
     pep8 = 'PEP8'
     pyflakes = 'pyflakes'
+    flake8 = 'flake8'
 
 
 class _AnalyzerAnnotation(Annotation):
@@ -56,6 +60,9 @@ class _AnalyzerAnnotation(Annotation):
 
     def __lt__(self, other):
         if self.source is _Source.pep8 and other.source is _Source.pyflakes:
+            return True
+
+        if self.source is _Source.flake8 and other.source is not _Source.flake8:
             return True
 
         if self.style is Style.warning and other.style is Style.error:
@@ -158,6 +165,93 @@ def _pyflakes_annotations(path, text):
 
     return warnings + errors
 
+#
+# flake8
+#
+
+
+def _parse_flake8_output(path, output_path):
+    l = len(path)
+
+    annotations = []
+
+    with open(output_path, 'r') as output:
+        report = output.read()
+        for line in report.splitlines():
+            if not line.startswith(path):
+                continue
+
+            line = line[(l + 1):]  # Strip 'filename:'
+            match = _LINE_COL_MESSAGE_REGEX.fullmatch(line)
+
+            if not match:
+                match = _LINE_MESSAGE_REGEX.fullmatch(line)
+
+            if not match:
+                continue
+
+            line = int(match.group(1))
+
+            def get_style(message):
+                return Style.warning if message.startswith('W') else Style.error
+
+            if match.lastindex == 3:
+                annotation = _AnalyzerAnnotation(
+                    line, 'Col {}: {}'.format(match.group(2), match.group(3)),
+                    _Source.flake8, get_style(match.group(3))
+                )
+            else:
+                annotation = _AnalyzerAnnotation(
+                    line, match.group(2),
+                    _Source.flake8, get_style(match.group(2))
+                )
+
+            annotations.append(annotation)
+
+    return annotations
+
+
+def _flake8_annotations(path, options):
+    import blackmamba
+    import os
+
+    blackmamba.setup_lib_path()
+
+    from flake8.main import application
+
+    _tmp = os.environ.get('TMPDIR', os.environ.get('TMP'))
+    _output_file = os.path.join(_tmp, 'blackmamba.flake8.txt')
+
+    annotations = []
+
+    for o in options:
+        try:
+            if os.path.exists(_output_file):
+                os.remove(_output_file)
+
+            o = list(o)
+            o.insert(0, path)
+            o.extend([
+                '-j', '0',  # Disable subprocess
+                '--output-file={}'.format(_output_file)
+            ])
+            app = application.Application()
+            app.run(o)
+            del app
+
+            annotations.extend(_parse_flake8_output(path, _output_file))
+        except Exception as e:
+            log.error('flake8 failed: {}'.format(str(e)))
+
+    if os.path.exists(_output_file):
+        os.remove(_output_file)
+
+    return annotations
+
+#
+# main
+#
+
 
 def _annotate(line, annotations, scroll):
     by_priority = sorted(annotations, reverse=True)
@@ -185,11 +279,13 @@ def _editor_text():
         text = _remove_trailing_whitespaces(text)
         text = _remove_trailing_lines(text)
         editor.replace_text(0, range_end, text)
+        tab.save()
         # Pythonista is adding '\n' automatically, so, if we removed them
         # all we have to simulate Pythonista behavior by adding '\n'
         # for pyflakes & pep8 analysis
         return text + '\n'
 
+    tab.save()
     return text
 
 
@@ -204,15 +300,23 @@ def main():
 
     editor.clear_annotations()
 
+    flake8_options = get_config_value('analyzer.flake8', None)
+
     text = _editor_text()
 
-    annotations = _pep8_annotations(
-        text,
-        ignore=_ignore_codes(),
-        max_line_length=_max_line_length()
-    )
+    if flake8_options:
+        annotations = _flake8_annotations(
+            os.path.abspath(path),
+            flake8_options
+        )
+    else:
+        annotations = _pep8_annotations(
+            text,
+            ignore=_ignore_codes(),
+            max_line_length=_max_line_length()
+        )
 
-    annotations += _pyflakes_annotations(path, text)
+        annotations += _pyflakes_annotations(path, text)
 
     if not annotations:
         console.hud_alert('No Issues Found', 'iob:checkmark_32', _hud_alert_delay())

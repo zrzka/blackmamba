@@ -222,5 +222,19 @@ def main(config=None):
     _main(config)
 
 
+def setup_lib_path():
+    """
+    Add blackmamba.lib to sys.path if it's not there.
+    """
+    import sys
+    import os
+
+    lib = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
+    try:
+        sys.path.index(lib)
+    except ValueError:
+        sys.path.insert(0, lib)
+
+
 if __name__ == '__main__':
     main()
