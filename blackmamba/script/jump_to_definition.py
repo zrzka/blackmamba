@@ -13,7 +13,6 @@ from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import editor
 import console
 import os
-import ui
 import jedi
 from blackmamba.config import get_config_value
 import blackmamba.log as log
