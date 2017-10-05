@@ -7,8 +7,9 @@
 * Show documentation contains symbol name in the dialog title
 * `tab.open_file` has new `line` argument
     * Jump to definition, Find usages utilizes `tab.open_file` instead of `editor`'s one
-* `flake8` support added
+* Analyze can optionally use `flake8`, `mccabe`, etc.
     * See [documentation](TODO)
+* Open quickly, ... filter is case insensitive
 
 
 ## 1.0.2 (2017-10-01)
