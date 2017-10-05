@@ -82,6 +82,9 @@ Analyzer
 
 Defaults (since 1.1.0):
 
+* ``ignore_codes`` option is removed /ignored
+* ``max_line_length`` option is removed / ignored
+
 .. code-block:: python
 
     'analyzer': {

@@ -32,30 +32,8 @@ installed.
 PIP
 ---
 
-If you have `StaSh <https://github.com/ywangd/stash>`_ installed and you do use
-``dev`` branch, you can use ``pip`` to install / update Black Mamba. Why ``dev``?
-``pip`` in ``master`` does use XML-RPC, which is a legacy PyPI API.
-`This pull request <https://github.com/ywangd/stash/pull/269>`_ replaces it with
-JSON API and is merged into ``dev`` branch only.
-
-So, you've got ``StaSh`` & ``dev``?
-
-.. code-block:: bash
-
-    pip install blackmamba -d ~/Documents/site-packages-3
-
-How to update Black Mamba via ``pip``? Until `this PR <https://github.com/ywangd/stash/pull/272>`_
-will be merged, you have to:
-
-.. code-block:: bash
-
-    pip remove blackmamba
-    pip install blackmamba -d ~/Documents/site-packages-3
-
-``pip update`` works, but it removes Black Mamba from ``site-packages-3`` and installs
-latest version into the ``site-packages`` folder. Black Mamba is compatible with Python
-3 only and we have to keep it in the ``site-packages-3`` folder. Don't use it
-and stick with ``pip remove`` and ``pip install``.
+Black Mamba no longer supports installation via ``pip``. Latest available
+release is 1.0.2.
 
 
 Startup
