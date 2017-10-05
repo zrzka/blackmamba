@@ -36,7 +36,7 @@ config = {
             # 1st pass
             ['--select=E901,E999,F821,F822,F823'],
             # 2nd pass
-            ['--max-complexity=10', '--max-line-length=127', '--ignore=E402']
+            ['--max-complexity=10', '--max-line-length=127']
         ]
     },
     'tester': {
