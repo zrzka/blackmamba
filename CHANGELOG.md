@@ -7,8 +7,7 @@
 
 ## 1.1.0 (2017-10-05)
 
-* Dropped PyPI packaging, because of bundled modules like `flake8`, `mccabe`, ...
-    * Some of these modules are bundled with Pythonista, some of them not
+* [Dropped PyPI packaging](http://blackmamba.readthedocs.io/en/stable/user/install.html#pip)
     * Black Mamba provides own / updated modules to provide new functionality
     * This is not compatible with `pip` at all, thus this installation method is no longer supported
     * Latest Black Mamba release in PyPI is 1.0.2
