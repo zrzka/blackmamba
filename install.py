@@ -85,11 +85,17 @@ def _get_json(command):
         _terminate('Failed to parse JSON from GitHub response')
 
 
-def _get_latest_release():
+def _get_latest_release(prerelease=False):
     # GitHub doesn't return drafts / prereleases, we just get
     # the latest release
     _info('Checking latest Black Mamba release...')
-    release = _get_json('releases/latest')
+    if prerelease:
+        releases = _get_json('releases')
+        if not releases:
+            return None
+        release = releases[0]
+    else:
+        release = _get_json('releases/latest')
     _info('Latest release {} (tag {}) found'.format(release['name'], release['tag_name']))
     return release
 
@@ -227,8 +233,11 @@ def _save_release_info(release):
 
 
 def _install():
-    release = _get_latest_release()
-    local_exists = _local_installation_exists(release)
+    release = _get_latest_release('--prerelease' in sys.argv)
+    if not release:
+        _error('Unable to find latest release')
+        return
+    _local_installation_exists(release)
     path = _download_release_zip(release)
     extracted_zip_dir = _extract_release(release, path)
     _move_to_site_packages(extracted_zip_dir)
@@ -236,11 +245,10 @@ def _install():
     _cleanup()
     _info('Black Mamba {} installed'.format(release['tag_name']))
 
-    if local_exists:
-        tag_name = release['tag_name']
-        console.alert('Black Mamba Installer',
-                      'Black Mamba {} installed.\n\nPythonista RESTART needed for updates to take effect.'.format(tag_name),
-                      'Got it!', hide_cancel_button=True)
+    tag_name = release['tag_name']
+    console.alert('Black Mamba Installer',
+                  'Black Mamba {} installed.\n\nPythonista RESTART needed for updates to take effect.'.format(tag_name),
+                  'Got it!', hide_cancel_button=True)
 
 
 if __name__ == '__main__':
