@@ -12,8 +12,10 @@
 * Show documentation contains symbol name in the dialog title
 * `tab.open_file` has new `line` argument
     * Jump to definition, Find usages utilizes `tab.open_file` instead of `editor`'s one
-* Analyze can optionally use `flake8`, `mccabe`, etc.
-    * See [documentation](TODO)
+* Analyze script does use bundled `flake8`, 'mccabe`, ...
+    * See [documentation](http://blackmamba.readthedocs.io/en/stable/user/configuration.html#analyzer) to check how to configure it
+    * First pass defaults are `['--select=E901,E999,F821,F822,F823']`
+    * Second pass defaults are `['--max-complexity=10', '--max-line-length=127']`
 * Open quickly, ... filter is case insensitive
 
 
