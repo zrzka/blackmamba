@@ -71,7 +71,7 @@ class PickerDataSource(object):
     def _filter_items(self):
         if self._filter:
             search_terms = [
-                x.strip()
+                x.strip().lower()
                 for x in self._filter.split(' ')
                 if x.strip()
             ]
