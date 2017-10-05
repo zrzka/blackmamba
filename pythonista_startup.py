@@ -29,9 +29,6 @@ config = {
     'analyzer': {
         'hud_alert_delay': 1.0,
         'remove_whitespaces': True,
-        'ignore_codes': ['E114', 'E116'],  # ignored for flake8
-        'max_line_length': 127,  # ignored for flake8
-        # In case flake8 is provided, ignore_codes and max_line_length options are ignored
         'flake8': [
             # 1st pass
             ['--select=E901,E999,F821,F822,F823'],
