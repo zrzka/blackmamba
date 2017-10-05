@@ -232,8 +232,8 @@ def _save_release_info(release):
         _terminate('Failed to save installed version release info')
 
 
-def _install():
-    release = _get_latest_release('--prerelease' in sys.argv)
+def _install(prerelease=False):
+    release = _get_latest_release(prerelease)
     if not release:
         _error('Unable to find latest release')
         return
