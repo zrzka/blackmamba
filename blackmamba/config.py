@@ -80,7 +80,26 @@ Affects Open quickly and Run quickly scripts, see :ref:`scripts`.
 Analyzer
 --------
 
-Defaults:
+Defaults (since 1.1.0):
+
+.. code-block:: python
+
+    'analyzer': {
+        'hud_alert_delay': 1.0,
+        'remove_whitespaces': True,
+        'flake8': [
+            # 1st pass
+            ['--select=E901,E999,F821,F822,F823'],
+            # 2nd pass
+            ['--max-complexity=10', '--max-line-length=127']
+        ]
+    }
+
+If ``flake8`` is provided, ``ignore_codes`` and ``max_line_length`` options are ignored. ``flake8``
+must contain list of passes and every pass contains list of ``flake8`` arguments. You can run ``flake8``
+several times with different options in this way.
+
+Defaults (pre 1.1.0):
 
 .. code-block:: python
 
@@ -158,9 +177,13 @@ _DEFAULTS = {
     },
     'analyzer': {
         'hud_alert_delay': 1.0,
-        'ignore_codes': None,
-        'max_line_length': 127,
-        'remove_whitespaces': True
+        'remove_whitespaces': True,
+        'flake8': [
+            # 1st pass
+            ['--select=E901,E999,F821,F822,F823'],
+            # 2nd pass
+            ['--max-complexity=10', '--max-line-length=127']
+        ]
     },
     'tester': {
         'hud_alert_delay': 1.0,
