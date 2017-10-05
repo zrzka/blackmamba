@@ -8,10 +8,6 @@ Pythonista annotations. If there's no error / warning, HUD informs you about tha
 This script is configurable, see :ref:`configuration`.
 """
 
-import blackmamba.module as module
-
-module.preflight()
-
 import io
 import re
 from enum import Enum
@@ -332,4 +328,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    from blackmamba.bundle import bundle
+    with bundle('analyze'):
+        main()
