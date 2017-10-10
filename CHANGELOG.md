@@ -2,7 +2,10 @@
 
 ## master (unreleased)
 
-*
+* ``.uikit.overlay`` introduced which allows to display information as overlays
+* ``.ide.theme`` introduced to get some theme functionality
+* Show documentation script leverages new overlays
+* Overlay can be closed via ``Ctrl W`` shortcut
 
 
 ## 1.1.0 (2017-10-05)
