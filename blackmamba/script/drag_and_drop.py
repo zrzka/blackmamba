@@ -12,7 +12,7 @@ limitation, you can drop them at the folder only.
 .. note:: If you drop a folder, folder tree is not refreshed. You have to close
    dialog and open it again to see a new folder. Will be fixed.
 
-This script is configurable, see :ref:`configuration`.
+This script is configurable, see :ref:`configuration-drag_and_drop` configuration.
 """
 
 import os

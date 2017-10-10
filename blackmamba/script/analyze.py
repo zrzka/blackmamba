@@ -5,7 +5,7 @@ Script name ``analyze.py``.
 Source code analysis with ``pep8`` and ``pyflakes``. Results are displayed as
 Pythonista annotations. If there's no error / warning, HUD informs you about that.
 
-This script is configurable, see :ref:`configuration`.
+This script is configurable, see :ref:`configuration-analyzer` configuration.
 """
 
 import io

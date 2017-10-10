@@ -7,9 +7,12 @@ HUD informs you. If there're more than one definitions, dialog appears where
 you can select which one to show.
 
 Documentation is displayed as an overlay, which can be closed by the
-``Ctrl-W`` shortcut or by tapping on the ``X`` button.
+``Ctrl W`` shortcut or by tapping on the ``X`` button.
 
-JEDI must be enabled, see :ref:`configuration`.
+This script is configurable, see :ref:`configuration-documentation` configuration.
+
+.. note::
+    JEDI must be enabled, see :ref:`configuration-general` configuration.
 """
 
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource

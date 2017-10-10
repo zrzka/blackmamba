@@ -4,7 +4,7 @@ Script name ``run_unit_tests.py``.
 
 Runs unit tests and show results as Pythonista annotations.
 
-This script is configurable, see :ref:`configuration`.
+This script is configurable, see :ref:`configuration-tester` configuration.
 """
 
 import pytest

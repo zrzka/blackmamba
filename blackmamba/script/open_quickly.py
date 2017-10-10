@@ -8,7 +8,7 @@ selected file.
 
 If file is already opened, Black Mamba changes selected tab only.
 
-This script is configurable, see :ref:`configuration`.
+This script is configurable, see :ref:`configuration-file_picker` configuration.
 """
 
 import os

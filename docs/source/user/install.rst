@@ -35,6 +35,7 @@ PIP
 Black Mamba no longer supports installation via ``pip``. Latest available
 release is 1.0.2.
 
+.. _install-startup:
 
 Startup
 -------

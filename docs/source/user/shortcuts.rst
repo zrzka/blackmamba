@@ -67,7 +67,10 @@ Shortcut          Function
 ``Ctrl Cmd J``    Jump to definition
 ``Ctrl Cmd U``    Find usages
 ``Ctrl Cmd ?``    Show documentation
+``Ctrl W``        Close active overlay [#f1]_
 ================  ========
+
+.. [#f1] Show documentation script does use overlays.
 
 Just hold ``Cmd`` key and iOS will show you all available shortcuts
 if you can't remember them.

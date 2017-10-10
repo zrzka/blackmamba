@@ -3,6 +3,11 @@ Following scripts are usable as Pythonista action items (wrench menu icon). In o
 words, you can use them even without external keyboard.
 
 
+.. note::
+
+    Scripts still requires you to call :func:`blackmamba.main`, see :ref:`install-startup` section.
+
+
 Action quickly
 ==============
 

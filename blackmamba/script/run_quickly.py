@@ -6,7 +6,7 @@ Shows dialog with all your Python files. You can filter these files by directori
 file name, etc. Use arrows keys to change selection and then hit ``Enter`` to
 run selected file.
 
-This script is configurable, see :ref:`configuration`.
+This script is configurable, see :ref:`configuration-file_picker` configuration.
 """
 
 import os

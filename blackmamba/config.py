@@ -7,6 +7,8 @@ from time to time. Just to check if this documentation isn't outdated.
 Sections
 ========
 
+.. _configuration-general:
+
 General
 -------
 
@@ -31,6 +33,8 @@ set it to ``True`` to enable mentioned scripts.
 ``page_line_count: int`` - number of lines to scroll up / down for page up / down.
 
 
+.. _configuration-updates:
+
 Updates
 -------
 
@@ -48,6 +52,7 @@ Defaults:
 ``interval: int`` - check for updates time interval (in seconds).
 
 
+.. _configuration-file_picker:
 
 File picker
 -----------
@@ -76,6 +81,7 @@ Default value says that ``.git`` folder inside any folder is ignored. ``.Trash``
 
 Affects Open quickly and Run quickly scripts, see :ref:`scripts`.
 
+.. _configuration-analyzer:
 
 Analyzer
 --------
@@ -115,6 +121,7 @@ Defaults (pre 1.1.0):
 
 Affects Analyze script, see :ref:`scripts`.
 
+.. _configuration-tester:
 
 Tester
 ------
@@ -130,6 +137,7 @@ Defaults:
 
 Affects Run unit tests script, see :ref:`scripts`.
 
+.. _configuration-drag_and_drop:
 
 Drag and Drop
 -------------
@@ -148,6 +156,7 @@ Defaults:
 
 Affects Drag & Drop script, see :ref:`scripts`.
 
+.. _configuration-documentation:
 
 Documentation
 -------------
@@ -161,13 +170,12 @@ Defaults:
         'frame': (630, 110, 730, 350)
     }
 
-Same overlay view is used for consequent show documentation calls if
-``reuse`` is set to ``True``. Otherwise multiple overlays appear in
-consequent show documentation calls, but if symbol's fully qualified name
-matches existing overlay, this particular overlay is expanded (if collapsed)
-and activated.
+``reuse: bool`` - same overlay view is reused for consequent show documentation calls if
+set to ``True``. Otherwise multiple overlays appear in consequent show documentation calls,
+but if a symbol's fully qualified name matches existing overlay, this particular overlay is
+expanded and activated.
 
-``frame`` is in the key window coordinates.
+``frame: tuple(float, float, float, float)`` - initial overlay frame in the key window coordinates.
 
 Affects Show documentation script, see :ref:`scripts`.
 
