@@ -131,7 +131,7 @@ def _register_default_key_commands():
         (UIKeyInput.downArrow, UIKeyModifier.control,
          source.page_down),
         ('W', UIKeyModifier.control,
-         overlay.dismiss_active_overlay) 
+         overlay.dismiss_active_overlay)
     ]
 
     for command in commands:
