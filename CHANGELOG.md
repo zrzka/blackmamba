@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-*
+* [Bundled packages](http://blackmamba.readthedocs.io/en/stable/bundled.html) links and licenses
 
 
 ## 1.2.0 (2017-10-10)
