@@ -34,6 +34,6 @@ def run_script(script_name, full_path=False, delay=None):
                 webbrowser.open(url)
             return open
 
-        ui.delay(make_open_url(url), 1.0)
+        ui.delay(make_open_url(url), delay)
     else:
         webbrowser.open(url)
