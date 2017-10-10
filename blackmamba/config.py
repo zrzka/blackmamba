@@ -149,6 +149,28 @@ Defaults:
 Affects Drag & Drop script, see :ref:`scripts`.
 
 
+Documentation
+-------------
+
+Defaults:
+    
+.. code-block:: python
+
+    'documentation': {
+        'reuse': True,
+        'frame': (630, 110, 730, 350)
+    }
+    
+Same overlay view is used for consequent show documentation calls if
+``reuse`` is set to ``True``. Otherwise multiple overlays appear in
+consequent show documentation calls, but if symbol's fully qualified name
+matches existing overlay, this particular overlay is expanded (if collapsed)
+and activated.
+
+``frame`` is in the key window coordinates.
+
+Affects Show documentation script, see :ref:`scripts`.
+
 Sample
 ======
 
@@ -198,6 +220,10 @@ _DEFAULTS = {
             '.': ['.Trash', 'Examples',
                   'site-packages', 'site-packages-2', 'site-packages-3', 'stash_extensions']
         }
+    },
+    'documentation': {
+        'reuse': True,
+        'frame': (630, 110, 730, 350)
     }
 }
 

@@ -281,9 +281,13 @@ class LayoutProxy(ui.View):
     def __getattr__(self, name):
         if name in self._attributes:
             return super().__getattr__(name)
-        return self._view.__getattr__(name)
+        return getattr(self._view, name)
 
     def __setattr__(self, name, value):
         if name in self._attributes:
-            return super().__setattr__(name, value)
-        return self._view.__setattr__(name, value)
+            super().__setattr__(name, value)
+
+        if name in ['touch_enabled']:
+            super().__setattr__(name, value)
+
+        setattr(self._view, name, value)

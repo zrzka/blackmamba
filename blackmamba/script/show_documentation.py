@@ -6,7 +6,8 @@ Shows documentation for the symbol around cursor. If definition can't be found,
 HUD informs you. If there're more than one definitions, dialog appears where
 you can select which one to show.
 
-Documentation is displayed as Pythonista annotation.
+Documentation is displayed as an overlay, which can be closed by the
+``Ctrl-W`` shortcut or by tapping on the ``X`` button.
 
 JEDI must be enabled, see :ref:`configuration`.
 """
@@ -20,6 +21,9 @@ import os
 import jedi
 from blackmamba.config import get_config_value
 import blackmamba.log as log
+import ui
+import blackmamba.uikit.overlay as overlay
+from blackmamba.ide.theme import get_theme_value, get_editor_font
 
 
 class LocationPickerItem(PickerItem):
@@ -66,8 +70,36 @@ class LocationDataSource(PickerDataSource):
 
 
 def _show_documentation(definition):
-    line = source.get_line_number()
-    editor.annotate_line(line, definition.docstring(), 'success')
+    reuse = get_config_value('documentation.reuse', True)
+    frame = get_config_value('documentation.frame', (630, 110, 730, 350))
+    tag = '__blackmamba.show_documentation'
+    if not reuse:
+        tag += ':{}'.format(definition.full_name)
+
+    manager = overlay.get_manager()
+
+    o = manager.get_overlay(tag)
+    if o:
+        o.title = definition.name
+        o.content_view.text = definition.docstring()
+        o.expand()
+        o.become_active()
+        return
+
+    tv = ui.TextView(
+        text=definition.docstring(),
+        background_color=get_theme_value('background_color'),
+        text_color=get_theme_value('text_color'),
+        font=get_editor_font()
+    )
+    tv.editable = False
+
+    window_size = ui.get_window_size()
+    x = frame[0]
+    y = frame[1]
+    width = min(window_size[0] - x - 12, frame[2])
+    height = min(window_size[1] - y - 12, frame[3])
+    manager.present(definition.name, tv, frame=(x, y, width, height), tag=tag)
 
 
 def _select_location(definitions):

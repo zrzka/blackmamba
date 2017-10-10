@@ -70,6 +70,7 @@ def _register_default_key_commands():
     from blackmamba.uikit.keyboard import UIKeyModifier, UIKeyInput
     import blackmamba.ide.tab as tab
     import blackmamba.ide.source as source
+    import blackmamba.uikit.overlay as overlay
 
     info('Registering default key commands...')
 
@@ -128,7 +129,9 @@ def _register_default_key_commands():
         (UIKeyInput.upArrow, UIKeyModifier.control,
          source.page_up),
         (UIKeyInput.downArrow, UIKeyModifier.control,
-         source.page_down)
+         source.page_down),
+        ('W', UIKeyModifier.control,
+         overlay.dismiss_active_overlay) 
     ]
 
     for command in commands:
