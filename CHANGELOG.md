@@ -7,11 +7,11 @@
 
 ## 1.2.0 (2017-10-10)
 
-* ``.uikit.overlay`` introduced which allows Black Mamba to display information as overlays
+* `.uikit.overlay` introduced which allows Black Mamba to display information as overlays
     * Overlays are Pythonista app overlays (visible in editor, console, ...)
-* ``.ide.theme`` introduced to get some theme functionality
+* `.ide.theme` introduced to get some theme functionality
 * Show documentation script leverages new overlays
-    * Overlay can be closed via ``Ctrl W`` shortcut
+    * Overlay can be closed via `Ctrl W` shortcut
     * Overlay can be moved (title bar)
     * Overlay can be resized (drag bottom left/right corner)
     * Script is configurable, see [docs](http://blackmamba.readthedocs.io/en/stable/user/configuration.html#documentation)
