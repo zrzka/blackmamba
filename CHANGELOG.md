@@ -5,6 +5,11 @@
 * [Bundled packages](http://blackmamba.readthedocs.io/en/stable/bundled.html) links and licenses
 * `ide.run_script` respects `delay` argument (did contain hardcoded value)
 * Analyze script documentation mentions `flake8`
+* Drag & Drop script
+    * Children nodes are lazy-loaded (faster)
+    * Dropped folder reloads ...
+        * Target row if not expanded (to display triangle)
+        * Children nodes (dropped folder appears if it didn't exist before drop)
 
 
 ## 1.2.0 (2017-10-10)

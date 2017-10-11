@@ -9,16 +9,13 @@ and `Kaleidoscope <https://www.kaleidoscopeapp.com/>`_ for example.
 You can drag a file / folder from any other iOS application as well. But there's one
 limitation, you can drop them at the folder only.
 
-.. note:: If you drop a folder, folder tree is not refreshed. You have to close
-   dialog and open it again to see a new folder. Will be fixed.
-
 This script is configurable, see :ref:`configuration-drag_and_drop` configuration.
 """
 
 import os
 import ui
-from objc_util import ns, ObjCClass, ObjCInstance, ObjCBlock, create_objc_class
-from blackmamba.log import error
+from objc_util import ns, ObjCClass, ObjCInstance, ObjCBlock, create_objc_class, on_main_thread
+from blackmamba.log import error, issue
 import blackmamba.util.runtime as runtime
 import editor
 import ctypes
@@ -36,6 +33,7 @@ from blackmamba.config import get_config_value
 _TMP_DIR = os.environ.get('TMPDIR', os.environ.get('TMP'))
 
 NSIndexPath = ObjCClass('NSIndexPath')
+NSIndexSet = ObjCClass('NSIndexSet')
 NSItemProvider = ObjCClass('NSItemProvider')
 UIDragItem = ObjCClass('UIDragItem')
 NSError = ObjCClass('NSError')
@@ -47,6 +45,7 @@ _dragged_item_path = None
 _dropped_item_destination_path = None
 _dropped_item_is_folder = None
 _dropped_item_name = None
+_datasource = None
 
 #
 # Drag support
@@ -212,6 +211,8 @@ def _drop_folder(data_ptr, path):
 
         zf.extractall(os.path.dirname(path))
 
+        _datasource.reload_path(os.path.dirname(path))
+
         console.hud_alert('{} dropped'.format(os.path.basename(path)))
 
     except KeyboardInterrupt:
@@ -306,41 +307,64 @@ def tableView_performDropWithCoordinator_(_self, _cmd, tv_ptr, coordinator_ptr):
 
 
 class FileNode:
-    def __init__(self, path, parent=None):
+    def __init__(self, path, parent=None, ignore=None):
         assert(parent is None or isinstance(parent, FileNode))
 
         self.path = os.path.normpath(path)
         self.parent = parent
         self.level = parent.level + 1 if parent else 0
         self.name = os.path.basename(path)
-        self.children = []
+        self._ignore = ignore
+        self._children = None
 
-    def add_child(self, child):
-        assert(isinstance(child, FileNode))
-        self.children.append(child)
+    def _include_file(self, file):
+        if not os.path.isdir(os.path.join(self.path, file)):
+            return False
 
-    def dump(self):
+        if self._ignore and self._ignore(self.path, file):
+            return False
+
+        return True
+
+    @property
+    def children_exists(self):
+        for file in os.listdir(self.path):
+            if not self._include_file(file):
+                continue
+            return True
+
+        return False
+
+    def invalidate_children(self):
+        self._children = None
+
+    def _load_children(self):
+        children = []
+
+        for file in os.listdir(self.path):
+            if not self._include_file(file):
+                continue
+            children.append(FileNode(os.path.join(self.path, file), self, self._ignore))
+
+        return children
+
+    @property
+    def children(self):
+        if self._children is not None:
+            return self._children
+        self._children = self._load_children()
+        return self._children
+
+    def dump(self, autoload=False):
         print('{} {}'.format(self.level * '  ', os.path.basename(self.path)))
-        for child in self.children:
-            child.dump()
 
+        if autoload:
+            children = self.children
+        else:
+            children = self._children or []
 
-def build_folder_tree(folder, parent=None, ignore=None):
-    node = FileNode(folder, parent=parent)
-
-    for file in os.listdir(folder):
-        path = os.path.join(folder, file)
-
-        if not os.path.isdir(path):
-            continue
-
-        if ignore and ignore(folder, file):
-            continue
-
-        child_node = build_folder_tree(path, node, ignore)
-        node.add_child(child_node)
-
-    return node
+        for child in children:
+            child.dump(autoload)
 
 
 def ignore(folder, file):
@@ -425,9 +449,6 @@ class FolderPickerDataSource:
     def _generate_node_children_items(self, node):
         items = []
 
-        if not node.children:
-            return items
-
         if node.path not in self._expanded_node_paths:
             return items
 
@@ -441,6 +462,35 @@ class FolderPickerDataSource:
         items = [self._node_dict(node)]
         items.extend(self._generate_node_children_items(node))
         return items
+
+    @on_main_thread
+    def reload_path(self, path):
+        index = None
+        for idx, item in enumerate(self.items):
+            if item['path'] == path:
+                index = idx
+                break
+
+        if index is None:
+            issue('drag_and_drop.py: unable to item in reload_path')
+            return
+
+        item = self.items[index]
+        node = item['node']
+        node.invalidate_children()
+
+        tv_objc = ObjCInstance(self.tableview)
+
+        if node.path in self._expanded_node_paths:
+            # Folder expanded, reload the whole section
+            self._items = None
+            index_set = NSIndexSet.alloc().initWithIndex_(self._folder_section)
+            tv_objc.reloadSections_withRowAnimation_(ns(index_set), 0)
+        else:
+            # Not expanded, just reload folder row, so the triangle is expanded
+            index_paths = []
+            index_paths.append(NSIndexPath.indexPathForRow_inSection_(index, self._folder_section))
+            tv_objc.reloadRowsAtIndexPaths_withRowAnimation_(ns(index_paths), 0)
 
     @property
     def items(self):
@@ -531,7 +581,7 @@ class FolderPickerDataSource:
 
         x = 15 + cvb.x + item['level'] * 15
 
-        if node and node.children:
+        if node and node.children_exists:
             image_view = ui.ImageView()
             image_view.frame = (x, 10, 24, 24)
             image_view.image = ui.Image.named(
@@ -574,6 +624,8 @@ class FolderPickerDataSource:
 
 class DragAndDropView(ui.View):
     def __init__(self):
+        global _datasource
+
         self.name = 'Drag & Drop'
 
         self.width = min(ui.get_window_size()[0] * 0.8, 700)
@@ -587,12 +639,12 @@ class DragAndDropView(ui.View):
             expanded_folder = None
             files = None
 
-        root_node = build_folder_tree(os.path.expanduser('~/Documents'), ignore=ignore)
-        data_source = FolderPickerDataSource(root_node, expanded_folder, files)
+        root_node = FileNode(os.path.expanduser('~/Documents'), ignore=ignore)
+        _datasource = FolderPickerDataSource(root_node, expanded_folder, files)
 
         tv = ui.TableView(frame=self.bounds, flex='WH')
-        tv.delegate = data_source
-        tv.data_source = data_source
+        tv.delegate = _datasource
+        tv.data_source = _datasource
         tv.allows_multiple_selection = False
         tv.allows_selection = True
         tv.allows_multiple_selection_during_editing = False
@@ -628,8 +680,10 @@ class DragAndDropView(ui.View):
         ]
 
     def will_close(self):
+        global _datasource
         if self._handlers:
             unregister_key_event_handlers(self._handlers)
+        _datasource = None
 
 
 def main():
