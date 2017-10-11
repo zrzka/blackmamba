@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+*
+
+## 1.2.1 (2017-10-11)
+
 * [Bundled packages](http://blackmamba.readthedocs.io/en/stable/bundled.html) links and licenses
 * `ide.run_script` respects `delay` argument (did contain hardcoded value)
 * Analyze script documentation mentions `flake8`
