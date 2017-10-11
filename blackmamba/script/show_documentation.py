@@ -152,7 +152,7 @@ def main():
     script = jedi.api.Script(text, line, column, path)
     definitions = [
         d for d in script.goto_definitions()
-        if d.module_path and d.line
+        if d.module_path and d.line and d.docstring()
     ]
 
     if not definitions:

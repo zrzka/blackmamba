@@ -10,6 +10,8 @@
     * Dropped folder reloads ...
         * Target row if not expanded (to display triangle)
         * Children nodes (dropped folder appears if it didn't exist before drop)
+* Show documentation
+    * Do not show picker / docstring if symbol was found, but it has no docstring
 
 
 ## 1.2.0 (2017-10-10)
