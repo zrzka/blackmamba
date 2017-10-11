@@ -2,7 +2,8 @@
 
 ## master (unreleased)
 
-*
+* `lib/pep8` removed, not used
+
 
 ## 1.2.1 (2017-10-11)
 

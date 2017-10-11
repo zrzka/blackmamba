@@ -6,7 +6,7 @@ from contextlib import contextmanager
 from blackmamba.log import debug
 
 _BUNDLES = {
-    'analyze': ['mccabe', 'flake8', 'pep8', 'pycodestyle', 'pyflakes', 'setuptools'],
+    'analyze': ['mccabe', 'flake8', 'pycodestyle', 'pyflakes', 'setuptools'],
     'docutils': ['docutils']
 }
 
