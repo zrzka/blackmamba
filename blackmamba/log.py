@@ -123,3 +123,8 @@ def error(*args, **kwargs):
     :param kwargs: Passed to :func:`print`
     """
     _log(ERROR, *args, **kwargs)
+
+
+def issue(*args, **kwargs):
+    error(*args, **kwargs)
+    error('Please, file an issue at {}'.format('https://github.com/zrzka/blackmamba/issues'))
