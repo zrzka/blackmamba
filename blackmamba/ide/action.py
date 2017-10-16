@@ -25,7 +25,8 @@ class ActionInfo(object):
 def get_actions():
     from objc_util import ObjCClass
     defaults = ObjCClass('NSUserDefaults').standardUserDefaults()
-    return [ActionInfo(ai) for ai in defaults.objectForKey_('EditorActionInfos')]
+    action_infos = defaults.objectForKey_('EditorActionInfos') or []
+    return [ActionInfo(ai) for ai in action_infos]
 
 
 def get_action(title):

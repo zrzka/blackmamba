@@ -3,6 +3,7 @@
 ## master (unreleased)
 
 * `lib/pep8` removed, not used
+* Fixed `get_actions` (exception when user has no custom actions)
 
 
 ## 1.2.1 (2017-10-11)
