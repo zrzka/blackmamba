@@ -208,18 +208,6 @@ class OverlayView(ui.View):
     def state(self):
         return self._state
 
-    # @state.setter
-    # def state(self, new_value):
-    #     if self.state == new_value:
-    #         return
-    #
-    #     call_did_become_active = self._delegate and new_value & OverlayState.active and not self.state & OverlayState.active
-    #     self._state = new_value
-    #     self._apply_theme_colors()
-    #
-    #     if call_did_become_active:
-    #         self._delegate.did_become_active(self)
-
     def become_active(self):
         self.bring_to_front()
 
