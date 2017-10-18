@@ -238,7 +238,7 @@ def _blackmamba_keyCommands(_self, _cmd):
     """Swizzled version of keyCommands(). It calls original method to
     get Pythonista shortcuts and then appends custom ones."""
     obj = ObjCInstance(_self)
-    commands = list(obj.originalkeyCommands())
+    commands = list(obj.originalkeyCommands() or [])
     commands.extend(_key_commands)
     return ns(commands).ptr
 
@@ -308,7 +308,7 @@ def _register_key_command(input, modifier_flags, function, title=None):
 
     selector_name = _key_command_selector_name(input, modifier_flags)
     selector = sel(selector_name)
-    obj = UIApplication.sharedApplication().keyWindow()
+    obj = UIApplication.sharedApplication()
 
     info('Registering key command "{}" ({})'.format(
         _shortcut_name(input, modifier_flags),

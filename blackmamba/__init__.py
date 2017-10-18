@@ -23,10 +23,10 @@ Reference
 from blackmamba.log import info, error, get_level, set_level, ERROR
 import blackmamba.system as system
 
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 __author__ = 'Robert Vojta'
 
-_LATEST_VERSION_COMPATIBILITY_TEST = (311009, '3.1.1')
+_LATEST_VERSION_COMPATIBILITY_TEST = (311013, '3.1.1')
 
 
 def _register_key_command(input, modifier, function, title=None):
@@ -59,6 +59,48 @@ def _register_ios11_default_key_commands():
     commands = [
         ('E', UIKeyModifier.command,
          'drag_and_drop.py', 'Drag & Drop')
+    ]
+
+    for command in commands:
+        _register_key_command(*command)
+
+
+@system.Pythonista(appex=False)
+def _register_pre_311013_key_commands():
+    from blackmamba.uikit.keyboard import UIKeyModifier
+    import blackmamba.ide.tab as tab
+
+    if system.PYTHONISTA_BUNDLE_VERSION >= 311013:
+        return
+
+    commands = [
+        ('W', UIKeyModifier.command,
+         tab.close_selected_tab,
+         'Close Tab'),
+        ('\t', UIKeyModifier.control,
+         tab.select_next_tab,
+         'Show Next Tab'),
+        ('\t', UIKeyModifier.control | UIKeyModifier.shift,
+         tab.select_previous_tab,
+         'Show Previous Tab')
+    ]
+
+    for command in commands:
+        _register_key_command(*command)
+
+
+@system.Pythonista(appex=False)
+def _register_post_311013_key_commands():
+    from blackmamba.uikit.keyboard import UIKeyModifier
+    import blackmamba.ide.tab as tab
+
+    if system.PYTHONISTA_BUNDLE_VERSION < 311013:
+        return
+
+    commands = [
+        ('Q', UIKeyModifier.command,
+         tab.close_selected_tab,
+         'Close Tab')
     ]
 
     for command in commands:
@@ -113,15 +155,6 @@ def _register_default_key_commands():
         ('0', UIKeyModifier.command,
          tab.toggle_navigator,
          'Toggle Navigator'),
-        ('W', UIKeyModifier.command,
-         tab.close_selected_tab,
-         'Close Tab'),
-        ('\t', UIKeyModifier.control,
-         tab.select_next_tab,
-         'Show Next Tab'),
-        ('\t', UIKeyModifier.control | UIKeyModifier.shift,
-         tab.select_previous_tab,
-         'Show Previous Tab'),
         (']', UIKeyModifier.command | UIKeyModifier.shift,
          tab.select_next_tab),
         ('[', UIKeyModifier.command | UIKeyModifier.shift,
@@ -144,6 +177,9 @@ def _register_default_key_commands():
 
     for i in range(9):
         _register_key_command(str(i + 1), UIKeyModifier.command, _make_select_tab(i))
+
+    _register_pre_311013_key_commands()
+    _register_post_311013_key_commands()
 
     # No need to show Cmd-[Shift]-S to users
     _log_level = get_level()

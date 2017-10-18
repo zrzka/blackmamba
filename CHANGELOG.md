@@ -2,9 +2,25 @@
 
 ## master (unreleased)
 
-* `lib/pep8` removed, not used
-* Fixed `get_actions` (exception when user has no custom actions)
+*
 
+## 1.2.2 (2017-10-18)
+
+* Bundled `lib/pep8` removed, unused
+* Fixed `get_actions` (exception when user has no custom actions)
+* Pythonista 3.1.1 (311013)
+    * Compatibility check with 311013
+    * Shortcuts `Cmd W`, `Ctrl Tab`, `Ctrl Shift Tab` no longer work (1)
+    * Shortcuts `Cmd 1..9`, `Cmd Shift ]`, `Cmd Shift [`, `Cmd Shift W` still work
+
+(1) Pythonista 311013 provides these shortcuts natively. Unfortunately,
+they do not work. Also these shortcuts are provided elsewhere in the
+responder chain, so, even if I register them via the Black Mamba, responder
+chain catches them sooner then Black Mamba and they do not work.
+
+All these shortcuts do work prior to 311013. If you have 311013 installed, you
+can use `Cmd Q` to close tab (temporary) and `Cmd Shift ]` / `Cmd Shift [`
+to show next / previous tab.
 
 ## 1.2.1 (2017-10-11)
 
