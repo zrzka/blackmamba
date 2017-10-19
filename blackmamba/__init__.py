@@ -23,10 +23,10 @@ Reference
 from blackmamba.log import info, error, get_level, set_level, ERROR
 import blackmamba.system as system
 
-__version__ = '1.2.2'
+__version__ = '1.3.0'
 __author__ = 'Robert Vojta'
 
-_LATEST_VERSION_COMPATIBILITY_TEST = (311013, '3.1.1')
+_LATEST_VERSION_COMPATIBILITY_TEST = (311014, '3.1.1')
 
 
 def _register_key_command(input, modifier, function, title=None):
@@ -82,25 +82,9 @@ def _register_pre_311013_key_commands():
          'Show Next Tab'),
         ('\t', UIKeyModifier.control | UIKeyModifier.shift,
          tab.select_previous_tab,
-         'Show Previous Tab')
-    ]
-
-    for command in commands:
-        _register_key_command(*command)
-
-
-@system.Pythonista(appex=False)
-def _register_post_311013_key_commands():
-    from blackmamba.uikit.keyboard import UIKeyModifier
-    import blackmamba.ide.tab as tab
-
-    if system.PYTHONISTA_BUNDLE_VERSION < 311013:
-        return
-
-    commands = [
-        ('Q', UIKeyModifier.command,
-         tab.close_selected_tab,
-         'Close Tab')
+         'Show Previous Tab'),
+        ('T', UIKeyModifier.command,
+         'new_tab.py', 'New Tab')
     ]
 
     for command in commands:
@@ -122,8 +106,6 @@ def _register_default_key_commands():
          'toggle_comments.py', 'Toggle Comments'),
         ('N', UIKeyModifier.command,
          'new_file.py', 'New File'),
-        ('T', UIKeyModifier.command,
-         'new_tab.py', 'New Tab'),
         ('W', UIKeyModifier.command | UIKeyModifier.shift,
          'close_all_tabs_except_current_one.py', 'Close Tabs Except Current One'),
         ('O', UIKeyModifier.command | UIKeyModifier.shift,
@@ -179,7 +161,6 @@ def _register_default_key_commands():
         _register_key_command(str(i + 1), UIKeyModifier.command, _make_select_tab(i))
 
     _register_pre_311013_key_commands()
-    _register_post_311013_key_commands()
 
     # No need to show Cmd-[Shift]-S to users
     _log_level = get_level()
