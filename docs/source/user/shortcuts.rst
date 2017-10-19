@@ -37,6 +37,10 @@ current one.
 ``Cmd T`` creates new empty tab and ``Cmd N`` shows Pythonista new file
 dialog.
 
+.. note:: Shortcuts ``Cmd W``, ``Ctrl Tab`` and ``Ctrl Shift Tab`` are no longer
+    registered if you're using Pythonista (> 311013). These three are natively
+    supported. They still do work if you're using older Pythonista version.
+
 
 Editor
 ======
