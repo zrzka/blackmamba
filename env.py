@@ -3,22 +3,35 @@
 import shutil
 import os
 import console
+import blackmamba.ide.bookmark as bookmark
 
 _ROOT_FOLDER = os.path.expanduser('~/Documents/site-packages-3/blackmamba')
 _BACKUP_FOLDER = os.path.expanduser('~/Documents/site-packages-3/bm-pip-backup')
-_GIT_FOLDER = os.path.expanduser('~/Documents/WorkingCopy/blackmamba')
-_GIT_MODULE_FOLDER = os.path.join(_GIT_FOLDER, 'blackmamba')
 
 
 def switch_to_working_copy():
     print('Switching Black Mamba to Working Copy version')
 
+    git_folder = None
+    paths = bookmark.get_bookmark_paths()
+    if paths:
+        for path in paths:
+            if os.path.basename(path) == 'blackmamba':
+                git_folder = path
+                break
+
+    if not git_folder:
+        print('Unable to find blackmamba folder in External files...')
+        return
+
+    git_module_folder = os.path.join(git_folder, 'blackmamba')
+
     if not os.path.isdir(_ROOT_FOLDER):
         print('Failed, folder does not exist: {}'.format(_ROOT_FOLDER))
         return
 
-    if not os.path.isdir(_GIT_FOLDER):
-        print('Failed, checkout Black Mamba to: {}'.format(_GIT_FOLDER))
+    if not os.path.isdir(git_folder):
+        print('Failed, checkout Black Mamba to: {}'.format(git_folder))
         return
 
     if os.path.isdir(_BACKUP_FOLDER):
@@ -31,7 +44,7 @@ def switch_to_working_copy():
         print('Failed, folder still exists: {}'.format(_ROOT_FOLDER))
         return
 
-    os.symlink(_GIT_MODULE_FOLDER, _ROOT_FOLDER)
+    os.symlink(git_module_folder, _ROOT_FOLDER)
 
     if not os.path.islink(_ROOT_FOLDER):
         print('Failed, folder is not a symlink: {}'.format(_ROOT_FOLDER))
