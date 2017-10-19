@@ -26,7 +26,7 @@ def run_script(script_name, full_path=False, delay=None):
         script_name = script_name[len(docs_root):]
 
     encoded_name = urllib.parse.quote_plus(script_name, safe='', encoding=None, errors=None)
-    url = 'pythonista://{}?action=run'.format(encoded_name)
+    url = 'pythonista3://{}?action=run'.format(encoded_name)
 
     if delay:
         def make_open_url(url):

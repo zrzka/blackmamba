@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+## 1.3.1 (2017-10-19)
+
+* Run scripts via `pythonista3://`, not just `pythonista://` (see #29)
+
 ## 1.3.0 (2017-10-19)
 
 * Pythonista 3.1.1 (311014)
