@@ -14,8 +14,9 @@ This script is configurable, see :ref:`configuration-file_picker` configuration.
 import os
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 from blackmamba.config import get_config_value
-from blackmamba.util.path import strip_documents_folder
 import blackmamba.ide.tab as tab
+import blackmamba.ide.bookmark as bookmark
+
 
 _IGNORE_FOLDERS = {
     '': ['.git'],
@@ -29,46 +30,77 @@ def _ignore_folders():
 
 
 class FilePickerItem(PickerItem):
-    def __init__(self, folder, name, display_folder):
+    def __init__(self, folder, name, display_folder, root_folder=None):
         super().__init__(name, display_folder)
         self._folder = folder
+        self._root_folder = root_folder
+        self._match_value = None
+        self._file_path = None
 
     @property
     def file_path(self):
-        return os.path.join(self._folder, self.title)
+        if not self._file_path:
+            self._file_path = os.path.join(self._folder, self.title)
+        return self._file_path
 
     @property
     def match_value(self):
-        return strip_documents_folder(self.file_path).lower()
+        if not self._match_value:
+            path = self.file_path
+            if self._root_folder:
+                path = path[len(self._root_folder)+1:]
+            self._match_value = path.lower()
+
+        return self._match_value
 
 
 class FilePickerDataSource(PickerDataSource):
     def __init__(self, allow_file=None, ignore_folders=None):
         super().__init__()
-        self._root_folder = os.path.expanduser('~/Documents')
 
-        def expand_folder(f):
-            if not f:
-                return f
+        items = self._load_items('Documents', os.path.expanduser('~/Documents'), allow_file, ignore_folders)
 
-            return os.path.normpath(os.path.join(self._root_folder, f))
-
-        ignore_folders = {expand_folder(k): v for k, v in ignore_folders.items()}
-        global_ignore_folders = ignore_folders.get('', [])
-
-        home_folder = os.path.expanduser('~')
-        items = []
-        for root, subdirs, files in os.walk(self._root_folder, topdown=True, followlinks=True):
-            if ignore_folders:
-                ignore_list = global_ignore_folders[:]
-                ignore_list.extend(ignore_folders.get(root, []))
-                subdirs[:] = [d for d in subdirs if d not in ignore_list]
-            display_folder = ' • '.join(root[len(home_folder) + 1:].split(os.sep))
-            if allow_file:
-                files = [f for f in files if allow_file(root, f)]
-            items.extend([FilePickerItem(root, f, display_folder) for f in files])
+        bookmarks = bookmark.get_bookmark_paths()
+        if bookmarks:
+            for path in bookmarks:
+                items.extend(self._load_items('Bookmark', path, allow_file, ignore_folders, True))
 
         self.items = sorted(items)
+
+    def _load_items(self, title, path, allow_file=None, ignore_folders=None, bookmark=False):
+        dirname = os.path.dirname(path)
+        basename = os.path.basename(path)
+
+        if os.path.isfile(path):
+            if allow_file and allow_file(dirname, basename):
+                return [FilePickerItem(dirname, basename, '{} • {}'.format(title, basename), dirname)]
+
+        if not os.path.isdir(path):
+            return []
+
+        global_ignore_folders = ignore_folders.get('', [])
+
+        items = []
+        for root, subdirs, files in os.walk(path, topdown=True, followlinks=True):
+            if ignore_folders:
+                ignore_list = global_ignore_folders[:]
+                ignore_list.extend(ignore_folders.get(os.path.basename(root), []))
+                if root == path:
+                    ignore_list.extend(ignore_folders.get('.', []))
+                subdirs[:] = [d for d in subdirs if d not in ignore_list]
+
+            display_folder_items = [x for x in root[len(path) + 1:].split(os.sep) if x]
+            display_folder_items.insert(0, title)
+            if bookmark:
+                display_folder_items.insert(1, basename)
+            display_folder = ' • '.join(display_folder_items)
+
+            if allow_file:
+                files = [f for f in files if allow_file(root, f)]
+
+            items.extend([FilePickerItem(root, f, display_folder, path) for f in files])
+
+        return items
 
 
 def main():
