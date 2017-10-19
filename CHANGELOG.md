@@ -2,7 +2,17 @@
 
 ## master (unreleased)
 
-*
+## 1.3.0 (2017-10-19)
+
+* Pythonista 3.1.1 (311014)
+    * Compatibility check with 311014
+    * Shortcuts `Cmd W`, `Ctrl [Shift] Tab` work
+* Trashed `Cmd Q` shortcut (workaround for 311013)
+* Open Quickly supports File System Provider bookmarks
+    * You can search / open files added to Pythonista via `Open...` (External files)
+    * These files are added as bookmarks (iOS terminology)
+    * If cell subtitle starts with `Documents`, it's a file from `~/Documents`
+    * If cell subtitle starts with `Bookmark`, it's a file from FSP
 
 ## 1.2.2 (2017-10-18)
 
