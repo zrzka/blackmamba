@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+* Fixed exception when there's empty tab opened (#30)
+* Open quickly selects proper tab when the file is already opened
+  and empty tab exists as well
+
 ## 1.3.1 (2017-10-19)
 
 * Run scripts via `pythonista3://`, not just `pythonista://` (see #29)

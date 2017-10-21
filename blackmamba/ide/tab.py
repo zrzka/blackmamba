@@ -165,7 +165,7 @@ def get_path():
     if not tab:
         return None
 
-    return str(tab.filePath())
+    return str(tab.filePath()) if tab.respondsToSelector_(sel('filePath')) else None
 
 
 @on_main_thread
@@ -175,7 +175,10 @@ def get_paths():
     if not tabs:
         return None
 
-    return [str(tab.filePath()) for tab in tabs.tabViewControllers()]
+    return [
+        str(tab.filePath()) if tab.respondsToSelector_(sel('filePath')) else None
+        for tab in tabs.tabViewControllers()
+    ]
 
 
 def open_file(path, new_tab=True, line=None):
