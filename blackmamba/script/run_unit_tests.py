@@ -52,7 +52,7 @@ def _parse_log_file():
 
     try:
         suite = ET.parse(_LOG_FILE_PATH).getroot()
-    except:
+    except Exception:
         return
 
     if not suite.tag == 'testsuite':

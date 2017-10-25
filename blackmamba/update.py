@@ -42,7 +42,7 @@ def get_local_release():
     try:
         with open(_RELEASE_PATH, 'rt') as input:
             return json.load(input)
-    except:
+    except Exception:
         pass
 
 
@@ -70,7 +70,7 @@ def _get_json(command):
 def _get_latest_release():
     try:
         return _get_json('releases/latest')
-    except:
+    except Exception:
         pass
 
 

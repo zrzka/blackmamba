@@ -33,7 +33,7 @@ def _cleanup():
                     shutil.rmtree(path)
                 else:
                     os.remove(path)
-            except:
+            except Exception:
                 pass
 
     _cleanup_paths = None

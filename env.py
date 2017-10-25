@@ -90,7 +90,7 @@ def toggle():
                           'Switch to Working Copy version?',
                           'OK')
             switch_to_working_copy()
-    except:
+    except Exception:
         pass
 
 
