@@ -118,14 +118,14 @@ _LINE_MESSAGE_REGEX = re.compile('^(\d+): (.*)$')
 
 
 def _get_annotations(path, stream, style):
-    l = len(path)
+    path_len = len(path)
 
     annotations = []
     for line in stream.getvalue().splitlines():
         if not line.startswith(path):
             continue
 
-        line = line[(l + 1):]  # Strip 'filename:'
+        line = line[(path_len + 1):]  # Strip 'filename:'
         match = _LINE_COL_MESSAGE_REGEX.fullmatch(line)
 
         if not match:
@@ -172,7 +172,7 @@ def _pyflakes_annotations(path, text):
 
 
 def _parse_flake8_output(path, output_path):
-    l = len(path)
+    path_len = len(path)
 
     annotations = []
 
@@ -182,7 +182,7 @@ def _parse_flake8_output(path, output_path):
             if not line.startswith(path):
                 continue
 
-            line = line[(l + 1):]  # Strip 'filename:'
+            line = line[(path_len + 1):]  # Strip 'filename:'
             match = _LINE_COL_MESSAGE_REGEX.fullmatch(line)
 
             if not match:
