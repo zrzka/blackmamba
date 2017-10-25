@@ -11,7 +11,10 @@
   and empty tab exists as well
 * Compatibility check with 311015
     * `Cmd-Shift-]`, `Cmd-Shift-[` registered only in Pythonista < 311015
-    * These shortcuts are natively supported  
+    * These shortcuts are natively supported
+* flake8-3.5.0, pyflakes-1.6.0
+    * Bare exception check
+    * Ambigious identifier check  
 
 ## 1.3.1 (2017-10-19)
 
