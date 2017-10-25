@@ -6,6 +6,8 @@ flake8 = flake8.main.setuptools_command:Flake8
 
 [flake8.extension]
 F = flake8.plugins.pyflakes:FlakesChecker
+pycodestyle.ambiguous_identifier = pycodestyle:ambiguous_identifier
+pycodestyle.bare_except = pycodestyle:bare_except
 pycodestyle.blank_lines = pycodestyle:blank_lines
 pycodestyle.break_around_binary_operator = pycodestyle:break_around_binary_operator
 pycodestyle.comparison_negative = pycodestyle:comparison_negative

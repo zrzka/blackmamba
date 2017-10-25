@@ -1,11 +1,12 @@
 Metadata-Version: 2.0
 Name: flake8
-Version: 3.4.1
+Version: 3.5.0
 Summary: the modular source code checker: pep8, pyflakes and co
 Home-page: https://gitlab.com/pycqa/flake8
 Author: Ian Stapleton Cordasco
 Author-email: graffatcolmingov@gmail.com
 License: MIT
+Description-Content-Type: UNKNOWN
 Platform: UNKNOWN
 Classifier: Development Status :: 5 - Production/Stable
 Classifier: Environment :: Console
@@ -23,7 +24,7 @@ Classifier: Topic :: Software Development :: Libraries :: Python Modules
 Classifier: Topic :: Software Development :: Quality Assurance
 Requires-Dist: enum34; python_version<"3.4"
 Requires-Dist: configparser; python_version<"3.2"
-Requires-Dist: pyflakes >= 1.5.0, < 1.6.0
+Requires-Dist: pyflakes >= 1.5.0, < 1.7.0
 Requires-Dist: pycodestyle >= 2.0.0, < 2.4.0
 Requires-Dist: mccabe >= 0.6.0, < 0.7.0
 

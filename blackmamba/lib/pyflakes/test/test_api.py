@@ -187,6 +187,36 @@ class TestIterSourceCode(TestCase):
             sorted(iterSourceCode([self.tempdir])),
             sorted([apath, bpath, cpath]))
 
+    def test_shebang(self):
+        """
+        Find Python files that don't end with `.py`, but contain a Python
+        shebang.
+        """
+        python = os.path.join(self.tempdir, 'a')
+        with open(python, 'w') as fd:
+            fd.write('#!/usr/bin/env python\n')
+
+        self.makeEmptyFile('b')
+
+        with open(os.path.join(self.tempdir, 'c'), 'w') as fd:
+            fd.write('hello\nworld\n')
+
+        python2 = os.path.join(self.tempdir, 'd')
+        with open(python2, 'w') as fd:
+            fd.write('#!/usr/bin/env python2\n')
+
+        python3 = os.path.join(self.tempdir, 'e')
+        with open(python3, 'w') as fd:
+            fd.write('#!/usr/bin/env python3\n')
+
+        pythonw = os.path.join(self.tempdir, 'f')
+        with open(pythonw, 'w') as fd:
+            fd.write('#!/usr/bin/env pythonw\n')
+
+        self.assertEqual(
+            sorted(iterSourceCode([self.tempdir])),
+            sorted([python, python2, python3, pythonw]))
+
     def test_multipleDirectories(self):
         """
         L{iterSourceCode} can be given multiple directories.  It will recurse
@@ -518,6 +548,9 @@ foo = '\\xyz'
         If the source file is not readable, this is reported on standard
         error.
         """
+        if os.getuid() == 0:
+            self.skipTest('root user can access all files regardless of '
+                          'permissions')
         sourcePath = self.makeTempFile('')
         os.chmod(sourcePath, 0)
         count, errors = self.getErrors(sourcePath)

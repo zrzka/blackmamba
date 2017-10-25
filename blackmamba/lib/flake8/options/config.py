@@ -1,8 +1,11 @@
 """Config handling logic for Flake8."""
+import collections
 import configparser
 import logging
 import os.path
 import sys
+
+from flake8 import utils
 
 LOG = logging.getLogger(__name__)
 
@@ -49,24 +52,39 @@ class ConfigFileFinder(object):
             args = ['.']
         self.parent = self.tail = os.path.abspath(os.path.commonprefix(args))
 
+        # caches to avoid double-reading config files
+        self._local_configs = None
+        self._user_config = None
+        self._cli_configs = {}
+
     @staticmethod
     def _read_config(files):
         config = configparser.RawConfigParser()
-        try:
-            found_files = config.read(files)
-        except configparser.ParsingError:
-            LOG.exception("There was an error trying to parse a config "
-                          "file. The files we were attempting to parse "
-                          "were: %r", files)
-            found_files = []
+        if isinstance(files, (str, type(u''))):
+            files = [files]
+
+        found_files = []
+        for filename in files:
+            try:
+                found_files.extend(config.read(filename))
+            except UnicodeDecodeError:
+                LOG.exception("There was an error decoding a config file."
+                              "The file with a problem was %s.",
+                              filename)
+            except configparser.ParsingError:
+                LOG.exception("There was an error trying to parse a config "
+                              "file. The file with a problem was %s.",
+                              filename)
         return (config, found_files)
 
     def cli_config(self, files):
         """Read and parse the config file specified on the command-line."""
-        config, found_files = self._read_config(files)
-        if found_files:
-            LOG.debug('Found cli configuration files: %s', found_files)
-        return config
+        if files not in self._cli_configs:
+            config, found_files = self._read_config(files)
+            if found_files:
+                LOG.debug('Found cli configuration files: %s', found_files)
+            self._cli_configs[files] = config
+        return self._cli_configs[files]
 
     def generate_possible_local_files(self):
         """Find and generate all local config files."""
@@ -104,10 +122,12 @@ class ConfigFileFinder(object):
 
     def local_configs(self):
         """Parse all local config files into one config object."""
-        config, found_files = self._read_config(self.local_config_files())
-        if found_files:
-            LOG.debug('Found local configuration files: %s', found_files)
-        return config
+        if self._local_configs is None:
+            config, found_files = self._read_config(self.local_config_files())
+            if found_files:
+                LOG.debug('Found local configuration files: %s', found_files)
+            self._local_configs = config
+        return self._local_configs
 
     def user_config_file(self):
         """Find the user-level config file."""
@@ -117,10 +137,12 @@ class ConfigFileFinder(object):
 
     def user_config(self):
         """Parse the user config file into a config object."""
-        config, found_files = self._read_config(self.user_config_file())
-        if found_files:
-            LOG.debug('Found user configuration files: %s', found_files)
-        return config
+        if self._user_config is None:
+            config, found_files = self._read_config(self.user_config_file())
+            if found_files:
+                LOG.debug('Found user configuration files: %s', found_files)
+            self._user_config = config
+        return self._user_config
 
 
 class MergedConfigParser(object):
@@ -138,30 +160,23 @@ class MergedConfigParser(object):
     #: :meth:`~configparser.RawConfigParser.getbool` method.
     GETBOOL_ACTIONS = {'store_true', 'store_false'}
 
-    def __init__(self, option_manager, extra_config_files=None, args=None):
+    def __init__(self, option_manager, config_finder):
         """Initialize the MergedConfigParser instance.
 
-        :param flake8.option.manager.OptionManager option_manager:
+        :param flake8.options.manager.OptionManager option_manager:
             Initialized OptionManager.
-        :param list extra_config_files:
-            List of extra config files to parse.
-        :params list args:
-            The extra parsed arguments from the command-line.
+        :param flake8.options.config.ConfigFileFinder config_finder:
+            Initialized ConfigFileFinder.
         """
         #: Our instance of flake8.options.manager.OptionManager
         self.option_manager = option_manager
         #: The prog value for the cli parser
         self.program_name = option_manager.program_name
-        #: Parsed extra arguments
-        self.args = args
         #: Mapping of configuration option names to
         #: :class:`~flake8.options.manager.Option` instances
         self.config_options = option_manager.config_options_dict
-        #: List of extra config files
-        self.extra_config_files = extra_config_files or []
         #: Our instance of our :class:`~ConfigFileFinder`
-        self.config_finder = ConfigFileFinder(self.program_name, self.args,
-                                              self.extra_config_files)
+        self.config_finder = config_finder
 
     def _normalize_value(self, option, value):
         final_value = option.normalize(
@@ -280,3 +295,48 @@ class MergedConfigParser(object):
             return self.parse_cli_config(cli_config)
 
         return self.merge_user_and_local_config()
+
+
+def get_local_plugins(config_finder, cli_config=None, isolated=False):
+    """Get local plugins lists from config files.
+
+    :param flake8.options.config.ConfigFileFinder config_finder:
+        The config file finder to use.
+    :param str cli_config:
+        Value of --config when specified at the command-line. Overrides
+        all other config files.
+    :param bool isolated:
+        Determines if we should parse configuration files at all or not.
+        If running in isolated mode, we ignore all configuration files
+    :returns:
+        LocalPlugins namedtuple containing two lists of plugin strings,
+        one for extension (checker) plugins and one for report plugins.
+    :rtype:
+        flake8.options.config.LocalPlugins
+    """
+    local_plugins = LocalPlugins(extension=[], report=[])
+    if isolated:
+        LOG.debug('Refusing to look for local plugins in configuration'
+                  'files due to user-requested isolation')
+        return local_plugins
+
+    if cli_config:
+        LOG.debug('Reading local plugins only from "%s" specified via '
+                  '--config by the user', cli_config)
+        config = config_finder.cli_config(cli_config)
+    else:
+        config = config_finder.local_configs()
+
+    section = '%s:local-plugins' % config_finder.program_name
+    for plugin_type in ['extension', 'report']:
+        if config.has_option(section, plugin_type):
+            local_plugins_string = config.get(section, plugin_type).strip()
+            plugin_type_list = getattr(local_plugins, plugin_type)
+            plugin_type_list.extend(utils.parse_comma_separated_list(
+                local_plugins_string,
+                regexp=utils.LOCAL_PLUGIN_LIST_RE,
+            ))
+    return local_plugins
+
+
+LocalPlugins = collections.namedtuple('LocalPlugins', 'extension report')
