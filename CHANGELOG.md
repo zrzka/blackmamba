@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+*
+
+## 1.3.2 (2017-10-25)
+
 * Fixed exception when there's empty tab opened (#30)
 * Open quickly selects proper tab when the file is already opened
   and empty tab exists as well
