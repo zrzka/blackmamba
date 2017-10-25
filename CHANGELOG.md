@@ -5,6 +5,9 @@
 * Fixed exception when there's empty tab opened (#30)
 * Open quickly selects proper tab when the file is already opened
   and empty tab exists as well
+* Compatibility check with 311015
+    * `Cmd-Shift-]`, `Cmd-Shift-[` registered only in Pythonista < 311015
+    * These shortcuts are natively supported  
 
 ## 1.3.1 (2017-10-19)
 

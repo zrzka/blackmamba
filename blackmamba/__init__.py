@@ -23,10 +23,10 @@ Reference
 from blackmamba.log import info, error, get_level, set_level, ERROR
 import blackmamba.system as system
 
-__version__ = '1.3.1'
+__version__ = '1.3.2'
 __author__ = 'Robert Vojta'
 
-_LATEST_VERSION_COMPATIBILITY_TEST = (311014, '3.1.1')
+_LATEST_VERSION_COMPATIBILITY_TEST = (311015, '3.1.1')
 
 
 def _register_key_command(input, modifier, function, title=None):
@@ -66,7 +66,7 @@ def _register_ios11_default_key_commands():
 
 
 @system.Pythonista(appex=False)
-def _register_pre_311013_key_commands():
+def _register_pre_311015_key_commands():
     from blackmamba.uikit.keyboard import UIKeyModifier
     import blackmamba.ide.tab as tab
 
@@ -84,7 +84,11 @@ def _register_pre_311013_key_commands():
          tab.select_previous_tab,
          'Show Previous Tab'),
         ('T', UIKeyModifier.command,
-         'new_tab.py', 'New Tab')
+         'new_tab.py', 'New Tab'),
+        (']', UIKeyModifier.command | UIKeyModifier.shift,
+         tab.select_next_tab),
+        ('[', UIKeyModifier.command | UIKeyModifier.shift,
+         tab.select_previous_tab),
     ]
 
     for command in commands:
@@ -137,10 +141,6 @@ def _register_default_key_commands():
         ('0', UIKeyModifier.command,
          tab.toggle_navigator,
          'Toggle Navigator'),
-        (']', UIKeyModifier.command | UIKeyModifier.shift,
-         tab.select_next_tab),
-        ('[', UIKeyModifier.command | UIKeyModifier.shift,
-         tab.select_previous_tab),
         (UIKeyInput.upArrow, UIKeyModifier.control,
          source.page_up),
         (UIKeyInput.downArrow, UIKeyModifier.control,
@@ -160,7 +160,7 @@ def _register_default_key_commands():
     for i in range(9):
         _register_key_command(str(i + 1), UIKeyModifier.command, _make_select_tab(i))
 
-    _register_pre_311013_key_commands()
+    _register_pre_311015_key_commands()
 
     # No need to show Cmd-[Shift]-S to users
     _log_level = get_level()
