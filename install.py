@@ -20,6 +20,13 @@ _RELEASE_INFO_FILE = os.path.join(_TARGET_DIR, '.release.json')
 _cleanup_paths = []
 
 
+def _get_version(release):
+    version = release['tag_name']
+    if version.startswith('v'):
+        version = version[1:]
+    return version
+
+
 def _cleanup():
     global _cleanup_paths
 
@@ -202,23 +209,37 @@ def _move_to_site_packages(extracted_zip_dir):
 def _local_installation_exists(release):
     _info('Checking Black Mamba installation...')
 
-    if os.path.exists(os.path.join(_TARGET_DIR, '.git')):
-        _terminate('Skipping, Black Mamba GitHub repository detected, use git pull')
+    if os.path.islink(_TARGET_DIR):
+        _terminate('Skipping, Black Mamba symlinked to site-packages-3')
 
-    exists = os.path.exists(_TARGET_DIR)
+    local_version = None
+    try:
+        import blackmamba
+        local_version = blackmamba.__version__
+        _info('Black Mamba {} installed'.format(local_version))
 
-    if exists:
+    except ModuleNotFoundError:
+        _info('Black Mamba not installed')
+
+    if local_version is not None:
+        remote_version = _get_version(release)
+
         try:
-            console.alert('Black Mamba Installer',
-                          'Black Mamba is already installed. Do you want to replace it with {}?'.format(release['tag_name']),
-                          'Replace')
+            if remote_version == local_version:
+                console.alert(
+                    'Black Mamba Installer',
+                    'Black Mamba {} installed. Do you want to replace it with {}?'.format(local_version, remote_version),
+                    'Replace'
+                )
+            else:
+                console.alert(
+                    'Black Mamba Installer',
+                    'Black Mamba {} installed. Do you want to update it to {}?'.format(local_version, remote_version),
+                    'Update'
+                )
+
         except KeyboardInterrupt:
             _terminate('Cancelling installation on user request')
-
-    if exists:
-        _info('Black Mamba installed, will be replaced')
-
-    return exists
 
 
 def _save_release_info(release):
@@ -243,12 +264,13 @@ def _install(prerelease=False):
     _move_to_site_packages(extracted_zip_dir)
     _save_release_info(release)
     _cleanup()
-    _info('Black Mamba {} installed'.format(release['tag_name']))
+    _info('Black Mamba {} installed'.format(_get_version(release)))
 
-    tag_name = release['tag_name']
-    console.alert('Black Mamba Installer',
-                  'Black Mamba {} installed.\n\nPythonista RESTART needed for updates to take effect.'.format(tag_name),
-                  'Got it!', hide_cancel_button=True)
+    console.alert(
+        'Black Mamba {} Installed'.format(_get_version(release)),
+        'Pythonista RESTART is required for changes to take effect.',
+        'Got it!', hide_cancel_button=True
+    )
 
 
 if __name__ == '__main__':
