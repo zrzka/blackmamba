@@ -2,7 +2,11 @@
 
 ## master (unreleased)
 
-*
+* Installer improved
+    * Print installed version to the console
+    * Show installed version in the dialog update/replace dialog
+    * Dialog content differs for update/replace (version comparison)
+* `script/selfupdate.py` added
 
 ## 1.3.2 (2017-10-25)
 
