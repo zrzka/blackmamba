@@ -177,7 +177,7 @@ def _register_default_key_commands():
 
 
 @system.Pythonista(appex=False)
-def _check_compatibility_and_updates():
+def _check_compatibility():
     import blackmamba.update
     info('Pythonista {} ({})'.format(system.PYTHONISTA_VERSION, system.PYTHONISTA_BUNDLE_VERSION))
 
@@ -194,6 +194,10 @@ def _check_compatibility_and_updates():
             _LATEST_VERSION_COMPATIBILITY_TEST[0]))
         error('Update Black Mamba or use at your own risk')
 
+
+@system.Pythonista(appex=False)
+def _check_for_updates():
+    import blackmamba.update
     blackmamba.update.check()
 
 
@@ -206,11 +210,12 @@ def _main(config=None):
     info('Black Mamba initialization...')
     if config:
         update_config_with_dict(config)
-    _check_compatibility_and_updates()
+    _check_compatibility()
     if get_config_value('general.register_key_commands', True):
         _register_default_key_commands()
         _register_ios11_default_key_commands()
     info('Black Mamba initialized')
+    _check_for_updates()
 
 
 def main(config=None):
