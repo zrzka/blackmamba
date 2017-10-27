@@ -23,7 +23,7 @@ Reference
 from blackmamba.log import info, error, get_level, set_level, ERROR
 import blackmamba.system as system
 
-__version__ = '1.3.2'
+__version__ = '1.3.3'
 __author__ = 'Robert Vojta'
 
 _LATEST_VERSION_COMPATIBILITY_TEST = (311015, '3.1.1')
