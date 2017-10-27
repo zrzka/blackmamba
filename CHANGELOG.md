@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+*
+
+## 1.3.3 (2017-10-27)
+
 * Installer improved
     * Print installed version to the console
     * Show installed version in the dialog update/replace dialog
