@@ -6,7 +6,12 @@
     * Print installed version to the console
     * Show installed version in the dialog update/replace dialog
     * Dialog content differs for update/replace (version comparison)
-* `script/selfupdate.py` added
+* `script/selfupdate.py` added (it just runs installer via requests)
+* Check for updates
+    * Update dialog allows you to run `selfupdate.py`
+    * If you hit cancel, installer command is copied to the clipboard
+      and additional info about `selfupdate.py` / installer command
+      is printed to the console
 
 ## 1.3.2 (2017-10-25)
 
