@@ -8,7 +8,9 @@ import requests
 import console
 from blackmamba.log import info, error
 from blackmamba.config import get_config_value
+import blackmamba.system as system
 import clipboard
+import textwrap
 
 
 _DEFAULTS_LAST_UPDATE_CHECK_KEY = 'BlackMambaLastUpdateCheck'
@@ -79,7 +81,6 @@ def check():
         return
 
     timestamp = _timestamp()
-#     last_check = timestamp - check_interval
     last_check = _get_last_update_check() or timestamp
     if last_check + get_config_value('update.interval', 86400) > timestamp:
         return
@@ -103,10 +104,33 @@ def check():
             info('No updates available, you are up to date')
             return
 
-        clipboard.set(_INSTALL_COMMAND)
+        try:
+            console.alert(
+                'Black Mamba',
+                'New version {} (tag {}) available. Do you want to update it?'.format(
+                    latest_release['name'], latest_release['tag_name']
+                ),
+                'Update'
+            )
+            import blackmamba.ide.script as script
+            if system.PYTHONISTA_BUNDLE_VERSION >= 311015:
+                # 311015 introduced script queues, no need for delay
+                delay = None
+            else:
+                delay = 0.5
+            script.run_script('site-packages-3/blackmamba/script/selfupdate.py', delay=delay)
 
-        console.alert('Black Mamba',
-                      'New version {} (tag {}) available.'.format(latest_release['name'], latest_release['tag_name']),
-                      'Got it!', hide_cancel_button=True)
+        except KeyboardInterrupt:
+            clipboard.set(_INSTALL_COMMAND)
+            info(textwrap.dedent(
+                '''\
+                Update cancelled on user request. Installation command copied to the clipboard.
+                If you'd like to update Black Mamba later, you have several options:
+
+                1. Run site-packages-3/blackmamba/script/selfupdate.py script
+                2. Run installer: {}\
+                '''.format(_INSTALL_COMMAND)
+            ))
+
     else:
         info('Missing installed version info, you should use the installer')
