@@ -4,6 +4,10 @@ from difflib import unified_diff
 
 import editor
 import ui
+from blackmamba.uikit.keyboard import (
+    UIKeyModifier, UIEventKeyCode,
+    register_key_event_handler, unregister_key_event_handlers
+)
 from objc_util import ObjCClass, ObjCInstance, on_main_thread
 
 
@@ -68,28 +72,46 @@ def _set_attributed_text(textview, attributed_string):
     tv_objc.setAttributedText_(attributed_string)
 
 
+class _PreviewChangesView(ui.View):
+    def __init__(self, change_set, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.name = 'Preview'
+        self.apply_changes = False
+
+        def apply(sender):
+            self.apply_changes = True
+            self.close()
+
+        button = ui.ButtonItem('Apply', action=apply)
+        self.right_button_items = [button]
+
+        textview = ui.TextView(frame=self.bounds, flex='WH')
+        textview.editable = False
+
+        diff = _change_set_diff(change_set)
+        attributed_string = _diff_to_attributed_string(diff)
+        _set_attributed_text(textview, attributed_string)
+
+        self.add_subview(textview)
+
+        def cancel():
+            self.close()
+
+        self.handlers = [
+            register_key_event_handler(UIEventKeyCode.escape, cancel),
+            register_key_event_handler(UIEventKeyCode.dot, cancel, modifier=UIKeyModifier.command),
+            register_key_event_handler(UIEventKeyCode.enter, lambda: apply(None))
+        ]
+
+    def will_close(self):
+        unregister_key_event_handlers(self.handlers)
+
+
 def ask_if_apply_change_set(change_set):
     if not change_set:
         return False
 
-    view = ui.View(name='Preview')
-    view.apply_changes = False
-
-    def apply(sender):
-        view.apply_changes = True
-        view.close()
-
-    button = ui.ButtonItem('Apply', action=apply)
-    view.right_button_items = [button]
-
-    textview = ui.TextView(frame=view.bounds, flex='WH')
-    textview.editable = False
-
-    diff = _change_set_diff(change_set)
-    attributed_string = _diff_to_attributed_string(diff)
-    _set_attributed_text(textview, attributed_string)
-
-    view.add_subview(textview)
+    view = _PreviewChangesView(change_set)
     view.present('fullscreen')
     view.wait_modal()
 
