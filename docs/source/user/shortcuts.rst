@@ -72,6 +72,9 @@ Shortcut          Function
 ``Ctrl Cmd U``    Find usages
 ``Ctrl Cmd ?``    Show documentation
 ``Ctrl W``        Close active overlay [#f1]_
+``Cmd Option O``  Refactor - Organize imports
+``Cmd Option E``  Refactor - Expand star imports
+``Cmd Option R``  Refactor - Rename
 ================  ========
 
 .. [#f1] Show documentation script does use overlays.
