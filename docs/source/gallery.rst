@@ -53,3 +53,11 @@ Others
 ======
 
 .. image:: _static/images/shortcuts.jpeg
+
+
+Refactoring
+===========
+
+.. image:: _static/images/refactoring_rename.jpeg
+
+.. image:: _static/images/refactoring_preview.jpeg
