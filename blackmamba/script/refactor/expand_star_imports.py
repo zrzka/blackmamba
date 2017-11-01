@@ -55,8 +55,7 @@ def main():
 
         if change_set and refactoring.ask_if_apply_change_set(change_set):
             refactoring.apply_change_set(change_set, path, selection)
-
-        console.hud_alert('Imports expanded')
+            console.hud_alert('Imports expanded')
 
     except RopeError as e:
         console.hud_alert(str(e), 'error')

@@ -61,8 +61,7 @@ def main():
         change_set = renamer.get_changes(new_name, docs=True, resources=[resource])
         if change_set and refactoring.ask_if_apply_change_set(change_set):
             refactoring.apply_change_set(change_set, path, selection)
-
-        console.hud_alert('Identifier renamed')
+            console.hud_alert('Identifier renamed')
 
     except RopeError as e:
         console.hud_alert(str(e), 'error')
