@@ -21,3 +21,4 @@ List of bundled packages.
    mccabe
    pycodestyle
    pyflakes
+   rope
