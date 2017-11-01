@@ -39,6 +39,7 @@ def main():
     selection = editor.get_selection()
 
     if not path or not selection:
+        console.hud_alert('Not a Python file', 'error')
         return
 
     tab.save()
@@ -48,18 +49,24 @@ def main():
         project = Project(os.path.dirname(path), ropefolder=None)
         resource = libutils.path_to_resource(project, path)
         if not libutils.is_python_file(project, resource):
+            console.hud_alert('Not a Python file', 'error')
             return
 
         renamer = Rename(project, resource, selection[0])
         old_name = renamer.get_old_name()
 
         if not old_name:
+            console.hud_alert('Unable to get identifier name', 'error')
             return
 
         new_name = _ask_for_new_name(old_name)
 
         change_set = renamer.get_changes(new_name, docs=True, resources=[resource])
-        if change_set and refactoring.ask_if_apply_change_set(change_set):
+        if not change_set:
+            console.hud_alert('No changes required')
+            return
+
+        if refactoring.ask_if_apply_change_set(change_set):
             refactoring.apply_change_set(change_set, path, selection)
             console.hud_alert('Identifier renamed')
 

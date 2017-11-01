@@ -39,6 +39,7 @@ def main():
     selection = editor.get_selection()
 
     if not path or not selection:
+        console.hud_alert('Not a Python file', 'error')
         return
 
     tab.save()
@@ -48,12 +49,16 @@ def main():
         project = Project(os.path.dirname(path), ropefolder=None)
         resource = libutils.path_to_resource(project, path)
         if not libutils.is_python_file(project, resource):
+            console.hud_alert('Not a Python file', 'error')
             return
 
         organizer = ImportOrganizer(project)
         change_set = organizer.expand_star_imports(resource)
+        if not change_set:
+            console.hud_alert('No changes required')
+            return
 
-        if change_set and refactoring.ask_if_apply_change_set(change_set):
+        if refactoring.ask_if_apply_change_set(change_set):
             refactoring.apply_change_set(change_set, path, selection)
             console.hud_alert('Imports expanded')
 
