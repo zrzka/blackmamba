@@ -10,9 +10,9 @@
 * Bundle `refactoring` introduced (includes `rope`)
 * Refactoring functions introduced
     * It's an EXPERIMENT. You should use version control system to avoid loosing data.
-    * ``Cmd Option O`` - Organize imports
-    * ``Cmd Option E`` - Expand star imports
-    * ``Cmd Option R`` - Rename identifier
+    * `Cmd Option O` - Organize imports
+    * `Cmd Option E` - Expand star imports
+    * `Cmd Option R` - Rename identifier
     * Can be used as scripts as well, see `script/refactoring` folder
     * Preview dialog can be closed with `Cmd .` / `Esc`, confirmed with `Enter`
 * Scroll back to initial cursor location if analyzer didn't find an issue, ugly, but better than end of the file
