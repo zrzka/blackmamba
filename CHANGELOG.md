@@ -12,7 +12,7 @@
     * ``Cmd Option O`` - Organize imports
     * ``Cmd Option E`` - Expand star imports
     * ``Cmd Option R`` - Rename identifier
-    * Can be used as scripts as well, see `script/refactor` folder
+    * Can be used as scripts as well, see `script/refactoring` folder
 
 ## 1.3.3 (2017-10-27)
 

@@ -137,11 +137,11 @@ def _register_default_key_commands():
         ('?', UIKeyModifier.command | UIKeyModifier.control,
          'show_documentation.py', 'Show documentation'),
         ('R', UIKeyModifier.command | UIKeyModifier.alternate,
-         'refactor/rename.py', 'Refactor - Rename'),
+         'refactoring/rename.py', 'Refactor - Rename'),
         ('O', UIKeyModifier.command | UIKeyModifier.alternate,
-         'refactor/organize_imports.py', 'Refactor - Organize imports'),
+         'refactoring/organize_imports.py', 'Refactor - Organize imports'),
         ('E', UIKeyModifier.command | UIKeyModifier.alternate,
-         'refactor/expand_star_imports.py', 'Refactor - Expand star imports'),
+         'refactoring/expand_star_imports.py', 'Refactor - Expand star imports'),
 
         # Still keyboard only
         ('0', UIKeyModifier.command,

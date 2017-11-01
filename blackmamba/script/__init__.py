@@ -108,5 +108,5 @@ Toggle comments
 Refactoring
 ===========
 
-.. automodule:: blackmamba.script.refactor
+.. automodule:: blackmamba.script.refactoring
 """
