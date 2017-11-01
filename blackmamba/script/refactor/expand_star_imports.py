@@ -1,5 +1,9 @@
 #!python3
+"""
+Script name ``expand_star_imports.py``.
 
+Expand star imports.
+"""
 import console
 import os
 

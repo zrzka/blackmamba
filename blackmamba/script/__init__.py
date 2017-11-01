@@ -104,4 +104,9 @@ Toggle comments
 ===============
 
 .. automodule:: blackmamba.script.toggle_comments
+
+Refactoring
+===========
+
+.. automodule:: blackmamba.script.refactor
 """
