@@ -17,7 +17,8 @@ def _ask_for_new_name(old_name):
         new_name = console.input_alert(
             'Rename identifier',
             'Preview of all changes will be available in the next step.',
-            old_name
+            old_name,
+            'Rename'
         )
 
         if not new_name:
