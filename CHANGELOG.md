@@ -4,6 +4,16 @@
 
 *
 
+## 1.4.0 (2017-11-01)
+
+* Fixed keyboard shortcut selector name generator
+* Bundle `refactoring` introduced (includes `rope`)
+* Refactoring functions introduced
+    * ``Cmd Option O`` - Organize imports
+    * ``Cmd Option E`` - Expand star imports
+    * ``Cmd Option R`` - Rename identifier
+    * Can be used as scripts as well, see `script/refactor` folder
+
 ## 1.3.3 (2017-10-27)
 
 * Installer improved
