@@ -7,7 +7,8 @@ from blackmamba.log import debug
 
 _BUNDLES = {
     'analyze': ['mccabe', 'flake8', 'pycodestyle', 'pyflakes', 'setuptools'],
-    'docutils': ['docutils']
+    'docutils': ['docutils'],
+    'refactoring': ['rope']
 }
 
 _BUNDLED_MODULES_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
