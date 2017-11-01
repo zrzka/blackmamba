@@ -14,6 +14,7 @@
     * ``Cmd Option R`` - Rename identifier
     * Can be used as scripts as well, see `script/refactoring` folder
     * Preview dialog can be closed with `Cmd .` / `Esc`, confirmed with `Enter`
+* Scroll back to initial cursor location if analyzer didn't find an issue, ugly, but better than end of the file
 
 ## 1.3.3 (2017-10-27)
 

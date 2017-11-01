@@ -300,6 +300,7 @@ def main():
 
     flake8_options = get_config_value('analyzer.flake8', None)
 
+    selection = editor.get_selection()
     text = _editor_text()
 
     if flake8_options:
@@ -317,6 +318,8 @@ def main():
         annotations += _pyflakes_annotations(path, text)
 
     if not annotations:
+        if selection:
+            editor.set_selection(selection[0], scroll=True)
         console.hud_alert('No Issues Found', 'iob:checkmark_32', _hud_alert_delay())
         return None
 
