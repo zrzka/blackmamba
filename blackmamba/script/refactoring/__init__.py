@@ -1,6 +1,8 @@
 """
 All refactoring scripts are limited to open single file only.
 
+.. note:: It's an experiment. You should use version control system to avoid loosing data.
+
 Rename
 ------
 

@@ -9,6 +9,7 @@
 * Fixed keyboard shortcut selector name generator
 * Bundle `refactoring` introduced (includes `rope`)
 * Refactoring functions introduced
+    * It's an EXPERIMENT. You should use version control system to avoid loosing data.
     * ``Cmd Option O`` - Organize imports
     * ``Cmd Option E`` - Expand star imports
     * ``Cmd Option R`` - Rename identifier
