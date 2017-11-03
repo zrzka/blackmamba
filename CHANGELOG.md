@@ -11,6 +11,15 @@
     * Console is not cluttered with local / latest release info (installer prints this)
     * Update `check()` doesn't ask if update should (not) be installer (installer also asks)
     * If there's new update available, installer is executed, you will still be asked (just once, not twice)
+* Script `new_file.py` modified
+    * File opened
+        * Asks for a file name (empty & `Enter` -> Cancel)
+        * New file path is currently opened file dirname + entered file name
+        * If file doesn't exist, new file is created and opened
+        * If file exists, file is opened
+    * No file opened
+        * Same behavior as now
+        * New tab created and _New File..._ button tap emulated
 
 ## 1.4.0 (2017-11-01)
 
