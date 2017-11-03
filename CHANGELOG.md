@@ -7,6 +7,10 @@
     * Equivalent of `futurize -1 --all-imports -n -w --add-suffix 3 $editor.get_path()` (Stage 1 only)
     * When futurizer ends, editor text is replaced with content of the `.py3` and `.py3` is trashed
     * You can run futurizer script with `Cmd Option F`
+* Improved updates check
+    * Console is not cluttered with local / latest release info (installer prints this)
+    * Update `check()` doesn't ask if update should (not) be installer (installer also asks)
+    * If there's new update available, installer is executed, you will still be asked (just once, not twice)
 
 ## 1.4.0 (2017-11-01)
 

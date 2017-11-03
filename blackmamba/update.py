@@ -5,12 +5,9 @@ import time
 import os
 import json
 import requests
-import console
 from blackmamba.log import info, error
 from blackmamba.config import get_config_value
 import blackmamba.system as system
-import clipboard
-import textwrap
 
 
 _DEFAULTS_LAST_UPDATE_CHECK_KEY = 'BlackMambaLastUpdateCheck'
@@ -95,42 +92,19 @@ def check():
         error('Failed to fetch latest release version info')
         return
 
-    info('Latest Black Mamba release {} (tag {})'.format(latest_release['name'], latest_release['tag_name']))
-
     if local_release:
-        info('Installed version {} (tag {})'.format(local_release['name'], local_release['tag_name']))
-
         if local_release['tag_name'] == latest_release['tag_name']:
             info('No updates available, you are up to date')
             return
 
-        try:
-            console.alert(
-                'Black Mamba',
-                'New version {} (tag {}) available. Do you want to update it?'.format(
-                    latest_release['name'], latest_release['tag_name']
-                ),
-                'Update'
-            )
-            import blackmamba.ide.script as script
-            if system.PYTHONISTA_BUNDLE_VERSION >= 311015:
-                # 311015 introduced script queues, no need for delay
-                delay = None
-            else:
-                delay = 0.5
-            script.run_script('site-packages-3/blackmamba/script/selfupdate.py', delay=delay)
-
-        except KeyboardInterrupt:
-            clipboard.set(_INSTALL_COMMAND)
-            info(textwrap.dedent(
-                '''\
-                Update cancelled on user request. Installation command copied to the clipboard.
-                If you'd like to update Black Mamba later, you have several options:
-
-                1. Run site-packages-3/blackmamba/script/selfupdate.py script
-                2. Run installer: {}\
-                '''.format(_INSTALL_COMMAND)
-            ))
+        info('New version available, selfupdate.py will be executed')
+        import blackmamba.ide.script as script
+        if system.PYTHONISTA_BUNDLE_VERSION >= 311015:
+            # 311015 introduced script queues, no need for delay
+            delay = None
+        else:
+            delay = 0.5
+        script.run_script('site-packages-3/blackmamba/script/selfupdate.py', delay=delay)
 
     else:
         info('Missing installed version info, you should use the installer')
