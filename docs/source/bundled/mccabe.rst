@@ -6,7 +6,6 @@ mccabe
 License
 -------
 
-
 Copyright © <year> Ned Batchelder
 Copyright © 2011-2013 Tarek Ziade <tarek@ziade.org>
 Copyright © 2013 Florent Xicluna <florent.xicluna@gmail.com>

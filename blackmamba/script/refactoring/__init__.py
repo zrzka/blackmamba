@@ -17,4 +17,10 @@ Organize imports
 ----------------
 
 .. automodule:: blackmamba.script.refactoring.organize_imports
+
+Futurize
+----------------
+
+.. automodule:: blackmamba.script.refactoring.futurize
+
 """

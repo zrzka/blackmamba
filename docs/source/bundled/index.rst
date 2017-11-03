@@ -18,6 +18,7 @@ List of bundled packages.
 
    docutils
    flake8
+   future
    mccabe
    pycodestyle
    pyflakes
