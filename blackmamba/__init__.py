@@ -142,6 +142,8 @@ def _register_default_key_commands():
          'refactoring/organize_imports.py', 'Refactor - Organize imports'),
         ('E', UIKeyModifier.command | UIKeyModifier.alternate,
          'refactoring/expand_star_imports.py', 'Refactor - Expand star imports'),
+        ('F', UIKeyModifier.command | UIKeyModifier.alternate,
+         'refactoring/futurize.py', 'Refactor - Futurize'),
 
         # Still keyboard only
         ('0', UIKeyModifier.command,

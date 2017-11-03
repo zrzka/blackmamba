@@ -2,7 +2,11 @@
 
 ## master (unreleased)
 
-*
+* Bundle `refactoring` enhanced with `future`, `libfuturize`, `libpasteurize` modules
+* `script/refactoring/futurize.py` introduced (see [Python Future](https://github.com/PythonCharmers/python-future))
+    * Equivalent of `futurize -1 --all-imports -n -w --add-suffix 3 $editor.get_path()` (Stage 1 only)
+    * When futurizer ends, editor text is replaced with content of the `.py3` and `.py3` is trashed
+    * You can run futurizer script with `Cmd Option F`
 
 ## 1.4.0 (2017-11-01)
 
