@@ -2,7 +2,7 @@
 """
 Script name ``new_file.py``.
 
-If there's no opened file in the Pythonista, new tab is created and _New File..._
+If there's no opened file in the Pythonista, new tab is created and *New File...*
 button tap is emulated.
 
 Otherwise dialog appears where you can enter new file name. File will be created
