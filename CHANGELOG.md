@@ -20,6 +20,8 @@
     * No file opened
         * Same behavior as now
         * New tab created and _New File..._ button tap emulated
+* Installer
+    * Replaced `ModuleNotFoundError` (Python 3.6) with `ImportError` (Python 3.5)
 
 ## 1.4.0 (2017-11-01)
 
