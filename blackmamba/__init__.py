@@ -26,7 +26,7 @@ import blackmamba.system as system
 __version__ = '1.4.0'
 __author__ = 'Robert Vojta'
 
-_LATEST_VERSION_COMPATIBILITY_TEST = (311015, '3.1.1')
+_LATEST_VERSION_COMPATIBILITY_TEST = (311016, '3.1.1')
 
 
 def _register_key_command(input, modifier, function, title=None):

@@ -2,6 +2,7 @@
 
 ## master (unreleased)
 
+* Compatibility check with 3.1.1 (311016)
 * Bundle `refactoring` enhanced with `future`, `libfuturize`, `libpasteurize` modules
 * `script/refactoring/futurize.py` introduced (see [Python Future](https://github.com/PythonCharmers/python-future))
     * Equivalent of `futurize -1 --all-imports -n -w --add-suffix 3 $editor.get_path()` (Stage 1 only)
