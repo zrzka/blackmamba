@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+*
+
+## 1.4.1 (2017-11-13)
+
 * Compatibility check with 3.1.1 (311016)
 * Bundle `refactoring` enhanced with `future`, `libfuturize`, `libpasteurize` modules
 * `script/refactoring/futurize.py` introduced (see [Python Future](https://github.com/PythonCharmers/python-future))
