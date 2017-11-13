@@ -384,18 +384,14 @@ class KeyEventHandler(object):
 def _blackmamba_handleKeyUIEvent(_self, _cmd, event):
     e = ObjCInstance(event)
 
-    consume = False
     if e.type() == UIEventType.physicalKeyboard.value and e.subtype() == UIEventSubtype.none.value:
         for h in _key_event_handlers:
             if h.key_code == e._keyCode() and h.modifier == e._modifierFlags():
-                if e._isKeyDown():
-                    consume = True
-                else:
+                if not e._isKeyDown():
                     h.fn()
-                break
+                return
 
-    if not consume:
-        ObjCInstance(_self).originalhandleKeyUIEvent_(e)
+    ObjCInstance(_self).originalhandleKeyUIEvent_(e)
 
 
 @on_main_thread
