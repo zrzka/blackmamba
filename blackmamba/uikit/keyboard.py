@@ -277,7 +277,7 @@ def _modifier_selector_name(modifier):
     flags = [
         name
         for mod, name in _names.items()
-        if mod.value & modifier == mod.value
+        if mod.value & modifier
     ]
 
     if flags:
