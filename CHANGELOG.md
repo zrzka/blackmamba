@@ -4,6 +4,10 @@
 
 *
 
+## 1.4.3 (2017-12-30)
+
+* Compatibility check with 3.2 (320000)
+
 ## 1.4.2 (2017-12-23)
 
 * Compatibility check with 3.1.1 (311017)
