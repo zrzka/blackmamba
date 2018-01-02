@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-*
+* Pass `-p no:cacheprovider` to fix operation not permitted for `.cache` directory (run unit tests script)
 
 ## 1.4.3 (2017-12-30)
 

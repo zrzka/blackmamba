@@ -108,7 +108,7 @@ def _run_unit_tests(path):
     editor.clear_annotations()
 
     _remove_log_file()
-    pytest.main(['-q', '--junitxml={}'.format(_LOG_FILE_PATH), path])
+    pytest.main(['-q', '-p', 'no:cacheprovider', '--junitxml={}'.format(_LOG_FILE_PATH), path])
     attrib, annotations = _parse_log_file()
 
     _show_results(attrib, not annotations)
