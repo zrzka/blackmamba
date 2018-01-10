@@ -128,6 +128,7 @@ texinfo_documents = [
 
 intersphinx_mapping = {'https://docs.python.org/': None}
 
+
 def setup(app):
     app.add_config_value('recommonmark_config', {
         'enable_eval_rst': True,
