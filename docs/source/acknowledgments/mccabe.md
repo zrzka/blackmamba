@@ -1,15 +1,14 @@
-pycodestyle
-===========
-
-`Project homepage <https://github.com/pycqa/pycodestyle>`_.
+# mccabe
 
 
-License
--------
+[Project homepage](https://github.com/pycqa/mccabe).
 
-Copyright © 2006-2009 Johann C. Rocholl <johann@rocholl.net>
-Copyright © 2009-2014 Florent Xicluna <florent.xicluna@gmail.com>
-Copyright © 2014-2016 Ian Lee <IanLee1521@gmail.com>
+**License**
+
+```text
+Copyright © <year> Ned Batchelder
+Copyright © 2011-2013 Tarek Ziade <tarek@ziade.org>
+Copyright © 2013 Florent Xicluna <florent.xicluna@gmail.com>
 
 Licensed under the terms of the Expat License
 
@@ -32,3 +31,4 @@ BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
 ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```

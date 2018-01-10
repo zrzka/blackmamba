@@ -1,9 +1,4 @@
 #!python3
-"""
-Script name ``toggle_comments.py``.
-
-Toggles current line / selected lines comments.
-"""
 
 import re
 from blackmamba.system import Pythonista

@@ -1,9 +1,4 @@
 #!python3
-"""
-Script name ``futurize.py``.
-
-Runs stage 1 of the `futurizer <https://github.com/PythonCharmers/python-future>`_.
-"""
 
 import console
 import os

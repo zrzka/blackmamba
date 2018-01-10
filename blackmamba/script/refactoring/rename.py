@@ -1,9 +1,5 @@
 #!python3
-"""
-Script name ``rename.py``.
 
-Rename identifier.
-"""
 import console
 import os
 

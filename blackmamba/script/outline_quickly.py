@@ -1,10 +1,4 @@
 #!python3
-"""
-Script name ``outline_quickly.py``.
-
-Shows source code outline. You can filter functions, ... by name. Use arrows key to
-change selection and then hit ``Enter`` to scroll to the symbol.
-"""
 
 import editor
 import ast

@@ -1,9 +1,4 @@
 #!python3
-"""
-Script name ``close_all_tabs_except_current_one.py``.
-
-Closes all tabs except current one.
-"""
 
 import blackmamba.ide.tab as tab
 

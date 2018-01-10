@@ -1,11 +1,10 @@
-rope
-====
+# rope
 
-`Project homepage <https://github.com/python-rope/rope>`_.
+[Project homepage](https://github.com/python-rope/rope>).
 
-License
--------
+**License**
 
+```text
 Copyright (C) 2015-2016 Nicholas Smith
 Copyright (C) 2014-2015 Matej Cepl
 Copyright (C) 2006-2012 Ali Gholami Rudi
@@ -20,3 +19,4 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
+```

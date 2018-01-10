@@ -1,9 +1,7 @@
-.. _blackmamba.log:
+# blackmamba.log
 
-##############
-blackmamba.log
-##############
-
+```eval_rst
 .. automodule:: blackmamba.log
     :members:
     :member-order: bysource
+```

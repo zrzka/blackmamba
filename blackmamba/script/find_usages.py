@@ -1,13 +1,4 @@
 #!python3
-"""
-Script name ``find_usages.py``.
-
-Finds usages of a symbol. If there're no usage, HUD informs you.
-Otherwise dialog appears where you can select location and scroll to it.
-
-.. note::
-    JEDI must be enabled, see :ref:`configuration-general` configuration.
-"""
 
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import editor

@@ -3,6 +3,7 @@
 ## master (unreleased)
 
 * Pass `-p no:cacheprovider` to fix operation not permitted for `.cache` directory (run unit tests script)
+* Documentation cleanup and rewrite to Markdown, which is easily editable in Pythonista when compared to reST
 
 ## 1.4.3 (2017-12-30)
 

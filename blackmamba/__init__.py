@@ -1,23 +1,16 @@
 #!python3
-"""
-Black Mamba initialization module.
 
-Module is Python 3 compatible only.
+"""Black Mamba initialization module.
 
-The only requirement is to call :func:`blackmamba.main`. Example:
-
-.. code-block:: python
+The only requirement is to call `blackmamba.main`. Example::
 
     import blackmamba
     blackmamba.main()
 
 .. warning:: Do not add top level imports which depends on Pythonista modules. Module
     must be importable on any other platform. Add these imports to specific functions
-    decorated with :obj:`blackmamba.system.Pythonista` and / or
-    :obj:`blackmamba.system.iOS`.
-
-Reference
-=========
+    decorated with `blackmamba.system.Pythonista` and / or
+    `blackmamba.system.iOS`.
 """
 
 from blackmamba.log import info, error, get_level, set_level, ERROR
@@ -227,16 +220,14 @@ def _main(config=None):
 
 
 def main(config=None):
-    """
-    Black Mamba initialization.
+    """Black Mamba initialization.
 
-    Call this function from ``pythonista_startup.py`` (``site-packages-3``) file.
+    Call this function from `pythonista_startup.py` (`site-packages-3`) file.
 
-    :param config: Optional dictionary, see :ref:`configuration`
+    Args:
+        config (optional): Dictionary with configuration
 
-    Example:
-
-    .. code-block:: python
+    Example::
 
         import blackmamba
 
@@ -250,7 +241,6 @@ def main(config=None):
 
     See `pythonista_startup.py <https://github.com/zrzka/blackmamba/blob/master/pythonista_startup.py>`_
     for more examples.
-
     """
     _main(config)
 

@@ -1,9 +1,4 @@
 #!python3
-"""
-Script name ``new_tab.py``.
-
-Creates new empty tab.
-"""
 
 import blackmamba.ide.tab as tab
 

@@ -1,13 +1,4 @@
 #!python3
-"""
-Script name ``run_quickly.py``.
-
-Shows dialog with all your Python files. You can filter these files by directories,
-file name, etc. Use arrows keys to change selection and then hit ``Enter`` to
-run selected file.
-
-This script is configurable, see :ref:`configuration-file_picker` configuration.
-"""
 
 import os
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource

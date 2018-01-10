@@ -1,14 +1,4 @@
 #!python3
-"""
-Script name ``new_file.py``.
-
-If there's no opened file in the Pythonista, new tab is created and *New File...*
-button tap is emulated.
-
-Otherwise dialog appears where you can enter new file name. File will be created
-in the current folder. If it already exists, file will be opened instead of creating
-new one.
-"""
 
 import blackmamba.ide.tab as tab
 import editor

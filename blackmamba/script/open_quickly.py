@@ -1,15 +1,4 @@
 #!python3
-"""
-Script name ``open_quickly.py``.
-
-Shows dialog with all your files. You can filter these files by directories,
-file name, etc. Use arrow keys to change selection and then hit ``Enter`` to open
-selected file.
-
-If file is already opened, Black Mamba changes selected tab only.
-
-This script is configurable, see :ref:`configuration-file_picker` configuration.
-"""
 
 import os
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource

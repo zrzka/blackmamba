@@ -1,9 +1,4 @@
 #!python3
-"""
-Script name ``search_dash.py``.
-
-Opens `Dash <https://kapeli.com/dash_ios>`_ application with selected text or a symbol around cursor position.
-"""
 
 import editor
 import urllib.parse

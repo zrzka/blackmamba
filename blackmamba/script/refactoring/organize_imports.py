@@ -1,9 +1,5 @@
 #!python3
-"""
-Script name ``organize_imports.py``.
 
-Organize imports.
-"""
 import console
 import os
 

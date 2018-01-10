@@ -1,12 +1,9 @@
 #!python3
-"""
-System info and decorators.
+
+"""System info and decorators.
 
 .. warning:: This module must not introduce dependency on any other Black Mamba
     modules and must be importable on any other platform as well.
-
-Reference
-=========
 """
 
 import sys
@@ -23,25 +20,25 @@ except ImportError:
 # 3.1.1 beta, 311008
 
 PYTHONISTA = sys.platform == 'ios'
-"""bool: ``True`` if we're running within Pythonista or ``False``."""
+"""bool: True if we're running within Pythonista or False."""
 
 PYTHONISTA_VERSION = None
-"""str: Pythonista version or ``None`` if we're not within Pythonista."""
+"""str: Pythonista version or `None` if we're not within Pythonista."""
 
 PYTHONISTA_BUNDLE_VERSION = None
-"""int: Pythonista bundle version or ``None`` if we're not within Pythonista."""
+"""int: Pythonista bundle version or `None` if we're not within Pythonista."""
 
 PYTHONISTA_VERSION_TUPLE = None
-"""tuple(int): Pythonista version tuple (3, 1, 1) or ``None`` if we're not within Pythonista."""
+"""tuple(int): Pythonista version tuple (3, 1, 1) or `None` if we're not within Pythonista."""
 
 IOS = sys.platform == 'ios'
-"""bool: ``True`` if we're running within iOS or ``False``."""
+"""bool: `True` if we're running within iOS or `False`."""
 
 IOS_VERSION = None
-"""str: iOS version or ``None`` if we're not within iOS."""
+"""str: iOS version or `None` if we're not within iOS."""
 
 IOS_VERSION_TUPLE = None
-"""tuple(int): iOS version tuple (11, 0) or ``None`` if we're not within iOS."""
+"""tuple(int): iOS version tuple (11, 0) or `None` if we're not within iOS."""
 
 
 def _version_tuple(version):
@@ -107,10 +104,9 @@ class _Available:
 
 
 class iOS(_Available):
-    """
-    Decorator to execute function under specific iOS versions.
+    """Decorator to execute function under specific iOS versions.
 
-    Return value is return value of decorated function or ``None``
+    Return value is return value of decorated function or `None`
     if iOS condition isn't met.
 
     Examples:
@@ -138,14 +134,13 @@ class iOS(_Available):
 
 
 class Pythonista(_Available):
-    """
-    Decorator to execute function under specific Pythonista versions.
+    """Decorator to execute function under specific Pythonista versions.
 
     By default, function is not executed under application extension.
     You have to pass ``appex=True`` if you'd like to run some function
     under appex as well.
 
-    Return value is return value of decorated function or ``None``
+    Return value is return value of decorated function or `None`
     if Pythonista condition isn't met.
 
     Examples:
@@ -198,14 +193,16 @@ class Pythonista(_Available):
 
 
 def catch_exceptions(func):
-    """
-    Decorator catching all ``Exception`` exceptions and writing info to console.
+    """Decorator catching all exceptions and printing info to the console.
 
     Use this decorator for functions handling keyboard shortcuts,
     keyboard events, ... to avoid Pythonista crash.
 
-    :param func: Function to decorate
-    :return: Return value of ``func``
+    Args:
+        func: Function to decorate
+
+    Returns:
+        Return value of decorated function.
     """
     @functools.wraps(func)
     def new_func(*args, **kwargs):

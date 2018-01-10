@@ -5,6 +5,9 @@ import os
 import sys
 import unittest.mock
 import enum
+from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
+
 
 # Mock Pythonista modules
 sys.modules['console'] = unittest.mock.MagicMock()
@@ -24,12 +27,17 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode'
+    'sphinx.ext.viewcode',
+    'sphinx.ext.napoleon'
 ]
 
 templates_path = ['_templates']
 
-source_suffix = '.rst'
+source_parsers = {
+    '.md': CommonMarkParser,
+}
+
+source_suffix = ['.md']
 
 master_doc = 'index'
 
@@ -40,18 +48,33 @@ author = blackmamba.__author__
 version = blackmamba.__version__
 release = blackmamba.__version__
 
-language = None
+language = 'en'
 
 exclude_patterns = []
 
 pygments_style = 'sphinx'
 
+default_role = 'py:obj'
+highlight_language = 'python3'
+
 todo_include_todos = False
+
+napoleon_google_docstring = True
+napoleon_numpy_docstring = False
+napoleon_include_init_with_doc = False
+napoleon_include_private_with_doc = False
+napoleon_include_special_with_doc = True
+napoleon_use_admonition_for_examples = False
+napoleon_use_admonition_for_notes = False
+napoleon_use_admonition_for_references = False
+napoleon_use_ivar = False
+napoleon_use_param = False
+napoleon_use_rtype = False
 
 
 # -- Options for HTML output ----------------------------------------------
 
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_sidebars = {'**': ['navigation.html', 'localtoc.html', 'relations.html']}
 
@@ -103,5 +126,12 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-
 intersphinx_mapping = {'https://docs.python.org/': None}
+
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+        'enable_eval_rst': True,
+        'enable_auto_doc_ref': True,
+        'auto_toc_tree_section': False
+        }, True)
+    app.add_transform(AutoStructify)

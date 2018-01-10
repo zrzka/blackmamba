@@ -1,14 +1,4 @@
 #!python3
-"""
-Script name ``jump_to_definition.py``.
-
-Jumps to symbol definition. If definition can't be found, HUD informs you.
-Otherwise it jumps to definition location or shows dialog where you can choose
-location if more than one definition was found.
-
-.. note::
-    JEDI must be enabled, see :ref:`configuration-general` configuration.
-"""
 
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import editor

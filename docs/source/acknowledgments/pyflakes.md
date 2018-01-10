@@ -1,11 +1,10 @@
-pyflakes
-========
+# pyflakes
 
-`Project homepage <https://github.com/PyCQA/pyflakes>`_.
+[Project homepage](https://github.com/PyCQA/pyflakes).
 
-License
--------
+**License**
 
+```text
 Copyright 2005-2011 Divmod, Inc.
 Copyright 2013-2014 Florent Xicluna
 
@@ -27,3 +26,4 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```

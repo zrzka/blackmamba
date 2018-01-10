@@ -1,19 +1,4 @@
 #!python3
-"""
-Script name ``show_documentation.py``.
-
-Shows documentation for the symbol around cursor. If definition can't be found,
-HUD informs you. If there're more than one definitions, dialog appears where
-you can select which one to show.
-
-Documentation is displayed as an overlay, which can be closed by the
-``Ctrl W`` shortcut or by tapping on the ``X`` button.
-
-This script is configurable, see :ref:`configuration-documentation` configuration.
-
-.. note::
-    JEDI must be enabled, see :ref:`configuration-general` configuration.
-"""
 
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 import editor

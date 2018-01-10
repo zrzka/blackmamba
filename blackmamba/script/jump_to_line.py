@@ -1,9 +1,4 @@
 #!python3
-"""
-Script name ``jump_to_line.py``.
-
-Shows dialog where you can enter line number to scroll to.
-"""
 
 import blackmamba.ide.source as source
 import console

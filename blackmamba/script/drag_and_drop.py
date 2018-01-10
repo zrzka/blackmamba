@@ -1,16 +1,4 @@
 #!python3
-"""
-Script name ``drag_and_drop.py``. **iOS >= 11.0 required**.
-
-Shows dialog with opened files and folders tree. You can drag a file / folder to
-any other iOS application. Works well with `Working Copy <http://workingcopyapp.com/>`_
-and `Kaleidoscope <https://www.kaleidoscopeapp.com/>`_ for example.
-
-You can drag a file / folder from any other iOS application as well. But there's one
-limitation, you can drop them at the folder only.
-
-This script is configurable, see :ref:`configuration-drag_and_drop` configuration.
-"""
 
 import os
 import ui
