@@ -141,7 +141,7 @@ def _from_nsnumber(obj):  # noqa: C901
     elif ctype == b'B':
         return obj.boolValue()
 
-    raise ValueError(f'Unsupported objCType value {ctype}')
+    return obj
 
 
 def _from_nsdata(obj):
