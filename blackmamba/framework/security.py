@@ -159,7 +159,7 @@ Limit to specific service::
 
     GenericPassword.query_items(service='service')
 
-Skip protected items:
+Skip protected items::
 
     GenericPassword.query_items(authentication_ui=AuthenticationUI.SKIP)
 
