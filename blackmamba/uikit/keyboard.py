@@ -178,6 +178,8 @@ class UIEventKeyCode(IntEnum):
     """Escape key."""
 
     leftSquareBracket = 47
+    """Left square bracket."""
+
     dot = 55
     """Dot key."""
 
