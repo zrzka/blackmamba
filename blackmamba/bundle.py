@@ -11,6 +11,10 @@ _BUNDLES = {
     'refactoring': ['rope', 'future', 'libfuturize', 'libpasteurize']
 }
 
+_ALWAYS_UNLOAD = [
+    'pkg_resources'
+]
+
 _BUNDLED_MODULES_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
 
 
@@ -63,6 +67,9 @@ def unload(name):
 
 @contextmanager
 def bundle(name, unload_bundle=False):
+    for module in _ALWAYS_UNLOAD:
+        _unload_modules(module)
+
     load(name)
     yield name
     if unload_bundle:

@@ -8,6 +8,9 @@
 * `blackmamba.uikit.keyboard`
     * Camel case enum constant deprecated, will be removed in 2.0.0
     * Use UPPER_CASED versions, camel case still exists as aliases
+* `with bundle()` always unloads `pkg_resources.*` causing issues
+    * Launch Pythonista, run Black Mamba Analyze - works vs
+    * Launch Pythonista, run Pythonista unit tests, run Black Mamba Analyze - fails, because of `pkg_resources`
 
 ## 1.4.3 (2017-12-30)
 
