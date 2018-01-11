@@ -87,7 +87,7 @@ from objc_util import (
     load_framework, c, ns, ObjCInstance, nsdata_to_bytes, NSString, NSData, NSNumber,
     ObjCClass, NSArray, NSDictionary
 )
-from enum import Enum, IntFlag, auto
+from enum import Enum, IntFlag
 import datetime
 import blackmamba.system as system
 from typing import List, Union
@@ -175,9 +175,10 @@ def _symbol_ptr(name):
 
 def _str_symbol(name):
     # [TODO] Sphinx quick hack, remove
-    if system.IOS:
-        return ObjCInstance(_symbol_ptr(name)).UTF8String().decode()
-    return auto()
+    if not system.IOS:
+        return name
+
+    return ObjCInstance(_symbol_ptr(name)).UTF8String().decode()
 
 
 #
