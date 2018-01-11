@@ -2,8 +2,7 @@
 
 """Keyboard shortcuts.
 
-Key commands
-============
+**Key commands**
 
 Key command is kind of global shortcut in Pythonista. They're visible if you
 hold down ``Cmd`` key for example. Black Mamba does use key commands for
@@ -31,8 +30,7 @@ Following example shows how to print *Hallo* with ``Cmd H`` keyboard shortcut::
         'Print Hallo'  # Optional discoverability title (hold down Cmd)
     )
 
-Key event handlers
-==================
+**Key event handlers**
 
 Key event handler is kind of local keyboard shortcut. They're not visible
 if you hold down ``Cmd`` key. Designed to be used in custom dialogs.
