@@ -79,7 +79,89 @@ You shouldn't use these low level wrappers unless you really need them. Stick wi
 
 **Examples**
 
-TODO
+Store generic password::
+
+    gp = GenericPassword('service', 'account')
+    gp.set_password('password')
+
+Update generic password attributes::
+
+    gp = GenericPassword('service', 'account')
+    gp.comment = 'Great password'
+    gp.description = 'Demo purposes, nothing elseeeee'
+    gp.save()
+
+Get generic password attributes::
+
+    gp = GenericPassword('service', 'account')
+    attrs = gp.get_attributes()
+    print(attrs.creation_date)
+
+Protect password with user presence::
+
+    gp = GenericPassword('service', 'account')
+    gp.access_control = AccessControl(
+        Accessibility.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
+        AuthenticationPolicy.TOUCH_ID_ANY | AuthenticationPolicy.OR | AuthenticationPolicy.DEVICE_PASSCODE
+    )
+    gp.set_password('password')
+
+Get protected password::
+
+    gp = GenericPassword('service', 'account')
+    try:
+        password = gp.get_password(
+            prompt='Your finger!'
+        )
+        print(password)
+    except KeychainUserCanceledError:
+        print('User did tap on Cancel, no password')
+    except KeychainAuthFailedError:
+        print('Authentication failed, no password')
+
+Disable authentication UI for protected items::
+
+    gp = GenericPassword('service', 'account')
+    try:
+        password = gp.get_password(
+            prompt='Your finger!',
+            authentication_ui=AuthenticationUI.FAIL
+        )
+        print(password)
+    except KeychainInteractionNotAllowedError:
+        print('Item is protected, authentication UI disabled, no password')
+
+Skip protected items::
+
+    gp = GenericPassword('service', 'account')
+    try:
+        password = gp.get_password(
+            prompt='Your finger!',
+            authentication_ui=AuthenticationUI.SKIP
+        )
+        print(password)
+    except KeychainItemNotFoundError:
+        print('Authentication UI disabled, protected items skipped, no password')
+
+Query for generic passwords::
+
+    try:
+        for x in GenericPassword.query_items():
+            print(f'{x.creation_date} {x.service} {x.account}')
+    except KeychainItemNotFoundError:
+        print('No generic password items')
+    except KeychainUserCanceledError:
+        print('Some items are protected, but user cancels authentication')
+    except KeychainAuthFailedError:
+        print('Some items are protected, but authentication failed')
+
+Limit to specific service::
+
+    GenericPassword.query_items(service='service')
+
+Skip protected items:
+
+    GenericPassword.query_items(authentication_ui=AuthenticationUI.SKIP)
 """
 
 from ctypes import c_int, c_void_p, POINTER, byref, c_ulong
