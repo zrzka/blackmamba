@@ -3,8 +3,11 @@
 ## master (unreleased)
 
 * Pass `-p no:cacheprovider` to fix operation not permitted for `.cache` directory (run unit tests script)
-* Documentation cleanup and rewrite to Markdown, which is easily editable in Pythonista when compared to reST
+* Documentation cleanup and rewrite to Markdown, which is easily editable in Pythonista compared to reST
 * `blackmamba.framework.security` introduced
+* `blackmamba.uikit.keyboard`
+    * Camel case enum constant deprecated, will be removed in 2.0.0
+    * Use UPPER_CASED versions, camel case still exists as aliases
 
 ## 1.4.3 (2017-12-30)
 

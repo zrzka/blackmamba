@@ -63,7 +63,7 @@ def register_custom_shortcuts():
 
         register_key_command(
             'S',
-            UIKeyModifier.control,
+            UIKeyModifier.CONTROL,
             launch_stash,
             'Launch StaSh'
         )

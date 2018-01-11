@@ -26,7 +26,7 @@ Following example shows how to print *Hallo* with ``Cmd H`` keyboard shortcut::
 
     register_key_command(
         'h',
-        UIKeyModifier.command,
+        UIKeyModifier.COMMAND,
         hallo,
         'Print Hallo'  # Optional discoverability title (hold down Cmd)
     )
@@ -59,7 +59,7 @@ Following example shows how to close dialog with ``Cmd .`` keyboard shortcut::
                 self.close()
 
             self._handlers = [
-                register_key_event_handler(UIEventKeyCode.dot, close_me, modifier=UIKeyModifier.command)
+                register_key_event_handler(UIEventKeyCode.DOT, close_me, modifier=UIKeyModifier.COMMAND)
             ]
 
         def will_close(self):
@@ -84,7 +84,7 @@ def is_in_hardware_keyboard_mode() -> bool:
     """Check if HW keyboard is connected.
 
     Returns:
-        `True` if HW keyboard is connected.
+        True if HW keyboard is connected.
     """
     if not _UIKeyboardImpl:
         return False
@@ -100,7 +100,18 @@ class UIKeyModifier(IntEnum):
 
     Modifiers can be combined like::
 
-        UIKeyModifier.command | UIKeyModifier.shift
+        UIKeyModifier.COMMAND | UIKeyModifier.SHIFT
+
+    * `NONE` - No modifier key.
+    * `ALPHA_SHIFT` - CapsLock.
+    * `SHIFT` - Shift key.
+    * `CONTROL` - Control key.
+    * `ALTERNATE` - Option key.
+    * `COMMAND` - Command key.
+    * `NUMERIC_PAD` - Key is on a numeric pad.
+
+    .. note:: Camel case constants deprecated in 1.4.4, will be removed in 2.0.0.
+        Use UPPER_CASE variants.
 
     See also:
 
@@ -108,38 +119,33 @@ class UIKeyModifier(IntEnum):
         * `register_key_event_handler`
     """
 
+    NONE = 0
+    ALPHA_SHIFT = 1 << 16
+    SHIFT = 1 << 17
+    CONTROL = 1 << 18
+    ALTERNATE = 1 << 19
+    COMMAND = 1 << 20
+    NUMERIC_PAD = 1 << 21
+
     none = 0
-    """No modifier key."""
-
-    alphaShift = 1 << 16  # CapsLock
-    """Caps Lock key."""
-
-    shift = 1 << 17  # Shift
-    """Shift key."""
-
-    control = 1 << 18  # Control
-    """Control key."""
-
-    alternate = 1 << 19  # Option
-    """Option key."""
-
-    command = 1 << 20  # Command
-    """Command key."""
-
-    numericPad = 1 << 21  # Key on numeric keypad
-    """Key is on numberic pad."""
+    alphaShift = 1 << 16
+    shift = 1 << 17
+    control = 1 << 18
+    alternate = 1 << 19
+    command = 1 << 20
+    numericPad = 1 << 21
 
 
 class UIEventType(IntEnum):
-    touches = 0
-    motion = 1
-    remoteControl = 2
-    presses = 3
-    physicalKeyboard = 4
+    TOUCHES = 0
+    MOTION = 1
+    REMOTE_CONTROL = 2
+    PRESSES = 3
+    PHYSICAL_KEYBOARD = 4
 
 
 class UIEventSubtype(IntEnum):
-    none = 0
+    NONE = 0
 
 
 class UIEventKeyCode(IntEnum):
@@ -148,65 +154,77 @@ class UIEventKeyCode(IntEnum):
     Not all key codes are listed / included here. Feel free to create pull request with more
     key codes if you'd like to use them.
 
+    * `RIGHT` - Right arrow key.
+    * `LEFT` - Left arrow key.
+    * `DOWN` - Down arrow key.
+    * `UP` - Up arrow key.
+    * `ENTER` - Enter / Return key.
+    * `SPACE` - Space key.
+    * `BACKSPACE` - Backspace key.
+    * `ESCAPE` - Escape key.
+    * `LEFT_SQUARE_BRACKET` - Left square bracket key.
+    * `DOT` - Dot key.
+
+    .. note:: Camel case constants deprecated in 1.4.4, will be removed in 2.0.0.
+        Use UPPER_CASE variants.
+
     See also:
 
         * `register_key_event_handler`
     """
 
+    RIGHT = 79
+    LEFT = 80
+    DOWN = 81
+    UP = 82
+    ENTER = 40
+    SPACE = 44
+    BACKSPACE = 42
+    ESCAPE = 41
+    LEFT_SQUARE_BRACKET = 47
+    DOT = 55
+
     right = 79
-    """Right arrow key."""
-
     left = 80
-    """Left arrow key."""
-
     down = 81
-    """Down arrow key."""
-
     up = 82
-    """Up arrow key."""
-
     enter = 40
-    """Enter key."""
-
     space = 44
-    """Space key."""
-
     backspace = 42
-    """Backspace key."""
-
     escape = 41
-    """Escape key."""
-
     leftSquareBracket = 47
-    """Left square bracket."""
-
     dot = 55
-    """Dot key."""
 
 
 class UIKeyInput(str, Enum):
     """Enumeration of special key input values.
+
+    * `LEFT_ARROW` - Left arrow key.
+    * `RIGHT_ARROW` - Right arrow key.
+    * `UP_ARROW` - Up arrow key.
+    * `DOWN_ARROW` - Down arrow key.
+
+    .. note:: Camel case constants deprecated in 1.4.4, will be removed in 2.0.0.
+        Use UPPER_CASE variants.
 
     See also:
 
         * `register_key_command`
     """
 
+    LEFT_ARROW = 'UIKeyInputLeftArrow'
+    RIGHT_ARROW = 'UIKeyInputRightArrow'
+    UP_ARROW = 'UIKeyInputUpArrow'
+    DOWN_ARROW = 'UIKeyInputDownArrow'
+
     leftArrow = 'UIKeyInputLeftArrow'
-    """Left arrow."""
-
     rightArrow = 'UIKeyInputRightArrow'
-    """Right arrow."""
-
     upArrow = 'UIKeyInputUpArrow'
-    """Up arrow."""
-
     downArrow = 'UIKeyInputDownArrow'
-    """Down arrow."""
 
     @property
     def selector_name(self):
-        return self.name.title()
+        return self.name.replace('_', '').title()
 
 
 _UIKeyInputNames = {
@@ -260,7 +278,13 @@ def _modifier_selector_name(modifier):
         UIKeyModifier.control: 'Control',
         UIKeyModifier.alternate: 'Alternate',
         UIKeyModifier.command: 'Command',
-        UIKeyModifier.numericPad: 'NumericPad'
+        UIKeyModifier.numericPad: 'NumericPad',
+        UIKeyModifier.ALPHA_SHIFT: 'AlphaShift',
+        UIKeyModifier.SHIFT: 'Shift',
+        UIKeyModifier.CONTROL: 'Control',
+        UIKeyModifier.ALTERNATE: 'Alternate',
+        UIKeyModifier.COMMAND: 'Command',
+        UIKeyModifier.NUMERIC_PAD: 'NumericPad'
     }
 
     if isinstance(modifier, UIKeyModifier):
@@ -355,7 +379,7 @@ def register_key_command(input: Union[str, UIKeyInput], modifier_flags: UIKeyMod
         title: Discoverability title
 
     Returns:
-        `True` if key command was registered.
+        True if key command was registered.
     """
     return _register_key_command(input, modifier_flags, function, title)
 
@@ -388,7 +412,7 @@ class KeyEventHandler(object):
 def _blackmamba_handleKeyUIEvent(_self, _cmd, event):
     e = ObjCInstance(event)
 
-    if e.type() == UIEventType.physicalKeyboard.value and e.subtype() == UIEventSubtype.none.value:
+    if e.type() == UIEventType.PHYSICAL_KEYBOARD.value and e.subtype() == UIEventSubtype.NONE.value:
         for h in _key_event_handlers:
             if h.key_code == e._keyCode() and h.modifier == e._modifierFlags():
                 if not e._isKeyDown():
@@ -399,7 +423,7 @@ def _blackmamba_handleKeyUIEvent(_self, _cmd, event):
 
 
 @on_main_thread
-def _register_key_event_handler(key_code, func, *, modifier=UIKeyModifier.none):
+def _register_key_event_handler(key_code, func, *, modifier=UIKeyModifier.NONE):
     if not UIApplication.sharedApplication().respondsToSelector_(sel('originalhandleKeyUIEvent:')):
         swizzle('UIApplication', 'handleKeyUIEvent:', _blackmamba_handleKeyUIEvent)
 
@@ -413,7 +437,7 @@ def _register_key_event_handler(key_code, func, *, modifier=UIKeyModifier.none):
 
 
 def register_key_event_handler(key_code: UIEventKeyCode, func: Callable[[], None],
-                               *, modifier: UIKeyModifier=UIKeyModifier.none) -> KeyEventHandler:
+                               *, modifier: UIKeyModifier=UIKeyModifier.NONE) -> KeyEventHandler:
     """Register key event handler.
 
     Usable in dialogs for example. Do not forget to unregister key event

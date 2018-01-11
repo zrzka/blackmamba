@@ -248,14 +248,14 @@ class PickerView(ui.View):
             self.close()
 
         self._handlers = [
-            register_key_event_handler(UIEventKeyCode.up, handle_key_up),
-            register_key_event_handler(UIEventKeyCode.down, handle_key_down),
-            register_key_event_handler(UIEventKeyCode.enter, handle_enter),
-            register_key_event_handler(UIEventKeyCode.enter, handle_shift_enter,
-                                       modifier=UIKeyModifier.shift),
-            register_key_event_handler(UIEventKeyCode.escape, handle_escape),
-            register_key_event_handler(UIEventKeyCode.dot, handle_escape,
-                                       modifier=UIKeyModifier.command)
+            register_key_event_handler(UIEventKeyCode.UP, handle_key_up),
+            register_key_event_handler(UIEventKeyCode.DOWN, handle_key_down),
+            register_key_event_handler(UIEventKeyCode.ENTER, handle_enter),
+            register_key_event_handler(UIEventKeyCode.ENTER, handle_shift_enter,
+                                       modifier=UIKeyModifier.SHIFT),
+            register_key_event_handler(UIEventKeyCode.ESCAPE, handle_escape),
+            register_key_event_handler(UIEventKeyCode.DOT, handle_escape,
+                                       modifier=UIKeyModifier.COMMAND)
         ]
 
     def will_close(self):

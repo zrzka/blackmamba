@@ -662,9 +662,9 @@ class DragAndDropView(ui.View):
             self.close()
 
         self._handlers = [
-            register_key_event_handler(UIEventKeyCode.escape, handle_escape),
-            register_key_event_handler(UIEventKeyCode.dot, handle_escape,
-                                       modifier=UIKeyModifier.command)
+            register_key_event_handler(UIEventKeyCode.ESCAPE, handle_escape),
+            register_key_event_handler(UIEventKeyCode.DOT, handle_escape,
+                                       modifier=UIKeyModifier.COMMAND)
         ]
 
     def will_close(self):

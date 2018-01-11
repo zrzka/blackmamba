@@ -16,7 +16,7 @@ The only requirement is to call `blackmamba.main`. Example::
 from blackmamba.log import info, error, get_level, set_level, ERROR
 import blackmamba.system as system
 
-__version__ = '1.4.3'
+__version__ = '1.4.4'
 __author__ = 'Robert Vojta'
 
 _LATEST_VERSION_COMPATIBILITY_TEST = (320000, '3.2')
@@ -50,7 +50,7 @@ def _register_ios11_default_key_commands():
     from blackmamba.uikit.keyboard import UIKeyModifier
 
     commands = [
-        ('E', UIKeyModifier.command,
+        ('E', UIKeyModifier.COMMAND,
          'drag_and_drop.py', 'Drag & Drop')
     ]
 
@@ -67,20 +67,20 @@ def _register_pre_311015_key_commands():
         return
 
     commands = [
-        ('W', UIKeyModifier.command,
+        ('W', UIKeyModifier.COMMAND,
          tab.close_selected_tab,
          'Close tab'),
-        ('\t', UIKeyModifier.control,
+        ('\t', UIKeyModifier.CONTROL,
          tab.select_next_tab,
          'Show next tab'),
-        ('\t', UIKeyModifier.control | UIKeyModifier.shift,
+        ('\t', UIKeyModifier.CONTROL | UIKeyModifier.SHIFT,
          tab.select_previous_tab,
          'Show previous tab'),
-        ('T', UIKeyModifier.command,
+        ('T', UIKeyModifier.COMMAND,
          'new_tab.py', 'New tab'),
-        (']', UIKeyModifier.command | UIKeyModifier.shift,
+        (']', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
          tab.select_next_tab),
-        ('[', UIKeyModifier.command | UIKeyModifier.shift,
+        ('[', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
          tab.select_previous_tab),
     ]
 
@@ -99,54 +99,54 @@ def _register_default_key_commands():
 
     commands = [
         # Scripts allowed to be used in the wrench
-        ('/', UIKeyModifier.command,
+        ('/', UIKeyModifier.COMMAND,
          'toggle_comments.py', 'Toggle comments'),
-        ('N', UIKeyModifier.command,
+        ('N', UIKeyModifier.COMMAND,
          'new_file.py', 'New file'),
-        ('W', UIKeyModifier.command | UIKeyModifier.shift,
+        ('W', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
          'close_all_tabs_except_current_one.py', 'Close tabs except current one'),
-        ('O', UIKeyModifier.command | UIKeyModifier.shift,
+        ('O', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
          'open_quickly.py', 'Open quickly...'),
-        ('0', UIKeyModifier.command | UIKeyModifier.shift,
+        ('0', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
          'search_dash.py', 'Search in Dash'),
-        ('R', UIKeyModifier.command | UIKeyModifier.shift,
+        ('R', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
          'run_quickly.py', 'Run quickly...'),
-        ('A', UIKeyModifier.command | UIKeyModifier.shift,
+        ('A', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
          'action_quickly.py', 'Action quickly...'),
-        ('B', UIKeyModifier.control | UIKeyModifier.shift,
+        ('B', UIKeyModifier.control | UIKeyModifier.SHIFT,
          'analyze.py', 'Analyze & Check style'),
-        ('K', UIKeyModifier.command | UIKeyModifier.shift,
+        ('K', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
          'clear_annotations.py', 'Clear annotations'),
-        ('U', UIKeyModifier.command,
+        ('U', UIKeyModifier.COMMAND,
          'run_unit_tests.py', 'Run unit tests...'),
-        ('L', UIKeyModifier.command | UIKeyModifier.shift,
+        ('L', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
          'outline_quickly.py', 'Outline quickly...'),
-        ('L', UIKeyModifier.control,
+        ('L', UIKeyModifier.CONTROL,
          'jump_to_line.py', 'Jump to line...'),
-        ('J', UIKeyModifier.command | UIKeyModifier.control,
+        ('J', UIKeyModifier.COMMAND | UIKeyModifier.CONTROL,
          'jump_to_definition.py', 'Jump to definition...'),
-        ('U', UIKeyModifier.command | UIKeyModifier.control,
+        ('U', UIKeyModifier.COMMAND | UIKeyModifier.CONTROL,
          'find_usages.py', 'Find usages...'),
-        ('?', UIKeyModifier.command | UIKeyModifier.control,
+        ('?', UIKeyModifier.COMMAND | UIKeyModifier.CONTROL,
          'show_documentation.py', 'Show documentation'),
-        ('R', UIKeyModifier.command | UIKeyModifier.alternate,
+        ('R', UIKeyModifier.COMMAND | UIKeyModifier.ALTERNATE,
          'refactoring/rename.py', 'Refactor - Rename'),
-        ('O', UIKeyModifier.command | UIKeyModifier.alternate,
+        ('O', UIKeyModifier.COMMAND | UIKeyModifier.ALTERNATE,
          'refactoring/organize_imports.py', 'Refactor - Organize imports'),
-        ('E', UIKeyModifier.command | UIKeyModifier.alternate,
+        ('E', UIKeyModifier.COMMAND | UIKeyModifier.ALTERNATE,
          'refactoring/expand_star_imports.py', 'Refactor - Expand star imports'),
-        ('F', UIKeyModifier.command | UIKeyModifier.alternate,
+        ('F', UIKeyModifier.COMMAND | UIKeyModifier.ALTERNATE,
          'refactoring/futurize.py', 'Refactor - Futurize'),
 
         # Still keyboard only
-        ('0', UIKeyModifier.command,
+        ('0', UIKeyModifier.COMMAND,
          tab.toggle_navigator,
          'Toggle navigator'),
-        (UIKeyInput.upArrow, UIKeyModifier.control,
+        (UIKeyInput.UP_ARROW, UIKeyModifier.CONTROL,
          source.page_up),
-        (UIKeyInput.downArrow, UIKeyModifier.control,
+        (UIKeyInput.DOWN_ARROW, UIKeyModifier.CONTROL,
          source.page_down),
-        ('W', UIKeyModifier.control,
+        ('W', UIKeyModifier.CONTROL,
          overlay.dismiss_active_overlay)
     ]
 
@@ -159,7 +159,7 @@ def _register_default_key_commands():
         return select_tab
 
     for i in range(9):
-        _register_key_command(str(i + 1), UIKeyModifier.command, _make_select_tab(i))
+        _register_key_command(str(i + 1), UIKeyModifier.COMMAND, _make_select_tab(i))
 
     _register_pre_311015_key_commands()
 
@@ -170,8 +170,8 @@ def _register_default_key_commands():
     def save_all():
         tab.save(True)
 
-    _register_key_command('S', UIKeyModifier.command, tab.save)
-    _register_key_command('S', UIKeyModifier.command | UIKeyModifier.shift, save_all)
+    _register_key_command('S', UIKeyModifier.COMMAND, tab.save)
+    _register_key_command('S', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT, save_all)
     set_level(_log_level)
 
     info('Default key commands registered')

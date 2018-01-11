@@ -98,9 +98,9 @@ class _PreviewChangesView(ui.View):
             self.close()
 
         self.handlers = [
-            register_key_event_handler(UIEventKeyCode.escape, cancel),
-            register_key_event_handler(UIEventKeyCode.dot, cancel, modifier=UIKeyModifier.command),
-            register_key_event_handler(UIEventKeyCode.enter, lambda: apply(None))
+            register_key_event_handler(UIEventKeyCode.ESCAPE, cancel),
+            register_key_event_handler(UIEventKeyCode.DOT, cancel, modifier=UIKeyModifier.COMMAND),
+            register_key_event_handler(UIEventKeyCode.ENTER, lambda: apply(None))
         ]
 
     def will_close(self):
