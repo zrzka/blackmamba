@@ -164,13 +164,13 @@ Skip protected items::
     GenericPassword.query_items(authentication_ui=AuthenticationUI.SKIP)
 
 Internet password::
-    
+
     ip = InternetPassword('zrzka', server='https://github.com/',
                           protocol=Protocol.HTTPS, authentication_type=AuthenticationType.HTML_FORM)
-    ip.set_password('password')    
-    
+    ip.set_password('password')
+
 Query internet passwords::
-    
+
     for x in InternetPassword.query_items(server='https://github.com/'):
         print(f'{x.creation_date} {x.account} {x.protocol} {x.authentication_type}')
 
