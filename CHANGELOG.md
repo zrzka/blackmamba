@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-* Test
+*
 
 ## 1.5.0 (2018-01-11)
 
