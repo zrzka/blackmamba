@@ -13,4 +13,5 @@
    blackmamba.log
    blackmamba.system
    blackmamba.uikit.keyboard
+   blackmamba.framework.security
 ```
