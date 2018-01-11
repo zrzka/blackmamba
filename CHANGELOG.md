@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+*
+
+## 1.5.0 (2018-01-11)
+
 * Pass `-p no:cacheprovider` to fix operation not permitted for `.cache` directory (run unit tests script)
 * Documentation cleanup and rewrite to Markdown, which is easily editable in Pythonista compared to reST
 * `blackmamba.framework.security` introduced
