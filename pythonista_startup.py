@@ -90,8 +90,10 @@ def main():
 
 if __name__ == 'pythonista_startup':
     import traceback
+    import appex
     try:
-        main()
+        if not appex.is_running_extension():
+            main()
     except Exception:
         print(traceback.format_exc())
         print('Failed to process pythonista_startup.py')

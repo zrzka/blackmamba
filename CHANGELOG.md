@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-*
+* `pythonista_startup.py` sample - execute `main` only if `appex.is_running_extension()` is false
 
 ## 1.5.0 (2018-01-11)
 
