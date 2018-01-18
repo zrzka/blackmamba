@@ -59,36 +59,6 @@ def _register_ios11_default_key_commands():
 
 
 @system.Pythonista(appex=False)
-def _register_pre_311015_key_commands():
-    from blackmamba.uikit.keyboard import UIKeyModifier
-    import blackmamba.ide.tab as tab
-
-    if system.PYTHONISTA_BUNDLE_VERSION >= 311013:
-        return
-
-    commands = [
-        ('W', UIKeyModifier.COMMAND,
-         tab.close_selected_tab,
-         'Close tab'),
-        ('\t', UIKeyModifier.CONTROL,
-         tab.select_next_tab,
-         'Show next tab'),
-        ('\t', UIKeyModifier.CONTROL | UIKeyModifier.SHIFT,
-         tab.select_previous_tab,
-         'Show previous tab'),
-        ('T', UIKeyModifier.COMMAND,
-         'new_tab.py', 'New tab'),
-        (']', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
-         tab.select_next_tab),
-        ('[', UIKeyModifier.COMMAND | UIKeyModifier.SHIFT,
-         tab.select_previous_tab),
-    ]
-
-    for command in commands:
-        _register_key_command(*command)
-
-
-@system.Pythonista(appex=False)
 def _register_default_key_commands():
     from blackmamba.uikit.keyboard import UIKeyModifier, UIKeyInput
     import blackmamba.ide.tab as tab
@@ -160,8 +130,6 @@ def _register_default_key_commands():
 
     for i in range(9):
         _register_key_command(str(i + 1), UIKeyModifier.COMMAND, _make_select_tab(i))
-
-    _register_pre_311015_key_commands()
 
     # No need to show Cmd-[Shift]-S to users
     _log_level = get_level()
