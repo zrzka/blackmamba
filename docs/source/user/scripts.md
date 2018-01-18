@@ -68,10 +68,6 @@ Otherwise dialog appears where you can enter new file name. File will be created
 in the current folder. If it already exists, file will be opened instead of creating
 new one.
 
-## new_tab.py
-
-Creates new empty tab.
-
 ## open_quickly.py
 
 Shows dialog with all your files. You can filter these files by directories,
