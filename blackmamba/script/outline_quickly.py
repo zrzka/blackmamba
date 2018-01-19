@@ -18,8 +18,8 @@ class OutlineNodeItem(PickerItem):
     class Style(str, Enum):
         cls = 'class'
         fn = 'function'
-        todo = 'iob:hammer_24'
-        fixme = 'iob:flash_24'
+        todo = 'iob:ios7_bolt_outline_24'
+        fixme = 'iob:ios7_bolt_24'
 
     def __init__(self, style, name, line, column, level, breadcrumb):
         super().__init__('{}{}'.format(level * '    ', name),
