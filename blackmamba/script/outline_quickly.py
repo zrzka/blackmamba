@@ -7,12 +7,19 @@ from enum import Enum
 from blackmamba.uikit.picker import PickerView, PickerItem, PickerDataSource
 from ui import Image
 import blackmamba.ide.source as source
+import re
+
+
+_TODO_RE = re.compile('\A.*#\s*\[?(?i:TODO)\]?[ :]*(?P<text>.*?)\s*\Z')
+_FIXME_RE = re.compile('\A.*#\s*\[?(?i:FIXME)\]?[ :]*(?P<text>.*?)\s*\Z')
 
 
 class OutlineNodeItem(PickerItem):
     class Style(str, Enum):
         cls = 'class'
         fn = 'function'
+        todo = 'iob:alert_circled_24'
+        fixme = 'iob:alert_circled_24'
 
     def __init__(self, style, name, line, column, level, breadcrumb):
         super().__init__('{}{}'.format(level * '    ', name),
@@ -31,7 +38,23 @@ class OutlineDataSource(PickerDataSource):
         super().__init__()
 
         r = ast.parse(text)
-        self.items = OutlineDataSource._generate_nodes(r, breadcrumb=filename)
+        ast_nodes = OutlineDataSource._generate_nodes(r, breadcrumb=filename)
+
+        comment_nodes = []
+        for i, line in enumerate(text.splitlines()):
+            match = _TODO_RE.fullmatch(line)
+            if match:
+                comment_nodes.append(OutlineNodeItem(
+                    OutlineNodeItem.Style.todo, match.group('text'), i + 1, 0, 0, filename
+                ))
+
+            match = _FIXME_RE.fullmatch(line)
+            if match:
+                comment_nodes.append(OutlineNodeItem(
+                    OutlineNodeItem.Style.fixme, match.group('text'), i + 1, 0, 0, filename
+                ))
+
+        self.items = sorted(ast_nodes + comment_nodes, key=lambda x: x.line)
 
     @staticmethod
     def _generate_nodes(parent, level=0, breadcrumb=''):
@@ -57,6 +80,26 @@ class OutlineDataSource(PickerDataSource):
                     nodes.extend(child_nodes)
 
         return nodes
+
+    def tableview_cell_for_row(self, tv, section, row):
+        cell = super().tableview_cell_for_row(tv, section, row)
+
+        item = self.filtered_items[row]
+
+        font = '<system>'
+        tint_color = None
+
+        if item.style is OutlineNodeItem.Style.todo:
+            font = '<system-bold>'
+            tint_color = 'yellow'
+        elif item.style is OutlineNodeItem.Style.fixme:
+            font = '<system-bold>'
+            tint_color = 'red'
+
+        cell.text_label.font = (font, 17)
+        cell.image_view.tint_color = tint_color
+
+        return cell
 
 
 def main():

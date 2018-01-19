@@ -7,6 +7,11 @@
 * Keyboard shortcuts added to Pythonista 3.2 removed - dropped support of Pythonista < 3.2
 * `outline_quickly.py`
     * Added support for `async` functions
+    * Added support for `TODO` and `FIXME`
+        * Supported variants `TODO`, `TODO:`, `[TODO]`, case insensitive
+        * re for TODO `'\A.*#\s*\[?(?i:TODO)\]?[ :]*(?P<text>.*?)\s*\Z'` as an example
+        * Square brackets because of ligatures in [Pragmata Pro](https://www.fsd.it/shop/fonts/pragmatapro/)
+        * Not perfect, matches if it's in the string, but it's good enough for now
 
 ## 1.5.0 (2018-01-11)
 
