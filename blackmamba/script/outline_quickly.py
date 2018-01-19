@@ -45,13 +45,13 @@ class OutlineDataSource(PickerDataSource):
             match = _TODO_RE.fullmatch(line)
             if match:
                 comment_nodes.append(OutlineNodeItem(
-                    OutlineNodeItem.Style.todo, match.group('text'), i + 1, 0, 0, filename
+                    OutlineNodeItem.Style.todo, match.group('text') or 'TODO', i + 1, 0, 0, filename
                 ))
 
             match = _FIXME_RE.fullmatch(line)
             if match:
                 comment_nodes.append(OutlineNodeItem(
-                    OutlineNodeItem.Style.fixme, match.group('text'), i + 1, 0, 0, filename
+                    OutlineNodeItem.Style.fixme, match.group('text') or 'FIXME', i + 1, 0, 0, filename
                 ))
 
         self.items = sorted(ast_nodes + comment_nodes, key=lambda x: x.line)
