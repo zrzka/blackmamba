@@ -176,7 +176,17 @@ def _main(config=None):
     # It's here because Sphinx doesn't show documentation for decorated
     # functions
     from blackmamba.config import update_config_with_dict, get_config_value
+    import sys
     info('Black Mamba initialization...')
+    if system.PYTHONISTA_BUNDLE_VERSION < 320000:
+        error(f'Black Mamba supports Pythonista >= 3.2 only.')
+        return
+    if not sys.version_info.major == 3:
+        error(f'Black Mamba supports Python 3 only')
+        return
+    if sys.version_info.minor < 6:
+        error(f'Black Mamba support Python 3.6+ only')
+        return
     if config:
         update_config_with_dict(config)
     _check_compatibility()
