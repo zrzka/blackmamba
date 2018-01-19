@@ -7,3 +7,4 @@ MANIFEST
 .idea
 .blackmamba
 .DS_Store
+**/*.icloud
