@@ -5,6 +5,8 @@
 * `pythonista_startup.py` sample - execute `main` only if `appex.is_running_extension()` is false
 * `script/new_tab.py` trashed, it was there just for `Cmd T`, which is supported by Pythonista now
 * Keyboard shortcuts added to Pythonista 3.2 removed - dropped support of Pythonista < 3.2
+* `outline_quickly.py`
+    * Added support for `async` functions
 
 ## 1.5.0 (2018-01-11)
 

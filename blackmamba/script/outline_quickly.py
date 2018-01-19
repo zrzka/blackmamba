@@ -10,7 +10,7 @@ import blackmamba.ide.source as source
 
 
 class OutlineNodeItem(PickerItem):
-    class Style(Enum):
+    class Style(str, Enum):
         cls = 'class'
         fn = 'function'
 
@@ -23,7 +23,7 @@ class OutlineNodeItem(PickerItem):
         self.column = column
         self.level = level
         self.breadcrumb = breadcrumb
-        self.image = Image(style.value)
+        self.image = Image(style)
 
 
 class OutlineDataSource(PickerDataSource):
@@ -40,7 +40,7 @@ class OutlineDataSource(PickerDataSource):
         for child in parent.body:
             if isinstance(child, ast.ClassDef):
                 style = OutlineNodeItem.Style.cls
-            elif isinstance(child, ast.FunctionDef):
+            elif isinstance(child, ast.FunctionDef) or isinstance(child, ast.AsyncFunctionDef):
                 style = OutlineNodeItem.Style.fn
             else:
                 style = None
