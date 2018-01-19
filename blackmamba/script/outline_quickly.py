@@ -14,8 +14,8 @@ _TODO_RE = re.compile('\A.*#\s*\[?(?i:TODO)\]?[ :]*(?P<text>.*?)\s*\Z')
 _FIXME_RE = re.compile('\A.*#\s*\[?(?i:FIXME)\]?[ :]*(?P<text>.*?)\s*\Z')
 
 
-class OutlineNodeItem(PickerItem):  # TODO Something to do
-    class Style(str, Enum): # FIXME  Should be fixed
+class OutlineNodeItem(PickerItem):
+    class Style(str, Enum):
         cls = 'class'
         fn = 'function'
         todo = 'iob:hammer_24'
@@ -87,17 +87,17 @@ class OutlineDataSource(PickerDataSource):
         item = self.filtered_items[row]
 
         font = '<system>'
-        tint_color = None
+        text_color = None
 
         if item.style is OutlineNodeItem.Style.todo:
             font = '<system-bold>'
-            tint_color = 'yellow'
+            text_color = 'orange'
         elif item.style is OutlineNodeItem.Style.fixme:
             font = '<system-bold>'
-            tint_color = 'red'
+            text_color = 'red'
 
         cell.text_label.font = (font, 17)
-        cell.image_view.tint_color = tint_color
+        cell.text_label.text_color = text_color
 
         return cell
 
