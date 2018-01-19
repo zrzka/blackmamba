@@ -3,8 +3,10 @@
 ## master (unreleased)
 
 * `pythonista_startup.py` sample - execute `main` only if `appex.is_running_extension()` is false
-* `script/new_tab.py` trashed, it was there just for `Cmd T`, which is supported by Pythonista now
-* Keyboard shortcuts added to Pythonista 3.2 removed - dropped support of Pythonista < 3.2
+* Black Mamba supports Pythonista >= 3.2 & Python >= 3.6 only
+    * Keyboard shortcuts added to Pythonista 3.2 removed
+    * Removed `script/new_tab.py`, it was there just for `Cmd T`
+    * Black Mamba fails to initialize if you do use with Pythonista < 3.2 || Python < 3.6
 * `outline_quickly.py`
     * Added support for `async` functions
     * Added support for `TODO` and `FIXME`
