@@ -14,12 +14,12 @@ _TODO_RE = re.compile('\A.*#\s*\[?(?i:TODO)\]?[ :]*(?P<text>.*?)\s*\Z')
 _FIXME_RE = re.compile('\A.*#\s*\[?(?i:FIXME)\]?[ :]*(?P<text>.*?)\s*\Z')
 
 
-class OutlineNodeItem(PickerItem):
-    class Style(str, Enum):
+class OutlineNodeItem(PickerItem):  # TODO Something to do
+    class Style(str, Enum): # FIXME  Should be fixed
         cls = 'class'
         fn = 'function'
-        todo = 'iob:alert_circled_24'
-        fixme = 'iob:alert_circled_24'
+        todo = 'iob:hammer_24'
+        fixme = 'iob:flash_24'
 
     def __init__(self, style, name, line, column, level, breadcrumb):
         super().__init__('{}{}'.format(level * '    ', name),
