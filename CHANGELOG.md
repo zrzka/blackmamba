@@ -14,6 +14,8 @@
         * re for TODO `'\A.*#\s*\[?(?i:TODO)\]?[ :]*(?P<text>.*?)\s*\Z'` as an example
         * Square brackets because of ligatures in [Pragmata Pro](https://www.fsd.it/shop/fonts/pragmatapro/)
         * Not perfect, matches if it's in the string, but it's good enough for now
+* `forum-copy-code.py` script added
+    * Allows you to copy code elements from the forum
 
 ## 1.5.0 (2018-01-11)
 
