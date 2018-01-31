@@ -1417,7 +1417,7 @@ class InternetPasswordAttributes(SecItemAttributes):
         self.server = attrs.get(kSecAttrServer, None)
         self.protocol = Protocol(attrs[kSecAttrProtocol]) if kSecAttrProtocol in attrs else None
         self.authentication_type = AuthenticationType(attrs[kSecAttrAuthenticationType]) \
-            if kSecAttrAuthenticationType in attrs else None
+            if kSecAttrAuthenticationType in attrs and attrs[kSecAttrAuthenticationType] else None
         self.port = attrs.get(kSecAttrPort, None)
 
 

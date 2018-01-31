@@ -16,6 +16,8 @@
         * Not perfect, matches if it's in the string, but it's good enough for now
 * `forum-copy-code.py` script added
     * Allows you to copy code elements from the forum
+* `blackmamba.framework.security`
+    * Fixed InternetPassword query (check for not empty auth type)
 
 ## 1.5.0 (2018-01-11)
 
