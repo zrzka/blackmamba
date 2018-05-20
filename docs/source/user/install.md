@@ -32,7 +32,9 @@ release is 1.0.2.
 ## Startup
 
 Black Mamba requires from you to put following lines to the
-`~/Documents/site-packages-3/pythonista_startup.py` file:
+located inside Python Modules folder inside Pythonista (you can see it in the sidebar menu after
+app startup)
+`site-packages-3/pythonista_startup.py` file:
 
 ```python
 #!python3
