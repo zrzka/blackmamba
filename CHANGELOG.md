@@ -1,5 +1,9 @@
 # Change log
 
+## 1.5.2 (2018-05-28)
+
+* Updated info about installation (PR #36 from @idchlife)
+
 ## 1.5.1 (2018-05-28)
 
 * `pythonista_startup.py` sample - execute `main` only if `appex.is_running_extension()` is false
