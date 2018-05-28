@@ -31,8 +31,8 @@ release is 1.0.2.
 
 ## Startup
 
-Black Mamba requires from you to put following lines to the
-`~/Documents/site-packages-3/pythonista_startup.py` file:
+Black Mamba requires you to put following lines to the 
+`Python Modules/site-packages-3/pythonista_startup.py` file:
 
 ```python
 #!python3
@@ -40,3 +40,5 @@ import blackmamba
 
 blackmamba.main()
 ```
+
+Note: Python Modules folder can be found in the sidebar after app startup.
