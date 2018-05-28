@@ -16,7 +16,7 @@ The only requirement is to call `blackmamba.main`. Example::
 from blackmamba.log import info, error, get_level, set_level, ERROR
 import blackmamba.system as system
 
-__version__ = '1.5.0'
+__version__ = '1.5.1'
 __author__ = 'Robert Vojta'
 
 _LATEST_VERSION_COMPATIBILITY_TEST = (320000, '3.2')

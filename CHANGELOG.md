@@ -1,6 +1,6 @@
 # Change log
 
-## master (unreleased)
+## 1.5.1 (2018-05-28)
 
 * `pythonista_startup.py` sample - execute `main` only if `appex.is_running_extension()` is false
 * Black Mamba supports Pythonista >= 3.2 & Python >= 3.6 only
