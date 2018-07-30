@@ -13,8 +13,8 @@ def get_bookmark_paths():
     if not os.path.isfile(_BOOKMARKS_FILE):
         return None
 
-    with open(_BOOKMARKS_FILE, 'rb') as input:
-        content = plistlib.readPlist(input)
+    with open(_BOOKMARKS_FILE, 'rb') as in_file:
+        content = plistlib.readPlist(in_file)
 
         if not content:
             return None
