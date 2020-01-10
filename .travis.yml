@@ -7,7 +7,7 @@ python:
 install:
     - pip install -r requirements.txt
 before_script:
-    - flake8 . --count --max-complexity=10 --max-line-length=88 --statistics --exclude lib
+    - flake8 . --count --max-complexity=10 --max-line-length=121 --statistics --exclude lib
 script:
     - PYTHONPATH=. pytest tests
 notifications:
