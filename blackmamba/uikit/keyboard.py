@@ -365,7 +365,7 @@ def _register_key_command(input, modifier_flags, function, title=None):
 
 
 def register_key_command(input: Union[str, UIKeyInput], modifier_flags: UIKeyModifier,
-                         function: Callable[[], None], title: str=None) -> bool:
+                         function: Callable[[], None], title: str = None) -> bool:
     """Register key command.
 
     .. note:: There's no function to unregister key commands.
@@ -435,7 +435,7 @@ def _register_key_event_handler(key_code, func, *, modifier=UIKeyModifier.NONE):
 
 
 def register_key_event_handler(key_code: UIEventKeyCode, func: Callable[[], None],
-                               *, modifier: UIKeyModifier=UIKeyModifier.NONE) -> KeyEventHandler:
+                               *, modifier: UIKeyModifier = UIKeyModifier.NONE) -> KeyEventHandler:
     """Register key event handler.
 
     Usable in dialogs for example. Do not forget to unregister key event
