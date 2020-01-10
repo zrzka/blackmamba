@@ -10,8 +10,8 @@ import blackmamba.ide.source as source
 import re
 
 
-_TODO_RE = re.compile('\A.*#\s*\[?(?i:TODO)\]?[ :]*(?P<text>.*?)\s*\Z')
-_FIXME_RE = re.compile('\A.*#\s*\[?(?i:FIXME)\]?[ :]*(?P<text>.*?)\s*\Z')
+_TODO_RE = re.compile(r'\A.*#\s*\[?(?i:TODO)\]?[ :]*(?P<text>.*?)\s*\Z')
+_FIXME_RE = re.compile(r'\A.*#\s*\[?(?i:FIXME)\]?[ :]*(?P<text>.*?)\s*\Z')
 
 
 class OutlineNodeItem(PickerItem):
