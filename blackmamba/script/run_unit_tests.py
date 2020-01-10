@@ -31,7 +31,7 @@ def _parse_line(file, text, line):
     # If we can parse, we'll return the correct one, otherwise fallback
     # to the test function
 
-    pattern = re.escape(file) + '\:(\d+)\:'
+    pattern = re.escape(file) + r'\:(\d+)\:'
 
     match = re.search(pattern, text, re.MULTILINE)
     if match:
