@@ -29,8 +29,8 @@ def _remove_whitespaces():
     return get_config_value('analyzer.remove_whitespaces', True)
 
 
-_REMOVE_TRAILING_WHITESPACES_REGEX = re.compile('[ \t]+$', re.MULTILINE)
-_REMOVE_TRAILING_LINES_REGEX = re.compile('\s+\Z', re.MULTILINE)
+_REMOVE_TRAILING_WHITESPACES_REGEX = re.compile(r'[ \t]+$', re.MULTILINE)
+_REMOVE_TRAILING_LINES_REGEX = re.compile(r'\s+\Z', re.MULTILINE)
 
 #
 # Common for pep8 & pyflakes
@@ -105,8 +105,8 @@ def _pep8_annotations(text, ignore=None, max_line_length=None):
 # pyflakes
 #
 
-_LINE_COL_MESSAGE_REGEX = re.compile('^(\d+):(\d+): (.*)$')
-_LINE_MESSAGE_REGEX = re.compile('^(\d+): (.*)$')
+_LINE_COL_MESSAGE_REGEX = re.compile(r'^(\d+):(\d+): (.*)$')
+_LINE_MESSAGE_REGEX = re.compile(r'^(\d+): (.*)$')
 
 
 def _get_annotations(path, stream, style):

@@ -9,7 +9,7 @@ import requests
 import urllib3
 
 
-CODE_PATTERN = re.compile('\<code.*?\>(.*?)\<\/code\>', re.MULTILINE | re.DOTALL)
+CODE_PATTERN = re.compile(r'\<code.*?\>(.*?)\<\/code\>', re.MULTILINE | re.DOTALL)
 
 
 def get_code_elements(url):

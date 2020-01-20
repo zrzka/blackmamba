@@ -16,7 +16,7 @@ def _comment_line(line, hash_prefix=''):
     return hash_prefix + '# ' + line[len(hash_prefix):]
 
 
-_UNCOMMENT_RE = re.compile('\A(\s*)#( ?)(.*)\Z', re.DOTALL)
+_UNCOMMENT_RE = re.compile(r'\A(\s*)#( ?)(.*)\Z', re.DOTALL)
 
 
 def _uncomment_line(line):
@@ -35,7 +35,7 @@ def _uncomment_line(line):
     return result
 
 
-_HASH_INDEX_RE = re.compile('\A(\s*)')
+_HASH_INDEX_RE = re.compile(r'\A(\s*)')
 
 
 def _hash_prefix(lines):
